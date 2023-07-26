@@ -12,7 +12,13 @@ public class PlayerAudio : MonoBehaviour
 
     void Start()
     {
-        
+        audio = GetComponent<AudioSource>();
+    }
+
+    public void JumpSound()
+    {
+        audio.clip = jumpClip;
+        audio.Play();
     }
 
     void Update()
