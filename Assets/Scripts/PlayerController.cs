@@ -4,24 +4,25 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Move")]
+    [SerializeField]
+    private float jumpFoece = 500f;
+    private int jumpCount = 0;
+    [SerializeField]
+    private float rayDistance = 1.25f;
+    private bool onGround = true;
+
     [Header("Status")]
     private int maxLife = 3;
     private int life;
-    [SerializeField]
-    private float jumpFoece = 500f;
-
+    
     [Header("Action")]
-    [SerializeField]
-    private float rayDistance = 1.25f;
-    private int jumpCount = 0;
-    private bool onGround = true;
     private bool onDamage = false;
     private bool isDead = false;
 
     [Header("Components")]
     private Rigidbody2D rigid;
     private Animator animator;
-
     private PlayerAudio audio;
 
     void Awake()
@@ -105,15 +106,12 @@ public class PlayerController : MonoBehaviour
             {
                 onGround = true;
                 jumpCount = 0;
-                animator.SetBool("onFall", false);
-            }
-            else
-            {
-                animator.SetBool("onFall", true);
             }
         }
 
+        animator.SetBool("onFall", rigid.velocity.y < 0 ? true : false);
         animator.SetBool("onGround", onGround);
+
     }
 
     void OnTriggerEnter2D(Collider2D collision)
