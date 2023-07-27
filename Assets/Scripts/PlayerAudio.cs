@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class PlayerAudio : MonoBehaviour
@@ -10,14 +11,23 @@ public class PlayerAudio : MonoBehaviour
     [SerializeField]
     private AudioClip damageClip;
 
-    void Start()
+    void Awake()
     {
         audio = GetComponent<AudioSource>();
     }
 
-    public void JumpSound()
+    public void PlaySound(string sound)
     {
-        audio.clip = jumpClip;
+        switch (sound)
+        {
+            case "jump":
+                audio.clip = jumpClip;
+                break;
+            case "damage":
+                audio.clip = damageClip;
+                break;
+        }
+
         audio.Play();
     }
 

@@ -5,10 +5,14 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [Header("Status")]
+    private int maxLife = 3;
+    private int life;
     [SerializeField]
     private float jumpFoece = 500f;
 
     [Header("Action")]
+    [SerializeField]
+    private float rayDistance = 1.25f;
     private int jumpCount = 0;
     private bool onGround = true;
     private bool onDamage = false;
@@ -20,11 +24,16 @@ public class PlayerController : MonoBehaviour
 
     private PlayerAudio audio;
 
-    void Start()
+    void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         audio = GetComponent<PlayerAudio>();
+    }
+
+    void Start()
+    {
+        life = maxLife;
     }
 
     void Update()
@@ -32,39 +41,86 @@ public class PlayerController : MonoBehaviour
         if (isDead)
             return;
 
-        if (Input.GetMouseButtonDown(0) && jumpCount < 2)
+        GroundCheck();
+    }
+
+    public void Jump()
+    {
+        if (!isDead && jumpCount < 2)
         {
             jumpCount++;
             rigid.velocity = Vector2.zero;
             rigid.AddForce(Vector2.up * jumpFoece);
-            audio.JumpSound();
+            onGround = false;
 
+            audio.PlaySound("jump");
+            
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
+            {
+                animator.Play("Jump", -1);
+            }
+            else
+            {
+                animator.SetTrigger("doJump");
+                animator.SetBool("onGround", false);
+            }
         }
-        else if (Input.GetMouseButtonUp(0) && rigid.velocity.y > 0)
+    }
+
+    public void StopJump()
+    {
+        if (!isDead && rigid.velocity.y > 0)
         {
             rigid.velocity *= 0.5f;
+        }
+    }
+
+    void Damage()
+    {
+        animator.SetTrigger("onHit");
+        audio.PlaySound("damage");
+        rigid.velocity = Vector2.zero;
+        onDamage = true;
+        life--;
+
+        if (life <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        isDead = true;
+    }
+
+    void GroundCheck()
+    {
+        if (rigid.velocity.y < 0)
+        {
+            Debug.DrawRay(rigid.position, Vector2.down * rayDistance, Color.red);
+            RaycastHit2D platCheck = Physics2D.Raycast(rigid.position, Vector2.down, rayDistance, LayerMask.GetMask("Ground"));
+
+            if (platCheck.collider != null)
+            {
+                onGround = true;
+                jumpCount = 0;
+                animator.SetBool("onFall", false);
+            }
+            else
+            {
+                animator.SetBool("onFall", true);
+            }
         }
 
         animator.SetBool("onGround", onGround);
     }
 
-    void Damage()
-    {
-
-    }
-
     void OnTriggerEnter2D(Collider2D collision)
     {
-        
-    }
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        
-    }
-
-    void OnCollisionExit2D(Collision2D collision)
-    {
-        
+        if (collision.CompareTag("Enemy") || collision.CompareTag("Obstacle"))
+        {
+            Damage();
+        }
     }
 }
