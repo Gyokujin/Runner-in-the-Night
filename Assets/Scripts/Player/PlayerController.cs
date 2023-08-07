@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private bool onGround = true;
 
     [Header("Status")]
+    [SerializeField]
     private int maxLife = 3;
     private int life;
     
@@ -21,12 +22,14 @@ public class PlayerController : MonoBehaviour
     private bool isDead = false;
 
     [Header("Components")]
+    private BoxCollider2D collider;
     private Rigidbody2D rigid;
     private Animator animator;
     private PlayerAudio audio;
 
     void Awake()
     {
+        collider = GetComponent<BoxCollider2D>();
         rigid = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         audio = GetComponent<PlayerAudio>();
@@ -78,21 +81,29 @@ public class PlayerController : MonoBehaviour
 
     void Damage()
     {
-        animator.SetTrigger("onHit");
-        audio.PlaySound("damage");
-        rigid.velocity = Vector2.zero;
-        onDamage = true;
         life--;
+        rigid.velocity = Vector2.zero;
+        audio.PlaySound("damage");
 
         if (life <= 0)
         {
             Die();
         }
+        else
+        {
+            onDamage = true;
+            animator.SetTrigger("onHit");
+        }
     }
 
     void Die()
     {
+        collider.enabled = false;
+        rigid.velocity = Vector2.zero;
+        rigid.AddForce(Vector2.up * 700f);
+        animator.SetTrigger("onDie");
         isDead = true;
+        GameManager.instance.GameOver();
     }
 
     void GroundCheck()

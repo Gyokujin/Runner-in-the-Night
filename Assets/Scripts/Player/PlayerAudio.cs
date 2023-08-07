@@ -30,9 +30,4 @@ public class PlayerAudio : MonoBehaviour
 
         audio.Play();
     }
-
-    void Update()
-    {
-        
-    }
 }
