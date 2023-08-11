@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
 
     [Header("StageInfo")]
     private int score = 0;
+    private float scoreDelay = 0.5f;
+    private bool scoreGetting = false;
     public bool isGameOver = false;
 
     [Header("UI")]
@@ -55,6 +57,14 @@ public class GameManager : MonoBehaviour
         stageType = StageType.run;
         ChangeAnimator();
     }
+    
+    void Update()
+    {
+        if (!scoreGetting)
+        {
+            StartCoroutine("ProgressScore");
+        }
+    }
 
     void ChangeAnimator()
     {
@@ -76,8 +86,18 @@ public class GameManager : MonoBehaviour
         if (!isGameOver)
         {
             score += newScore;
-            scoreText.text = "Score : " + score;
+            string printScore = string.Format("{0:D4}", score);
+            scoreText.text = printScore;
         }
+    }
+
+    IEnumerator ProgressScore()
+    {
+        scoreGetting = true;
+        AddScore(1);
+
+        yield return new WaitForSeconds(scoreDelay);
+        scoreGetting = false;
     }
 
     public void GameOver()

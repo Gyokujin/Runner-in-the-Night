@@ -10,7 +10,8 @@ public class PlayerController : MonoBehaviour
     private int jumpCount = 0;
     [SerializeField]
     private float rayDistance = 1.25f;
-    private bool onGround = true;
+    [HideInInspector]
+    public bool onGround = true;
 
     [Header("Status")]
     [SerializeField]
@@ -87,7 +88,7 @@ public class PlayerController : MonoBehaviour
 
         if (life <= 0)
         {
-            Die();
+            StartCoroutine("Die");
         }
         else
         {
@@ -96,14 +97,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Die()
+    IEnumerator Die()
     {
         collider.enabled = false;
         rigid.velocity = Vector2.zero;
-        rigid.AddForce(Vector2.up * 700f);
+        rigid.AddForce(Vector2.up * 600f);
         animator.SetTrigger("onDie");
         isDead = true;
         GameManager.instance.GameOver();
+
+        yield return new WaitForSeconds(1f);
+        rigid.gravityScale *= 2;
+
+        yield return new WaitForSeconds(2f);
+        rigid.simulated = false;
     }
 
     void GroundCheck()
@@ -122,7 +129,6 @@ public class PlayerController : MonoBehaviour
 
         animator.SetBool("onFall", rigid.velocity.y < 0 ? true : false);
         animator.SetBool("onGround", onGround);
-
     }
 
     void OnTriggerEnter2D(Collider2D collision)
