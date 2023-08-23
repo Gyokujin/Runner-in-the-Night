@@ -21,15 +21,4 @@ public class Platform : MonoBehaviour
             }
         }
     }
-
-    /*
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.collider.tag == "Player" && !stepped)
-        {
-            stepped = true;
-            GameManager.instance.AddScore(1);
-        }
-    }
-    */
 }

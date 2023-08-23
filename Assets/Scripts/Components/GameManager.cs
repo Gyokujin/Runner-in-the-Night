@@ -8,6 +8,9 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
+    public bool isLive = false;
+    [SerializeField]
+    private float delayTime = 1.5f;
 
     public enum StageType
     {
@@ -56,6 +59,7 @@ public class GameManager : MonoBehaviour
     {
         stageType = StageType.run;
         ChangeAnimator();
+        isLive = true;
     }
     
     void Update()
@@ -98,6 +102,17 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(scoreDelay);
         scoreGetting = false;
+    }
+
+    public void GamePause(float pauseTime)
+    {
+        isLive = false;
+        Invoke("GameResume", pauseTime);
+    }
+
+    void GameResume()
+    {
+        isLive = true;
     }
 
     public void GameOver()
