@@ -42,6 +42,10 @@ public class GameManager : MonoBehaviour
     [Header("Component")]
     [SerializeField]
     private PlayerController player;
+    [SerializeField]
+    private ScrollingObject scroll;
+    [SerializeField]
+    private targetCamera camera;
 
     void Awake()
     {
@@ -107,12 +111,16 @@ public class GameManager : MonoBehaviour
     public void GamePause(float pauseTime)
     {
         isLive = false;
+        camera.StopCamera();
+        scroll.StopScroll();
         Invoke("GameResume", pauseTime);
     }
 
     void GameResume()
     {
         isLive = true;
+        camera.ActCamera();
+        scroll.StartScroll();
     }
 
     public void GameOver()
