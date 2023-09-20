@@ -106,14 +106,13 @@ public class GameManager : MonoBehaviour
         scoreGetting = false;
     }
 
-    public void GamePause(float pauseTime)
+    public void GamePause()
     {
         isLive = false;
         camera.StopCamera();
-        Invoke("GameResume", pauseTime);
     }
 
-    void GameResume()
+    public void GameResume()
     {
         isLive = true;
         camera.ActCamera();

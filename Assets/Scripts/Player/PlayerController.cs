@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -57,14 +58,36 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("onMove", true);
     }
 
+    /*
     void Update()
     {
         if (isDead)
             return;
 
-        GroundCheck();
-    }
+        if (GroundCheck())
+        {
+            onGround = true;
+            jumpCount = 0;
+            animator.SetBool("onGround", onGround);
+        }
+        else
+        {
+            animator.SetBool("onFall"
+        }
 
+        if (rigid.velocity.y < 0)
+        {
+            if (GroundCheck())
+            {
+
+
+
+                animator.SetBool("onFall", rigid.velocity.y < 0 ? true : false);
+                animator.SetBool("onGround", onGround);
+            }
+        }
+    }
+    */
     public void Jump()
     {
         if (!isDead && jumpCount < 2 && !onDamage)
@@ -161,15 +184,22 @@ public class PlayerController : MonoBehaviour
         onDamage = true;
         animator.SetBool("onMove", false);
         animator.SetTrigger("onHit");
-        GameManager.instance.GamePause(damageTime);
         sprite.color = new Color(1, 1, 1, 0.7f);
         rigid.velocity = Vector2.zero;
         rigid.AddForce(Vector2.left * knockbackForce);
 
-        yield return new WaitForSeconds(damageTime);
+        GameManager.instance.GamePause(); // 캐릭터외의 진행을 멈춘다. 스크롤링 일시정지
+
+        yield return new WaitForSeconds(1f); // 1초 뒤에 바닥을 검사해서 있을 경우 그대로 진행 없을 경우 새로 진행한다.
+        Invoke("StandUp", damageTime);
+    }
+
+    void StandUp()
+    {
         animator.SetBool("onMove", true);
         onDamage = false;
         StartCoroutine("Invincible");
+        GameManager.instance.GameRestart();
     }
 
     IEnumerator Invincible()
@@ -197,6 +227,7 @@ public class PlayerController : MonoBehaviour
         rigid.simulated = false;
     }
 
+    /*
     void GroundCheck()
     {
         if (rigid.velocity.y < 0)
@@ -214,13 +245,28 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("onFall", rigid.velocity.y < 0 ? true : false);
         animator.SetBool("onGround", onGround);
     }
+    */
+
+    bool GroundCheck()
+    {
+        bool check = false;
+        Debug.DrawRay(rigid.position, Vector2.down * rayDistance, Color.red);
+        RaycastHit2D platCheck = Physics2D.Raycast(rigid.position, Vector2.down, rayDistance, LayerMask.GetMask("Ground"));
+
+        if (platCheck.collider != null)
+        {
+            check = true;
+        }
+
+        return check;
+    }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (onSlide || onDamage || onInvincible)
             return;
-
-        if (collision.CompareTag("Enemy") || collision.CompareTag("Obstacle"))
+        
+        if (collision.CompareTag("Obstacle"))
         {
             Damage();
         }
