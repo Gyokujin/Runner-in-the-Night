@@ -3851,7 +3851,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformPrefab: {fileID: 9160345975231889215, guid: de9cab124dee709428ab3cdd0e77a214, type: 3}
   timeBetSpawnMin: 4
-  timeBetSpawnMax: 5.75
+  timeBetSpawnMax: 5.5
   xPos: 25
   yMin: -1.75
   yMax: 2.5

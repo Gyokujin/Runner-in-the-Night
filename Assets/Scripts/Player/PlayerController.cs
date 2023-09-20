@@ -113,6 +113,7 @@ public class PlayerController : MonoBehaviour
     void EndSlide()
     {
         animator.SetBool("onSlide", false);
+        StartCoroutine("SlideCooldown");
         onSlide = false;
     }
 
@@ -122,7 +123,6 @@ public class PlayerController : MonoBehaviour
         onSlide = true;
 
         yield return new WaitForSeconds(slideTime);
-        StartCoroutine("SlideCooldown");
         EndSlide();
     }
 
