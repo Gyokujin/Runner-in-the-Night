@@ -5,90 +5,116 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Move")]
-    [SerializeField]
-    private float rayDistance = 1.25f;
-    [HideInInspector]
-    public bool onGround = true;
-    [SerializeField]
-    private float jumpFoece = 500f;
-    private int jumpCount = 0;
-    [SerializeField]
-    private float slideTime = 0.5f;
-    [SerializeField]
-    private float slideCool = 3f;
-    private bool onSlide = false;
-    private bool slideAble = true;
-
     [Header("Status")]
-    [SerializeField]
-    private int maxLife = 3;
-    private int life;
+    private float landDis;
+    private float jumpFoece;
+    private float slideCool;
+    private int maxLife;
+    private float knockback;
+    private float hitTime;
+    private float invincibleTime;
 
     [Header("Action")]
-    [SerializeField]
-    private float knockbackForce;
-    [SerializeField]
-    private float damageTime = 1f;
+    private int life;
+    private int jumpCount = 0;
+    private Vector2[] landVec = new Vector2[2];
+
+    private bool onGround = true;
+    private bool onSlide = false;
+    private bool slideAble = true;
     private bool onDamage = false;
-    private float invincibleTime = 3f;
     private bool onInvincible = false;
     private bool isDead = false;
 
     [Header("Components")]
+    private PlayerStatus status;
+    private PlayerAudio audio;
     private SpriteRenderer sprite;
     private BoxCollider2D collider;
     private Rigidbody2D rigid;
     private Animator animator;
-    private PlayerAudio audio;
 
     void Awake()
     {
+        status = GetComponent<PlayerStatus>();
+        audio = GetComponent<PlayerAudio>();
         sprite = GetComponent<SpriteRenderer>();
         collider = GetComponent<BoxCollider2D>();
         rigid = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        audio = GetComponent<PlayerAudio>();
     }
 
     void Start()
     {
-        life = maxLife;
-        animator.SetBool("onGround", true);
-        animator.SetBool("onMove", true);
+        StatusSetting();
+        StartSetting();
     }
 
-    /*
+    void StatusSetting()
+    {
+        landDis = status.RayDistance;
+        jumpFoece = status.JumpFoce;
+        slideCool = status.SlideCoolTime;
+        maxLife = status.MaxLife;
+        knockback = status.KnockbackForce;
+        hitTime = status.HitTime;
+        invincibleTime = status.InvincibleTime;
+    }
+
+    void StartSetting()
+    {
+        life = maxLife;
+        landVec[0] = transform.GetChild(0).position;
+        landVec[1] = transform.GetChild(1).position;
+
+        Debug.Log(landVec[0]);
+        Debug.Log(landVec[1]);
+    }
+
     void Update()
     {
-        if (isDead)
-            return;
-
-        if (GroundCheck())
+        if (!isDead)
         {
-            onGround = true;
-            jumpCount = 0;
-            animator.SetBool("onGround", onGround);
+            onGround = GroundCheck();
+        }
+
+        if (onGround)
+        {
+            Move();
         }
         else
         {
-            animator.SetBool("onFall"
-        }
-
-        if (rigid.velocity.y < 0)
-        {
-            if (GroundCheck())
-            {
-
-
-
-                animator.SetBool("onFall", rigid.velocity.y < 0 ? true : false);
-                animator.SetBool("onGround", onGround);
-            }
+            Stop();
         }
     }
-    */
-    public void Jump()
+
+    void Move()
+    {
+        animator.SetBool("onMove", true);
+        animator.SetBool("onGround", true);
+    }
+
+    void Stop()
+    {
+        animator.SetBool("onMove", false);
+    }
+
+    void Land()
+    {
+        jumpCount = 0;
+    }
+
+    bool GroundCheck()
+    {
+        Debug.DrawRay(landVec[0], Vector2.down * landDis, Color.green);
+        Debug.DrawRay(landVec[1], Vector2.down * landDis, Color.green);
+        RaycastHit2D platCheck1 = Physics2D.Raycast(landVec[0], Vector2.down, landDis, LayerMask.GetMask("Ground"));
+        RaycastHit2D platCheck2 = Physics2D.Raycast(landVec[1], Vector2.down, landDis, LayerMask.GetMask("Ground"));
+
+        return platCheck1 || platCheck2 ? true : false;
+    }
+    
+    public void Jump() // 버튼으로 사용하기 때문에 public
     {
         if (!isDead && jumpCount < 2 && !onDamage)
         {
@@ -98,7 +124,7 @@ public class PlayerController : MonoBehaviour
             onGround = false;
 
             audio.PlaySound("jump");
-            
+
             if (animator.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
             {
                 animator.Play("Jump", -1);
@@ -111,6 +137,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /*
     public void StopJump()
     {
         if (!isDead && rigid.velocity.y > 0)
@@ -227,26 +254,8 @@ public class PlayerController : MonoBehaviour
         rigid.simulated = false;
     }
 
+
     /*
-    void GroundCheck()
-    {
-        if (rigid.velocity.y < 0)
-        {
-            Debug.DrawRay(rigid.position, Vector2.down * rayDistance, Color.red);
-            RaycastHit2D platCheck = Physics2D.Raycast(rigid.position, Vector2.down, rayDistance, LayerMask.GetMask("Ground"));
-
-            if (platCheck.collider != null)
-            {
-                onGround = true;
-                jumpCount = 0;
-            }
-        }
-
-        animator.SetBool("onFall", rigid.velocity.y < 0 ? true : false);
-        animator.SetBool("onGround", onGround);
-    }
-    */
-
     bool GroundCheck()
     {
         bool check = false;
@@ -260,15 +269,16 @@ public class PlayerController : MonoBehaviour
 
         return check;
     }
-
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (onSlide || onDamage || onInvincible)
             return;
-        
+
         if (collision.CompareTag("Obstacle"))
         {
             Damage();
         }
     }
+    */
+
 }
