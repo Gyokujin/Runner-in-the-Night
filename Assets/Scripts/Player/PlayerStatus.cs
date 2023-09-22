@@ -36,7 +36,7 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
-    private float jumpTime = 1f;
+    private float jumpTime = 0.35f;
     public float JumpTime
     {
         get
@@ -64,6 +64,22 @@ public class PlayerStatus : MonoBehaviour
             if (value > 0)
             {
                 jumpCoolTime = value;
+            }
+        }
+    }
+
+    private float slideTime = 2f;
+    public float SlideTime
+    {
+        get
+        {
+            return slideTime;
+        }
+        set
+        {
+            if (value > 0)
+            {
+                slideTime = value;
             }
         }
     }

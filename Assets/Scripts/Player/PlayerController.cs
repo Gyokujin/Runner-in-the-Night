@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     private float jumpTime;
     private float jumpCool;
     private float jumpFoece;
+    private float slideTime;
     private float slideCool;
     private int maxLife;
     private float knockback;
@@ -62,6 +63,7 @@ public class PlayerController : MonoBehaviour
         jumpTime = status.JumpTime;
         jumpCool = status.JumpCoolTime;
         jumpFoece = status.JumpFoce;
+        slideTime = status.SlideTime;
         slideCool = status.SlideCoolTime;
         maxLife = status.MaxLife;
         knockback = status.KnockbackForce;
@@ -83,7 +85,7 @@ public class PlayerController : MonoBehaviour
         if (isDead)
             return;
 
-        if (!onGround && !onJumping && GroundCheck())
+        if (!onGround && !onJumping && !onSlide && GroundCheck())
         {
             Land();
         }
@@ -138,7 +140,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnJump(bool click) // 버튼으로 사용하기 때문에 public
     {
-        rigid.gravityScale = click ? 0.75f : 1;
+        rigid.gravityScale = click ? 0.75f : 1.1f;
     }
 
     void JumpCool()
@@ -159,52 +161,27 @@ public class PlayerController : MonoBehaviour
 
     public void Slide()
     {
-        if (!isDead && onGround && !onDamage && slideAble)
+        if (!isDead && GroundCheck() && !onDamage && slideAble)
         {
-            StartCoroutine("SlideProcess");
+            onSlide = true;
+            slideAble = false;
+            animator.SetTrigger("doDodge");
+            Invoke("SlideTime", slideTime);
+            Invoke("SlideCool", slideCool);
         }
     }
 
-    /*
-    IEnumerator SlideProcess()
+    void SlideCool()
     {
-        animator.SetBool("onSlide", true);
-        onSlide = true;
-
-        yield return new WaitForSeconds(slideTime);
-        EndSlide();
-    }
-    */
-    /*
-    public void StopSlide()
-    {
-        StopCoroutine("SlideProcess");
-        EndSlide();
-    }
-
-    void EndSlide()
-    {
-        animator.SetBool("onSlide", false);
-        StartCoroutine("SlideCooldown");
-        onSlide = false;
-    }
-
-    
-
-    IEnumerator SlideCooldown()
-    {
-        slideAble = false;
-        float coolDown = slideCool;
-
-        while (coolDown > 0)
-        {
-            coolDown -= Time.deltaTime;
-            yield return null;
-        }
-
         slideAble = true;
     }
 
+    void SlideTime()
+    {
+        onSlide = false;
+    }
+
+    /*
     void Damage()
     {
         life--;
@@ -270,20 +247,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    /*
-    bool GroundCheck()
-    {
-        bool check = false;
-        Debug.DrawRay(rigid.position, Vector2.down * rayDistance, Color.red);
-        RaycastHit2D platCheck = Physics2D.Raycast(rigid.position, Vector2.down, rayDistance, LayerMask.GetMask("Ground"));
-
-        if (platCheck.collider != null)
-        {
-            check = true;
-        }
-
-        return check;
-    }
+    
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (onSlide || onDamage || onInvincible)
