@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class PlayerStatus : MonoBehaviour
 {
-    [SerializeField]
-    private float rayDistance = 1.25f;
+    private float rayDistance = 0.5f;
     public float RayDistance
     {
         get
@@ -21,7 +20,6 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
-    [SerializeField]
     private float jumpFoece = 420f;
     public float JumpFoce
     {
@@ -38,7 +36,38 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
-    [SerializeField]
+    private float jumpTime = 1f;
+    public float JumpTime
+    {
+        get
+        {
+            return jumpTime;
+        }
+        set
+        {
+            if (value > 0)
+            {
+                jumpTime = value;
+            }
+        }
+    }
+
+    private float jumpCoolTime = 0.35f;
+    public float JumpCoolTime
+    {
+        get
+        {
+            return jumpCoolTime;
+        }
+        set
+        {
+            if (value > 0)
+            {
+                jumpCoolTime = value;
+            }
+        }
+    }
+
     private float slideCoolTime = 3f;
     public float SlideCoolTime
     {
@@ -55,7 +84,6 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
-    [SerializeField]
     private int maxLife = 5;
     public int MaxLife
     {
@@ -72,7 +100,6 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
-    [SerializeField]
     private float knockbackForce = 250f;
     public float KnockbackForce
     {
@@ -89,7 +116,6 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
-    [SerializeField]
     private float hitTime = 2f;
     public float HitTime
     {
@@ -106,7 +132,6 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
-    [SerializeField]
     private float invincibleTime = 3f;
     public float InvincibleTime
     {

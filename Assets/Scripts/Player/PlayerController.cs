@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Status")]
+    // Status
     private float landDis;
+    private float jumpTime;
+    private float jumpCool;
     private float jumpFoece;
     private float slideCool;
     private int maxLife;
@@ -14,19 +16,23 @@ public class PlayerController : MonoBehaviour
     private float hitTime;
     private float invincibleTime;
 
-    [Header("Action")]
-    private int life;
+    // Action
     private int jumpCount = 0;
-    private Vector2[] landVec = new Vector2[2];
-
-    private bool onGround = true;
+    private bool onJumping = false;
+    private bool jumpAble = true;
+    private Transform[] landVec = new Transform[2];
+    private bool onGround = false;
+    private bool onFall = false;
     private bool onSlide = false;
     private bool slideAble = true;
+
+    // Hit
+    private int life;
     private bool onDamage = false;
     private bool onInvincible = false;
     private bool isDead = false;
 
-    [Header("Components")]
+    // Component
     private PlayerStatus status;
     private PlayerAudio audio;
     private SpriteRenderer sprite;
@@ -53,6 +59,8 @@ public class PlayerController : MonoBehaviour
     void StatusSetting()
     {
         landDis = status.RayDistance;
+        jumpTime = status.JumpTime;
+        jumpCool = status.JumpCoolTime;
         jumpFoece = status.JumpFoce;
         slideCool = status.SlideCoolTime;
         maxLife = status.MaxLife;
@@ -64,86 +72,89 @@ public class PlayerController : MonoBehaviour
     void StartSetting()
     {
         life = maxLife;
-        landVec[0] = transform.GetChild(0).position;
-        landVec[1] = transform.GetChild(1).position;
+        landVec[0] = transform.GetChild(0);
+        landVec[1] = transform.GetChild(1);
 
-        Debug.Log(landVec[0]);
-        Debug.Log(landVec[1]);
+        Move(true);
     }
 
     void Update()
     {
-        if (!isDead)
+        if (isDead)
+            return;
+
+        if (!onGround && !onJumping && GroundCheck())
         {
-            onGround = GroundCheck();
+            Land();
         }
 
-        if (onGround)
-        {
-            Move();
-        }
-        else
-        {
-            Stop();
-        }
+        Fall(rigid.velocity.y < 0 ? true : false);
     }
 
-    void Move()
+    void Move(bool move)
     {
-        animator.SetBool("onMove", true);
-        animator.SetBool("onGround", true);
-    }
-
-    void Stop()
-    {
-        animator.SetBool("onMove", false);
+        animator.SetBool("onMove", move);
     }
 
     void Land()
     {
+        onGround = true;
         jumpCount = 0;
+        animator.SetBool("onGround", true);
+        animator.SetBool("onFall", false);
     }
 
     bool GroundCheck()
     {
-        Debug.DrawRay(landVec[0], Vector2.down * landDis, Color.green);
-        Debug.DrawRay(landVec[1], Vector2.down * landDis, Color.green);
-        RaycastHit2D platCheck1 = Physics2D.Raycast(landVec[0], Vector2.down, landDis, LayerMask.GetMask("Ground"));
-        RaycastHit2D platCheck2 = Physics2D.Raycast(landVec[1], Vector2.down, landDis, LayerMask.GetMask("Ground"));
+        Vector2 landPos1 = new Vector2(transform.position.x + landVec[0].localPosition.x, transform.position.y + landVec[0].localPosition.y);
+        Vector2 landPos2 = new Vector2(transform.position.x + landVec[1].localPosition.x, transform.position.y + landVec[1].localPosition.y);
+        Debug.DrawRay(landPos1, Vector2.down * landDis, Color.green);
+        Debug.DrawRay(landPos2, Vector2.down * landDis, Color.green);
+        RaycastHit2D platCheck1 = Physics2D.Raycast(landPos1, Vector2.down, landDis, LayerMask.GetMask("Ground"));
+        RaycastHit2D platCheck2 = Physics2D.Raycast(landPos2, Vector2.down, landDis, LayerMask.GetMask("Ground"));
 
         return platCheck1 || platCheck2 ? true : false;
     }
     
     public void Jump() // 버튼으로 사용하기 때문에 public
     {
-        if (!isDead && jumpCount < 2 && !onDamage)
+        if (!isDead && jumpCount < 2 && jumpAble && !onDamage)
         {
+            onGround = false;
+            onJumping = true;
+            onFall = false;
+            jumpAble = false;
             jumpCount++;
+            animator.SetBool("onGround", false);
+
             rigid.velocity = Vector2.zero;
             rigid.AddForce(Vector2.up * jumpFoece);
-            onGround = false;
-
+            animator.SetTrigger("doJump");
             audio.PlaySound("jump");
-
-            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
-            {
-                animator.Play("Jump", -1);
-            }
-            else
-            {
-                animator.SetTrigger("doJump");
-                animator.SetBool("onGround", false);
-            }
+            Invoke("JumpCool", jumpCool);
+            Invoke("JumpTime", jumpTime); // 연속적인 Jump와 착지 오류를 막기위해 onJump에 딜레이를 준다.
         }
     }
 
-    /*
-    public void StopJump()
+    public void OnJump(bool click) // 버튼으로 사용하기 때문에 public
     {
-        if (!isDead && rigid.velocity.y > 0)
-        {
-            rigid.velocity *= 0.5f;
-        }
+        rigid.gravityScale = click ? 0.75f : 1;
+    }
+
+    void JumpCool()
+    {
+        jumpAble = true;
+    }
+
+    void JumpTime()
+    {
+        onJumping = false;
+    }
+
+    void Fall(bool fall)
+    {
+        onFall = fall;
+        animator.SetBool("onFall", fall);
     }
 
     public void Slide()
@@ -154,6 +165,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /*
+    IEnumerator SlideProcess()
+    {
+        animator.SetBool("onSlide", true);
+        onSlide = true;
+
+        yield return new WaitForSeconds(slideTime);
+        EndSlide();
+    }
+    */
+    /*
     public void StopSlide()
     {
         StopCoroutine("SlideProcess");
@@ -167,14 +189,7 @@ public class PlayerController : MonoBehaviour
         onSlide = false;
     }
 
-    IEnumerator SlideProcess()
-    {
-        animator.SetBool("onSlide", true);
-        onSlide = true;
-
-        yield return new WaitForSeconds(slideTime);
-        EndSlide();
-    }
+    
 
     IEnumerator SlideCooldown()
     {
