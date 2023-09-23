@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -25,7 +24,6 @@ public class PlayerController : MonoBehaviour
     private bool onGround = false;
     private bool onFall = false;
     private bool onSlide = false;
-    private bool slideAble = true;
     private int playerLayer = 6; // Player 레이어
     private int invincibleLayer = 7; // Invincible 레이어
 
@@ -168,21 +166,20 @@ public class PlayerController : MonoBehaviour
 
     public void Slide()
     {
-        if (!isDead && GroundCheck() && !onDamage && !onSlide && slideAble)
+        if (!isDead && GroundCheck() && !onDamage && !onSlide)
         {
             StartCoroutine("SlideProcess");
-            Invoke("SlideCool", slideCool); // 슬라이드의 쿨타임을 추가
         }
     }
 
     IEnumerator SlideProcess()
     {
         onSlide = true;
-        slideAble = false;
         gameObject.layer = invincibleLayer;
         animator.SetBool("onSlide", true);
         audio.PlaySound("slide");
         float time = slideTime;
+        UIManager.instance.ButtonCooldown("slide", slideCool); // 슬라이드의 쿨타임 계산
 
         while (time > 0)
         {
@@ -195,16 +192,10 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("onSlide", false);
     }
 
-    void SlideCool()
-    {
-        slideAble = true;
-    }
-
     void SlideCancel()
     {
         StopCoroutine("SlideProcess"); // 슬라이드중 점프로 내부의 bool을 초기화한다.
         onSlide = false;
-        slideAble = true;
         animator.SetBool("onSlide", false);
         gameObject.layer = playerLayer;
     }

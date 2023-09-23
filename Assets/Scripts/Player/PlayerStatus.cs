@@ -95,7 +95,7 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
-    private float slideCoolTime = 2f;
+    private float slideCoolTime = 3.95f;
     public float SlideCoolTime
     {
         get
