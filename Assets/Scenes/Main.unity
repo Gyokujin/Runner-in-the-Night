@@ -1170,7 +1170,7 @@ GameObject:
   - component: {fileID: 521270313}
   - component: {fileID: 521270315}
   - component: {fileID: 521270316}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Start Platform
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -3329,7 +3329,7 @@ GameObject:
   - component: {fileID: 1854409584}
   - component: {fileID: 1854409583}
   - component: {fileID: 1854409582}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -3466,7 +3466,7 @@ Rigidbody2D:
   m_Mass: 1.2
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 1.1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -3581,6 +3581,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpClip: {fileID: 8300000, guid: 6502456b47346ff489bc73b8cd914834, type: 3}
+  slideClip: {fileID: 8300000, guid: 532def05f3cfb474e88acf1f5ca57221, type: 3}
   damageClip: {fileID: 8300000, guid: bf16a3dc0e048174a81060025d89854e, type: 3}
 --- !u!114 &1854409583
 MonoBehaviour:

@@ -9,6 +9,8 @@ public class PlayerAudio : MonoBehaviour
     [SerializeField]
     private AudioClip jumpClip;
     [SerializeField]
+    private AudioClip slideClip;
+    [SerializeField]
     private AudioClip damageClip;
 
     void Awake()
@@ -22,6 +24,9 @@ public class PlayerAudio : MonoBehaviour
         {
             case "jump":
                 audio.clip = jumpClip;
+                break;
+            case "slide":
+                audio.clip = slideClip;
                 break;
             case "damage":
                 audio.clip = damageClip;

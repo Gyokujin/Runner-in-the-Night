@@ -26,11 +26,12 @@ public class PlayerController : MonoBehaviour
     private bool onFall = false;
     private bool onSlide = false;
     private bool slideAble = true;
+    private int playerLayer = 6; // Player 레이어
+    private int invincibleLayer = 7; // Invincible 레이어
 
     // Hit
     private int life;
     private bool onDamage = false;
-    private bool onInvincible = false;
     private bool isDead = false;
 
     // Component
@@ -76,6 +77,7 @@ public class PlayerController : MonoBehaviour
         life = maxLife;
         landVec[0] = transform.GetChild(0);
         landVec[1] = transform.GetChild(1);
+        gameObject.layer = playerLayer;
 
         Move(true);
     }
@@ -122,6 +124,11 @@ public class PlayerController : MonoBehaviour
     {
         if (!isDead && jumpCount < 2 && jumpAble && !onDamage)
         {
+            if (onSlide)
+            {
+                SlideCancel();
+            }
+
             onGround = false;
             onJumping = true;
             onFall = false;
@@ -161,14 +168,31 @@ public class PlayerController : MonoBehaviour
 
     public void Slide()
     {
-        if (!isDead && GroundCheck() && !onDamage && slideAble)
+        if (!isDead && GroundCheck() && !onDamage && !onSlide && slideAble)
         {
-            onSlide = true;
-            slideAble = false;
-            animator.SetTrigger("doDodge");
-            Invoke("SlideTime", slideTime);
-            Invoke("SlideCool", slideCool);
+            StartCoroutine("SlideProcess");
+            Invoke("SlideCool", slideCool); // 슬라이드의 쿨타임을 추가
         }
+    }
+
+    IEnumerator SlideProcess()
+    {
+        onSlide = true;
+        slideAble = false;
+        gameObject.layer = invincibleLayer;
+        animator.SetBool("onSlide", true);
+        audio.PlaySound("slide");
+        float time = slideTime;
+
+        while (time > 0)
+        {
+            time -= Time.deltaTime;
+            yield return null;
+        }
+
+        onSlide = false;
+        gameObject.layer = playerLayer;
+        animator.SetBool("onSlide", false);
     }
 
     void SlideCool()
@@ -176,16 +200,21 @@ public class PlayerController : MonoBehaviour
         slideAble = true;
     }
 
-    void SlideTime()
+    void SlideCancel()
     {
+        StopCoroutine("SlideProcess"); // 슬라이드중 점프로 내부의 bool을 초기화한다.
         onSlide = false;
+        slideAble = true;
+        animator.SetBool("onSlide", false);
+        gameObject.layer = playerLayer;
     }
 
-    /*
     void Damage()
     {
+        GameManager.instance.GamePause(); // 캐릭터외의 진행을 멈춘다. 스크롤링 일시정지
         life--;
         rigid.velocity = Vector2.zero;
+        animator.SetBool("onMove", false);
         audio.PlaySound("damage");
 
         if (life <= 0)
@@ -198,20 +227,21 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /*
     IEnumerator DamageProcess()
     {
         onDamage = true;
-        animator.SetBool("onMove", false);
+        
         animator.SetTrigger("onHit");
         sprite.color = new Color(1, 1, 1, 0.7f);
-        rigid.velocity = Vector2.zero;
         rigid.AddForce(Vector2.left * knockbackForce);
 
-        GameManager.instance.GamePause(); // 캐릭터외의 진행을 멈춘다. 스크롤링 일시정지
+        
 
         yield return new WaitForSeconds(1f); // 1초 뒤에 바닥을 검사해서 있을 경우 그대로 진행 없을 경우 새로 진행한다.
         Invoke("StandUp", damageTime);
     }
+    
 
     void StandUp()
     {
@@ -244,19 +274,6 @@ public class PlayerController : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
         rigid.simulated = false;
-    }
-
-
-    
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (onSlide || onDamage || onInvincible)
-            return;
-
-        if (collision.CompareTag("Obstacle"))
-        {
-            Damage();
-        }
     }
     */
 

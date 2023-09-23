@@ -13,10 +13,7 @@ public class PlayerStatus : MonoBehaviour
         }
         set
         {
-            if (value > 0)
-            {
-                rayDistance = value;
-            }
+            rayDistance = value;
         }
     }
 
@@ -29,10 +26,7 @@ public class PlayerStatus : MonoBehaviour
         }
         set
         {
-            if (value > 0)
-            {
-                jumpFoece = value;
-            }
+            jumpFoece = value;
         }
     }
 
@@ -45,10 +39,7 @@ public class PlayerStatus : MonoBehaviour
         }
         set
         {
-            if (value > 0)
-            {
-                jumpTime = value;
-            }
+            jumpTime = value;
         }
     }
 
@@ -61,14 +52,37 @@ public class PlayerStatus : MonoBehaviour
         }
         set
         {
-            if (value > 0)
-            {
-                jumpCoolTime = value;
-            }
+            jumpCoolTime = value;
         }
     }
 
-    private float slideTime = 2f;
+    private float minGravity = 0.75f;
+    public float MinGravity
+    {
+        get
+        {
+            return minGravity;
+        }
+        set
+        {
+            minGravity = value;
+        }
+    }
+
+    private float maxGravity = 1.1f;
+    public float MaxGravity
+    {
+        get
+        {
+            return maxGravity;
+        }
+        set
+        {
+            maxGravity = value;
+        }
+    }
+
+    private float slideTime = 0.55f;
     public float SlideTime
     {
         get
@@ -77,14 +91,11 @@ public class PlayerStatus : MonoBehaviour
         }
         set
         {
-            if (value > 0)
-            {
-                slideTime = value;
-            }
+            slideTime = value;
         }
     }
 
-    private float slideCoolTime = 3f;
+    private float slideCoolTime = 2f;
     public float SlideCoolTime
     {
         get
@@ -93,10 +104,7 @@ public class PlayerStatus : MonoBehaviour
         }
         set
         {
-            if (value > 0)
-            {
-                slideCoolTime = value;
-            }
+            slideCoolTime = value;
         }
     }
 
@@ -109,10 +117,7 @@ public class PlayerStatus : MonoBehaviour
         }
         set
         {
-            if (value > 0)
-            {
-                maxLife = value;
-            }
+            maxLife = value;
         }
     }
 
@@ -125,10 +130,7 @@ public class PlayerStatus : MonoBehaviour
         }
         set
         {
-            if (value > 0)
-            {
-                knockbackForce = value;
-            }
+            knockbackForce = value;
         }
     }
 
@@ -141,10 +143,7 @@ public class PlayerStatus : MonoBehaviour
         }
         set
         {
-            if (value > 0)
-            {
-                hitTime = value;
-            }
+            hitTime = value;
         }
     }
 
@@ -157,10 +156,7 @@ public class PlayerStatus : MonoBehaviour
         }
         set
         {
-            if (value > 0)
-            {
-                invincibleTime = value;
-            }
+            invincibleTime = value;
         }
     }
 }
