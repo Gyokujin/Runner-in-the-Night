@@ -8,7 +8,7 @@ public class targetCamera : MonoBehaviour
     private Transform target;
     [SerializeField]
     private float offsetX;
-    private bool onAct = false;
+    private bool onAct = true;
 
     void Update()
     {

@@ -109,13 +109,13 @@ public class GameManager : MonoBehaviour
     public void GamePause()
     {
         isLive = false;
-        camera.StopCamera();
+        //camera.StopCamera();
     }
 
     public void GameResume()
     {
+        //camera.ActCamera();
         isLive = true;
-        camera.ActCamera();
     }
 
     public void GameOver()

@@ -134,6 +134,19 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
+    private float bounceForce = 600f;
+    public float BounceForce
+    {
+        get
+        {
+            return bounceForce;
+        }
+        set
+        {
+            bounceForce = value;
+        }
+    }
+
     private float hitTime = 2f;
     public float HitTime
     {

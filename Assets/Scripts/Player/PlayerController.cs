@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private float slideCool;
     private int maxLife;
     private float knockback;
+    private float bounce;
     private float hitTime;
     private float invincibleTime;
 
@@ -37,6 +38,7 @@ public class PlayerController : MonoBehaviour
     private PlayerAudio audio;
     private SpriteRenderer sprite;
     private Rigidbody2D rigid;
+    private BoxCollider2D collider;
     private Animator animator;
 
     private WaitForSeconds slideWait;
@@ -48,6 +50,7 @@ public class PlayerController : MonoBehaviour
         audio = GetComponent<PlayerAudio>();
         sprite = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
+        collider = GetComponent<BoxCollider2D>();
         animator = GetComponent<Animator>();
     }
 
@@ -68,6 +71,7 @@ public class PlayerController : MonoBehaviour
         slideCool = status.SlideCoolTime;
         maxLife = status.MaxLife;
         knockback = status.KnockbackForce;
+        bounce = status.BounceForce;
         hitTime = status.HitTime;
         invincibleTime = status.InvincibleTime;
     }
@@ -228,9 +232,9 @@ public class PlayerController : MonoBehaviour
         rigid.AddForce(Vector2.left * knockback);
 
         yield return hitWait; // 1초 뒤에 바닥을 검사해서 있을 경우 그대로 진행 없을 경우 새로 진행한다.
+        GameManager.instance.GameResume();
         onDamage = false;
         Move(true);
-        GameManager.instance.GameResume();
 
         yield return StartCoroutine("Invincible", invincibleTime);
         sprite.color = new Color(1, 1, 1, 1);
@@ -244,14 +248,13 @@ public class PlayerController : MonoBehaviour
         gameObject.layer = playerLayer;
     }
 
-    /*
     IEnumerator Die()
     {
-        collider.enabled = false;
-        rigid.velocity = Vector2.zero;
-        rigid.AddForce(Vector2.up * 600f);
-        animator.SetTrigger("onDie");
         isDead = true;
+        collider.enabled = false;
+        animator.SetTrigger("doDie");
+        rigid.velocity = Vector2.zero;
+        rigid.AddForce(Vector2.up * bounce);
         GameManager.instance.GameOver();
 
         yield return new WaitForSeconds(1f);
@@ -260,5 +263,4 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(2f);
         rigid.simulated = false;
     }
-    */
 }
