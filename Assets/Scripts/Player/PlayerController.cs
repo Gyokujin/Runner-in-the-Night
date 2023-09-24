@@ -36,16 +36,17 @@ public class PlayerController : MonoBehaviour
     private PlayerStatus status;
     private PlayerAudio audio;
     private SpriteRenderer sprite;
-    private BoxCollider2D collider;
     private Rigidbody2D rigid;
     private Animator animator;
+
+    private WaitForSeconds slideWait;
+    private WaitForSeconds hitWait;
 
     void Awake()
     {
         status = GetComponent<PlayerStatus>();
         audio = GetComponent<PlayerAudio>();
         sprite = GetComponent<SpriteRenderer>();
-        collider = GetComponent<BoxCollider2D>();
         rigid = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
@@ -54,6 +55,7 @@ public class PlayerController : MonoBehaviour
     {
         StatusSetting();
         StartSetting();
+        WaitTimeSetting();
     }
 
     void StatusSetting()
@@ -78,6 +80,12 @@ public class PlayerController : MonoBehaviour
         gameObject.layer = playerLayer;
 
         Move(true);
+    }
+
+    void WaitTimeSetting()
+    {
+        slideWait = new WaitForSeconds(slideTime);
+        hitWait = new WaitForSeconds(hitTime);
     }
 
     void Update()
@@ -175,20 +183,13 @@ public class PlayerController : MonoBehaviour
     IEnumerator SlideProcess()
     {
         onSlide = true;
-        gameObject.layer = invincibleLayer;
         animator.SetBool("onSlide", true);
         audio.PlaySound("slide");
-        float time = slideTime;
+        StartCoroutine("Invincible", slideTime);
         UIManager.instance.ButtonCooldown("slide", slideCool); // 슬라이드의 쿨타임 계산
 
-        while (time > 0)
-        {
-            time -= Time.deltaTime;
-            yield return null;
-        }
-
+        yield return slideWait;
         onSlide = false;
-        gameObject.layer = playerLayer;
         animator.SetBool("onSlide", false);
     }
 
@@ -200,12 +201,12 @@ public class PlayerController : MonoBehaviour
         gameObject.layer = playerLayer;
     }
 
-    void Damage()
+    public void Damage() // AttackBox에서 Damage() 호출
     {
         GameManager.instance.GamePause(); // 캐릭터외의 진행을 멈춘다. 스크롤링 일시정지
         life--;
         rigid.velocity = Vector2.zero;
-        animator.SetBool("onMove", false);
+        Move(false);
         audio.PlaySound("damage");
 
         if (life <= 0)
@@ -214,43 +215,36 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            StartCoroutine("DamageProcess");
+            StartCoroutine("HitProcess");
         }
     }
 
-    /*
-    IEnumerator DamageProcess()
+    IEnumerator HitProcess()
     {
         onDamage = true;
-        
+        Move(false);
         animator.SetTrigger("onHit");
         sprite.color = new Color(1, 1, 1, 0.7f);
-        rigid.AddForce(Vector2.left * knockbackForce);
+        rigid.AddForce(Vector2.left * knockback);
 
-        
-
-        yield return new WaitForSeconds(1f); // 1초 뒤에 바닥을 검사해서 있을 경우 그대로 진행 없을 경우 새로 진행한다.
-        Invoke("StandUp", damageTime);
-    }
-    
-
-    void StandUp()
-    {
-        animator.SetBool("onMove", true);
+        yield return hitWait; // 1초 뒤에 바닥을 검사해서 있을 경우 그대로 진행 없을 경우 새로 진행한다.
         onDamage = false;
-        StartCoroutine("Invincible");
-        GameManager.instance.GameRestart();
-    }
+        Move(true);
+        GameManager.instance.GameResume();
 
-    IEnumerator Invincible()
-    {
-        onInvincible = true;
-
-        yield return new WaitForSeconds(invincibleTime);
-        onInvincible = false;
+        yield return StartCoroutine("Invincible", invincibleTime);
         sprite.color = new Color(1, 1, 1, 1);
     }
 
+    IEnumerator Invincible(float time)
+    {
+        gameObject.layer = invincibleLayer;
+
+        yield return new WaitForSeconds(time);
+        gameObject.layer = playerLayer;
+    }
+
+    /*
     IEnumerator Die()
     {
         collider.enabled = false;
@@ -267,5 +261,4 @@ public class PlayerController : MonoBehaviour
         rigid.simulated = false;
     }
     */
-
 }

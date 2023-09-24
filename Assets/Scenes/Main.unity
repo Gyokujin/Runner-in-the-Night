@@ -3780,7 +3780,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpClip: {fileID: 8300000, guid: 6502456b47346ff489bc73b8cd914834, type: 3}
   slideClip: {fileID: 8300000, guid: 532def05f3cfb474e88acf1f5ca57221, type: 3}
-  damageClip: {fileID: 8300000, guid: bf16a3dc0e048174a81060025d89854e, type: 3}
+  damageClip: {fileID: 8300000, guid: db505d2e6dc2ab94f80e741e40214485, type: 3}
 --- !u!114 &1854409583
 MonoBehaviour:
   m_ObjectHideFlags: 0
