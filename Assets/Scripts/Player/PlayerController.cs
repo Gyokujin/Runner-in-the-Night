@@ -104,7 +104,7 @@ public class PlayerController : MonoBehaviour
             Land();
         }
 
-        Fall(rigid.velocity.y < 0 ? true : false);
+        Fall(rigid.velocity.y < -0.1f ? true : false); // 0일 경우는 작은 반동에도 애니메이션 오류가 나타난다.
     }
 
     void Move(bool move)
