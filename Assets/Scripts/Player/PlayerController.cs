@@ -211,6 +211,7 @@ public class PlayerController : MonoBehaviour
     {
         GameManager.instance.GamePause(); // 캐릭터외의 진행을 멈춘다. 스크롤링 일시정지
         life--;
+        UIManager.instance.HitUI(life);
         onDamage = true;
         rigid.velocity = Vector2.zero;
         Move(false);
@@ -244,7 +245,6 @@ public class PlayerController : MonoBehaviour
         onDamage = false;
         Move(true);
 
-        // StopCoroutine("Invincible"); // 이미 무적 상태일 경우(낙사는 막지 못하기 때문에) 다시 시간을 초기화하기 위해 중지한다.
         yield return StartCoroutine("Invincible", invincibleTime);
         sprite.color = new Color(1, 1, 1, 1);
     }

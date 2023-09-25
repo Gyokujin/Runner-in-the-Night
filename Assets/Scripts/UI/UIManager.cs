@@ -13,6 +13,10 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text slideCoolText;
 
+    [Header("UI")]
+    [SerializeField]
+    private Image[] hpIcons;
+
     [Header("FX")]
     [SerializeField]
     private GameObject playerSpawnFX;
@@ -54,6 +58,11 @@ public class UIManager : MonoBehaviour
 
         slideButton.interactable = true;
         slideCoolText.gameObject.SetActive(false);
+    }
+
+    public void HitUI(int index)
+    {
+        hpIcons[index].enabled = false;
     }
 
     public void RespawnFX(Vector2 playerPos)
