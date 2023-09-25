@@ -20,12 +20,15 @@ public class GameManager : MonoBehaviour
     public StageType stageType;
 
     [Header("StageInfo")]
+    public float stageTime = 0;
     private int score = 0;
     private float scoreDelay = 0.5f;
     private bool scoreGetting = false;
     public bool isGameOver = false;
 
     [Header("UI")]
+    [SerializeField]
+    private GameObject background;
     [SerializeField]
     private Text scoreText;
     [SerializeField]
@@ -38,6 +41,12 @@ public class GameManager : MonoBehaviour
     private AnimatorController runAnimator;
     [SerializeField]
     private AnimatorController battleAnimator;
+
+    [Header("Respawn")]
+    [SerializeField]
+    private float spawnOffX;
+    [SerializeField]
+    private float spawnOffY;
 
     [Header("Component")]
     [SerializeField]
@@ -66,6 +75,11 @@ public class GameManager : MonoBehaviour
     
     void Update()
     {
+        if (!isLive)
+            return;
+
+        stageTime += Time.deltaTime;
+
         if (!scoreGetting)
         {
             StartCoroutine("ProgressScore");
@@ -109,7 +123,11 @@ public class GameManager : MonoBehaviour
     public void GamePause()
     {
         isLive = false;
-        //camera.StopCamera();
+    }
+
+    public void CameraPause()
+    {
+        camera.StopCamera();
     }
 
     public void GameResume()
@@ -121,7 +139,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         isGameOver = true;
-
+        CameraPause();
         Invoke("GameOverProcess", 2f);
     }
 

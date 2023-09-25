@@ -134,7 +134,7 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
-    private float bounceForce = 600f;
+    private float bounceForce = 850f;
     public float BounceForce
     {
         get

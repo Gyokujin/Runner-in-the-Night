@@ -20,10 +20,8 @@ public class PlatformSpawner : MonoBehaviour
     private float yMin = -1.75f;
     [SerializeField]
     private float yMax = 3.5f;
-
     private GameObject[] platforms;
     private int currentIndex = 0;
-
     private Vector2 poolPosition = new Vector2(0, -25); // 초반에 생성한 발판을 화면 밖에 숨겨둘 위치
     private float lastSpawnTime;
 
@@ -48,9 +46,9 @@ public class PlatformSpawner : MonoBehaviour
         }
 
         // 마지막 배치 시점에서 timeBetSpawn 이상 시간이 흘렀다면
-        if (Time.time >= lastSpawnTime + timeBetSpawn)
+        if (GameManager.instance.stageTime >= lastSpawnTime + timeBetSpawn)
         {
-            lastSpawnTime = Time.time;
+            lastSpawnTime = GameManager.instance.stageTime;
             timeBetSpawn = Random.Range(timeBetSpawnMin, timeBetSpawnMax);
             float yPos = Random.Range(yMin, yMax);
 

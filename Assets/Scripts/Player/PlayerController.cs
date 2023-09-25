@@ -27,11 +27,16 @@ public class PlayerController : MonoBehaviour
     private bool onSlide = false;
     private int playerLayer = 6; // Player 레이어
     private int invincibleLayer = 7; // Invincible 레이어
+    private float respawnPosY = 5f; // 낙사로 인한 리스폰시에 이동시킬 Y 좌표
 
     // Hit
     private int life;
     private bool onDamage = false;
     private bool isDead = false;
+
+    // yield return time
+    private WaitForSeconds slideWait;
+    private WaitForSeconds hitWait;
 
     // Component
     private PlayerStatus status;
@@ -40,9 +45,6 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rigid;
     private BoxCollider2D collider;
     private Animator animator;
-
-    private WaitForSeconds slideWait;
-    private WaitForSeconds hitWait;
 
     void Awake()
     {
@@ -97,7 +99,7 @@ public class PlayerController : MonoBehaviour
         if (isDead)
             return;
 
-        if (!onGround && !onJumping && !onSlide && GroundCheck())
+        if (!onDamage && !onGround && !onJumping && !onSlide && GroundCheck(landDis))
         {
             Land();
         }
@@ -118,14 +120,14 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("onFall", false);
     }
 
-    bool GroundCheck()
+    bool GroundCheck(float distance)
     {
         Vector2 landPos1 = new Vector2(transform.position.x + landVec[0].localPosition.x, transform.position.y + landVec[0].localPosition.y);
         Vector2 landPos2 = new Vector2(transform.position.x + landVec[1].localPosition.x, transform.position.y + landVec[1].localPosition.y);
-        Debug.DrawRay(landPos1, Vector2.down * landDis, Color.green);
-        Debug.DrawRay(landPos2, Vector2.down * landDis, Color.green);
-        RaycastHit2D platCheck1 = Physics2D.Raycast(landPos1, Vector2.down, landDis, LayerMask.GetMask("Ground"));
-        RaycastHit2D platCheck2 = Physics2D.Raycast(landPos2, Vector2.down, landDis, LayerMask.GetMask("Ground"));
+        Debug.DrawRay(landPos1, Vector2.down * distance, Color.green);
+        Debug.DrawRay(landPos2, Vector2.down * distance, Color.green);
+        RaycastHit2D platCheck1 = Physics2D.Raycast(landPos1, Vector2.down, distance, LayerMask.GetMask("Ground"));
+        RaycastHit2D platCheck2 = Physics2D.Raycast(landPos2, Vector2.down, distance, LayerMask.GetMask("Ground"));
 
         return platCheck1 || platCheck2 ? true : false;
     }
@@ -178,7 +180,7 @@ public class PlayerController : MonoBehaviour
 
     public void Slide()
     {
-        if (!isDead && GroundCheck() && !onDamage && !onSlide)
+        if (!isDead && GroundCheck(landDis) && !onDamage && !onSlide)
         {
             StartCoroutine("SlideProcess");
         }
@@ -205,13 +207,13 @@ public class PlayerController : MonoBehaviour
         gameObject.layer = playerLayer;
     }
 
-    public void Damage() // AttackBox에서 Damage() 호출
+    public void Damage(bool outSide) // AttackBox에서 Damage() 호출
     {
         GameManager.instance.GamePause(); // 캐릭터외의 진행을 멈춘다. 스크롤링 일시정지
         life--;
+        onDamage = true;
         rigid.velocity = Vector2.zero;
         Move(false);
-        audio.PlaySound("damage");
 
         if (life <= 0)
         {
@@ -219,25 +221,55 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            StartCoroutine("HitProcess");
+            StartCoroutine("DamageProcess", outSide);
         }
     }
 
-    IEnumerator HitProcess()
+    IEnumerator DamageProcess(bool onOut)
     {
-        onDamage = true;
-        Move(false);
-        animator.SetTrigger("onHit");
-        sprite.color = new Color(1, 1, 1, 0.7f);
-        rigid.AddForce(Vector2.left * knockback);
+        audio.PlaySound("damage");
 
-        yield return hitWait; // 1초 뒤에 바닥을 검사해서 있을 경우 그대로 진행 없을 경우 새로 진행한다.
-        GameManager.instance.GameResume();
+        if (onOut) // 낙사(DeadZone)로 인한 재등장
+        {
+            yield return StartCoroutine("Respawn");
+        }
+        else // 일반적인 피격
+        {
+            yield return StartCoroutine("HitProcess");
+            GameManager.instance.GameResume(); // 피격은 바로 게임을 진행 / 낙사는 타이밍을 따로 정해서 진행한다.
+        }
+        
         onDamage = false;
         Move(true);
 
         yield return StartCoroutine("Invincible", invincibleTime);
         sprite.color = new Color(1, 1, 1, 1);
+    }
+
+    IEnumerator Respawn()
+    {
+        rigid.simulated = false; // 리스폰 처리 중에는 rigidbody를 비활성화한다.
+        sprite.enabled = false;
+        transform.position = new Vector2(transform.position.x, respawnPosY);
+        GameManager.instance.GameResume();
+
+        while (!GroundCheck(6f))
+        {
+            yield return null;
+        }
+
+        rigid.simulated = true;
+        sprite.enabled = true;
+        UIManager.instance.RespawnFX(transform.position);
+    }
+
+    IEnumerator HitProcess()
+    {
+        animator.SetTrigger("onHit");
+        sprite.color = new Color(1, 1, 1, 0.7f);
+        rigid.AddForce(Vector2.left * knockback);
+
+        yield return hitWait; // 1초 뒤에 바닥을 검사해서 있을 경우 그대로 진행 없을 경우 새로 진행한다.
     }
 
     IEnumerator Invincible(float time)

@@ -13,6 +13,10 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text slideCoolText;
 
+    [Header("FX")]
+    [SerializeField]
+    private GameObject playerSpawnFX;
+
     void Awake()
     {
         if (instance == null)
@@ -50,5 +54,13 @@ public class UIManager : MonoBehaviour
 
         slideButton.interactable = true;
         slideCoolText.gameObject.SetActive(false);
+    }
+
+    public void RespawnFX(Vector2 playerPos)
+    {
+        Vector2 offset = playerSpawnFX.GetComponent<Offset>().offsetPos;
+        playerSpawnFX.transform.position = offset + playerPos;
+        playerSpawnFX.SetActive(false);
+        playerSpawnFX.SetActive(true);
     }
 }

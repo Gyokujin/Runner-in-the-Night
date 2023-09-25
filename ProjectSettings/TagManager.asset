@@ -17,7 +17,7 @@ TagManager:
   - Player
   - Invincible
   - Ground
-  - 
+  - FX
   - 
   - 
   - 
@@ -58,4 +58,7 @@ TagManager:
     locked: 0
   - name: Character
     uniqueID: 787086607
+    locked: 0
+  - name: FX
+    uniqueID: 3350520311
     locked: 0
