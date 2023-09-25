@@ -221,6 +221,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            StopCoroutine("DamageProcess");
             StartCoroutine("DamageProcess", outSide);
         }
     }
@@ -228,6 +229,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator DamageProcess(bool onOut)
     {
         audio.PlaySound("damage");
+        sprite.color = new Color(1, 1, 1, 0.7f);
 
         if (onOut) // 낙사(DeadZone)로 인한 재등장
         {
@@ -242,6 +244,7 @@ public class PlayerController : MonoBehaviour
         onDamage = false;
         Move(true);
 
+        // StopCoroutine("Invincible"); // 이미 무적 상태일 경우(낙사는 막지 못하기 때문에) 다시 시간을 초기화하기 위해 중지한다.
         yield return StartCoroutine("Invincible", invincibleTime);
         sprite.color = new Color(1, 1, 1, 1);
     }
@@ -266,7 +269,6 @@ public class PlayerController : MonoBehaviour
     IEnumerator HitProcess()
     {
         animator.SetTrigger("onHit");
-        sprite.color = new Color(1, 1, 1, 0.7f);
         rigid.AddForce(Vector2.left * knockback);
 
         yield return hitWait; // 1초 뒤에 바닥을 검사해서 있을 경우 그대로 진행 없을 경우 새로 진행한다.
@@ -285,6 +287,7 @@ public class PlayerController : MonoBehaviour
         isDead = true;
         collider.enabled = false;
         animator.SetTrigger("doDie");
+        audio.PlaySound("die");
         rigid.velocity = Vector2.zero;
         rigid.AddForce(Vector2.up * bounce);
         GameManager.instance.GameOver();

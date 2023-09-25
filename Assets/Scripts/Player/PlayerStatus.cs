@@ -160,7 +160,7 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
-    private float invincibleTime = 3f;
+    private float invincibleTime = 4f;
     public float InvincibleTime
     {
         get
