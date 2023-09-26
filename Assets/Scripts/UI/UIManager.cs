@@ -60,9 +60,10 @@ public class UIManager : MonoBehaviour
         slideCoolText.gameObject.SetActive(false);
     }
 
-    public void HitUI(int index)
+    public void DamageUI(int index)
     {
-        hpIcons[index].enabled = false;
+        GameObject hpIcon = hpIcons[index].gameObject;
+        hpIcon.GetComponent<Animator>().enabled = true;
     }
 
     public void RespawnFX(Vector2 playerPos)

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerStatus : MonoBehaviour
 {
-    private float rayDistance = 0.5f;
+    private float rayDistance = 0.4f;
     public float RayDistance
     {
         get

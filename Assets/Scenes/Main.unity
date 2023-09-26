@@ -900,9 +900,10 @@ GameObject:
   - component: {fileID: 275651102}
   - component: {fileID: 275651105}
   - component: {fileID: 275651104}
+  - component: {fileID: 275651106}
   - component: {fileID: 275651103}
   m_Layer: 5
-  m_Name: HP Image
+  m_Name: HP Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -981,6 +982,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 275651101}
   m_CullTransparentMesh: 1
+--- !u!95 &275651106
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275651101}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 72210bd9d3c5dfe4083de9a5f80be893, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &307365297
 GameObject:
   m_ObjectHideFlags: 0
@@ -3589,9 +3610,10 @@ GameObject:
   - component: {fileID: 1617326157}
   - component: {fileID: 1617326159}
   - component: {fileID: 1617326158}
+  - component: {fileID: 1617326161}
   - component: {fileID: 1617326160}
   m_Layer: 5
-  m_Name: HP Image
+  m_Name: HP Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3670,6 +3692,26 @@ MonoBehaviour:
   m_EffectColor: {r: 0.9528302, g: 0.9528302, b: 0.9528302, a: 0.5882353}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
+--- !u!95 &1617326161
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1617326156}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 72210bd9d3c5dfe4083de9a5f80be893, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1726268594
 GameObject:
   m_ObjectHideFlags: 0
@@ -3821,9 +3863,10 @@ GameObject:
   - component: {fileID: 1735356163}
   - component: {fileID: 1735356166}
   - component: {fileID: 1735356165}
+  - component: {fileID: 1735356167}
   - component: {fileID: 1735356164}
   m_Layer: 5
-  m_Name: HP Image
+  m_Name: HP Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3902,6 +3945,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1735356162}
   m_CullTransparentMesh: 1
+--- !u!95 &1735356167
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1735356162}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 72210bd9d3c5dfe4083de9a5f80be893, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1828587382
 GameObject:
   m_ObjectHideFlags: 0
@@ -4679,9 +4742,10 @@ GameObject:
   - component: {fileID: 2029188317}
   - component: {fileID: 2029188320}
   - component: {fileID: 2029188319}
+  - component: {fileID: 2029188321}
   - component: {fileID: 2029188318}
   m_Layer: 5
-  m_Name: HP Image
+  m_Name: HP Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4760,6 +4824,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2029188316}
   m_CullTransparentMesh: 1
+--- !u!95 &2029188321
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2029188316}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 72210bd9d3c5dfe4083de9a5f80be893, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2063394362
 GameObject:
   m_ObjectHideFlags: 0
@@ -5053,9 +5137,10 @@ GameObject:
   - component: {fileID: 2136994423}
   - component: {fileID: 2136994426}
   - component: {fileID: 2136994425}
+  - component: {fileID: 2136994427}
   - component: {fileID: 2136994424}
   m_Layer: 5
-  m_Name: HP Image
+  m_Name: HP Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5134,6 +5219,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2136994422}
   m_CullTransparentMesh: 1
+--- !u!95 &2136994427
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2136994422}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 72210bd9d3c5dfe4083de9a5f80be893, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1418493082767679888
 GameObject:
   m_ObjectHideFlags: 0

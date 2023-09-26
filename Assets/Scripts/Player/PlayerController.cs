@@ -211,7 +211,7 @@ public class PlayerController : MonoBehaviour
     {
         GameManager.instance.GamePause(); // 캐릭터외의 진행을 멈춘다. 스크롤링 일시정지
         life--;
-        UIManager.instance.HitUI(life);
+        UIManager.instance.DamageUI(life);
         onDamage = true;
         rigid.velocity = Vector2.zero;
         Move(false);
