@@ -160,16 +160,16 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
-    private float invincibleTime = 4f;
-    public float InvincibleTime
+    private float damageTime = 4f;
+    public float DamageTime
     {
         get
         {
-            return invincibleTime;
+            return damageTime;
         }
         set
         {
-            invincibleTime = value;
+            damageTime = value;
         }
     }
 }

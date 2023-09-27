@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     private float knockback;
     private float bounce;
     private float hitTime;
-    private float invincibleTime;
+    private float damageTime;
 
     // Action
     private int jumpCount = 2;
@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     private bool onSlide = false;
     private int playerLayer = 6; // Player 레이어
     private int invincibleLayer = 7; // Invincible 레이어
+    private float invincibleTime = 0; // 현재 남은 무적 시간을 계산
     private float respawnPosY = 5f; // 낙사로 인한 리스폰시에 이동시킬 Y 좌표
 
     // Hit
@@ -75,7 +76,7 @@ public class PlayerController : MonoBehaviour
         knockback = status.KnockbackForce;
         bounce = status.BounceForce;
         hitTime = status.HitTime;
-        invincibleTime = status.InvincibleTime;
+        damageTime = status.DamageTime;
     }
 
     void StartSetting()
@@ -198,7 +199,7 @@ public class PlayerController : MonoBehaviour
         onSlide = true;
         animator.SetBool("onSlide", true);
         audio.PlaySound("slide");
-        StartCoroutine("Invincible", slideTime);
+        StartCoroutine("InvincibleTime", slideTime);
         UIManager.instance.ButtonCooldown("slide", slideCool); // 슬라이드의 쿨타임 계산
 
         yield return slideWait;
@@ -214,23 +215,26 @@ public class PlayerController : MonoBehaviour
         gameObject.layer = playerLayer;
     }
 
-    public void Damage(bool outSide) // AttackBox에서 Damage() 호출
+    public void Damage(bool outSide)
     {
-        GameManager.instance.GamePause(); // 캐릭터외의 진행을 멈춘다. 스크롤링 일시정지
-        life--;
-        UIManager.instance.DamageUI(life);
-        onDamage = true;
-        rigid.velocity = Vector2.zero;
-        Move(false);
+        if (outSide || !onDamage) // 낙사이거나 피격 상태가 아닐때만 실행
+        {
+            GameManager.instance.GamePause(); // 캐릭터외의 진행을 멈춘다. 스크롤링 일시정지
+            life--;
+            UIManager.instance.DamageUI(life);
+            onDamage = true;
+            rigid.velocity = Vector2.zero;
+            Move(false);
 
-        if (life <= 0)
-        {
-            StartCoroutine("Die");
-        }
-        else
-        {
-            StopCoroutine("DamageProcess");
-            StartCoroutine("DamageProcess", outSide);
+            if (life <= 0)
+            {
+                StartCoroutine("Die");
+            }
+            else
+            {
+                StopCoroutine("DamageProcess");
+                StartCoroutine("DamageProcess", outSide);
+            }
         }
     }
 
@@ -252,7 +256,7 @@ public class PlayerController : MonoBehaviour
         onDamage = false;
         Move(true);
 
-        yield return StartCoroutine("Invincible", invincibleTime);
+        yield return StartCoroutine("InvincibleTime", damageTime);
         sprite.color = new Color(1, 1, 1, 1);
     }
 
@@ -282,12 +286,21 @@ public class PlayerController : MonoBehaviour
         yield return hitWait; // 1초 뒤에 바닥을 검사해서 있을 경우 그대로 진행 없을 경우 새로 진행한다.
     }
 
-    IEnumerator Invincible(float time)
+    IEnumerator InvincibleTime(float time)
     {
-        gameObject.layer = invincibleLayer;
+        if (time > invincibleTime) // 기존에 남아있는 무적시간보다 짧은 시간이 부여되면 실행하지 않는다. ex : 무적 상태일때 회피무적
+        {
+            gameObject.layer = invincibleLayer;
+            invincibleTime = time;
 
-        yield return new WaitForSeconds(time);
-        gameObject.layer = playerLayer;
+            while (invincibleTime > 0)
+            {
+                invincibleTime -= Time.deltaTime;
+                yield return null;
+            }
+
+            gameObject.layer = playerLayer;
+        }
     }
 
     IEnumerator Die()
