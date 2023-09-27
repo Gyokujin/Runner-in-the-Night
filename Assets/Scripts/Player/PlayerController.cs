@@ -263,6 +263,7 @@ public class PlayerController : MonoBehaviour
 
         rigid.simulated = true;
         sprite.enabled = true;
+        audio.PlaySound("respawn");
         UIManager.instance.RespawnFX(transform.position);
     }
 

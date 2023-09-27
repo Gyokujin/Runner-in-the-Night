@@ -13,6 +13,8 @@ public class PlayerAudio : MonoBehaviour
     [SerializeField]
     private AudioClip damageClip;
     [SerializeField]
+    private AudioClip respawnClip;
+    [SerializeField]
     private AudioClip dieClip;
 
     void Awake()
@@ -32,6 +34,9 @@ public class PlayerAudio : MonoBehaviour
                 break;
             case "damage":
                 audio.clip = damageClip;
+                break;
+            case "respawn":
+                audio.clip = respawnClip;
                 break;
             case "die":
                 audio.clip = dieClip;
