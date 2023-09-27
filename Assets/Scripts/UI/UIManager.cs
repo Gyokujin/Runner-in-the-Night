@@ -7,7 +7,11 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance = null;
 
-    [Header("Slide")]
+    [Header("Player")]
+    [SerializeField]
+    private Button jumpButton;
+    [SerializeField]
+    private Text jumpCountText;
     [SerializeField]
     private Button slideButton;
     [SerializeField]
@@ -30,6 +34,20 @@ public class UIManager : MonoBehaviour
         else
         {
             Destroy(this);
+        }
+    }
+
+    public void JumpCount(int count)
+    {
+        jumpCountText.text = count.ToString();
+
+        if (count == 2)
+        {
+            jumpButton.interactable = true;
+        }
+        else if (count == 0) // 남은 점프 횟수가 없으면 비활성화 한다.
+        {
+            jumpButton.interactable = false;
         }
     }
 

@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     private float invincibleTime;
 
     // Action
-    private int jumpCount = 0;
+    private int jumpCount = 2;
     private bool onJumping = false;
     private bool jumpAble = true;
     private Transform[] landVec = new Transform[2];
@@ -115,7 +115,13 @@ public class PlayerController : MonoBehaviour
     void Land()
     {
         onGround = true;
-        jumpCount = 0;
+
+        if (jumpCount != 2)
+        {
+            jumpCount = 2;
+            UIManager.instance.JumpCount(jumpCount);
+        }
+
         animator.SetBool("onGround", true);
         animator.SetBool("onFall", false);
     }
@@ -134,7 +140,7 @@ public class PlayerController : MonoBehaviour
     
     public void Jump() // 버튼으로 사용하기 때문에 public
     {
-        if (!isDead && jumpCount < 2 && jumpAble && !onDamage)
+        if (!isDead && jumpCount > 0 && jumpAble && !onDamage) // 2단 점프까지 가능하다.
         {
             if (onSlide)
             {
@@ -145,7 +151,8 @@ public class PlayerController : MonoBehaviour
             onJumping = true;
             onFall = false;
             jumpAble = false;
-            jumpCount++;
+            jumpCount--;
+            UIManager.instance.JumpCount(jumpCount);
             animator.SetBool("onGround", false);
 
             rigid.velocity = Vector2.zero;
@@ -296,7 +303,7 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(1f);
         rigid.gravityScale *= 2;
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(2f); // 캐릭터가 화면 밖으로 나간 시점에서 추락을 비활성화 한다.
         rigid.simulated = false;
     }
 }
