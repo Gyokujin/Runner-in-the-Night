@@ -7,7 +7,7 @@ public class AttackBox : MonoBehaviour
 {
     public enum AttackType
     {
-        Obstacle, Enemy, Bullet, Deadzone
+        Obstacle, Enemy, EnemyBullet, Deadzone
     }
 
     public AttackType attackType;
@@ -25,7 +25,7 @@ public class AttackBox : MonoBehaviour
                         collision.GetComponent<PlayerController>().Damage(false);
                     }
                     break;
-                case AttackType.Bullet:
+                case AttackType.EnemyBullet:
                     if (collision.gameObject.layer == 6) // 6 : 플레이어, 7 : 무적 상태
                     {
                         collision.GetComponent<PlayerController>().Damage(false);

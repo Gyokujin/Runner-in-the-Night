@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - Obstacle
   - Ground
+  - PlayerBullet
   layers:
   - Default
   - TransparentFX
@@ -18,8 +19,8 @@ TagManager:
   - Invincible
   - Ground
   - FX
-  - 
-  - 
+  - Deadzone
+  - Enemy
   - 
   - 
   - 
