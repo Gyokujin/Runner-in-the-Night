@@ -8,10 +8,14 @@ public class E_Detect : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            GameObject player = collision.gameObject;
+
             if (transform.parent.GetComponent<E_Chase>())
             {
-                Debug.Log("Check");
+                transform.parent.GetComponent<E_Chase>().Detect(player);
             }
+
+            gameObject.SetActive(false);
         }
     }
 }

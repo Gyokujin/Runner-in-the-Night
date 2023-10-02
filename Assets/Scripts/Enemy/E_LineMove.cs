@@ -6,6 +6,6 @@ public class E_LineMove : Enemy
 {
     void Start()
     {
-        rigid.velocity = moveVec;
+        rigid.velocity = moveVec * moveSpeed;
     }
 }

@@ -220,8 +220,13 @@ public class PlayerController : MonoBehaviour
         if (outSide || !onDamage) // 낙사이거나 피격 상태가 아닐때만 실행
         {
             GameManager.instance.GamePause(); // 캐릭터외의 진행을 멈춘다. 스크롤링 일시정지
-            life--;
-            UIManager.instance.DamageUI(life);
+
+            if (!onDamage) // 낙사라도 데미지 메서드 실행은 하되 라이프를 깎지는 않는다.
+            {
+                life--;
+                UIManager.instance.DamageUI(life);
+            }
+            
             onDamage = true;
             rigid.velocity = Vector2.zero;
             Move(false);

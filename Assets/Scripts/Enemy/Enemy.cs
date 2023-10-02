@@ -11,16 +11,20 @@ public class Enemy : MonoBehaviour
     
     [Header("Move")]
     [SerializeField]
+    protected float moveSpeed;
+    [SerializeField]
     protected Vector2 moveVec;
 
     [Header("Component")]
     protected Rigidbody2D rigid;
     protected BoxCollider2D collider;
+    protected Animator animator;
 
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         collider = GetComponent<BoxCollider2D>();
+        animator = GetComponent<Animator>();
     }
 
     void Start()

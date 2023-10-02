@@ -57,8 +57,14 @@ TagManager:
   - name: Environment
     uniqueID: 1325927541
     locked: 0
-  - name: Character
+  - name: Player
     uniqueID: 787086607
+    locked: 0
+  - name: Enemy
+    uniqueID: 4219166681
+    locked: 0
+  - name: Obstacle
+    uniqueID: 2516531455
     locked: 0
   - name: FX
     uniqueID: 3350520311

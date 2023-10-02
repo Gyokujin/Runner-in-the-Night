@@ -4,28 +4,33 @@ using UnityEngine;
 
 public class E_Chase : Enemy
 {
+    private bool onDetect = false;
     [SerializeField]
-    private GameObject detect;
-    public bool onDetect;
+    private float detectTime;
+    [SerializeField]
+    private float chaseSpeed;
 
     void Start()
     {
         rigid.velocity = moveVec;
-        detect.SetActive(true);
     }
 
-    void Update()
+    public void Detect(GameObject target)
     {
-        Detect();
+        if (!onDetect)
+        {
+            onDetect = true;
+            rigid.velocity = Vector2.zero;
+            animator.SetBool("onDetect", true);
+            StartCoroutine("Chase", target);
+        }
     }
 
-    void Detect()
+    IEnumerator Chase(GameObject vec)
     {
-
-    }
-
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        //this.transform.parent.GetComponent < 부모의 스크립트 이름> ().OnTriggerEnter(this.gameObject, collider.gameObject);
+        yield return new WaitForSeconds(detectTime);
+        moveVec = (vec.transform.position - transform.position).normalized;
+        rigid.velocity = moveVec * chaseSpeed;
+        animator.SetTrigger("doChase");
     }
 }
