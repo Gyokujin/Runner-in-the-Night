@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1ffc9a4ec940f7f449e5c309d5be6cdd
+guid: 7c0237819621768438f5f384d6454210
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -67,7 +67,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 256
+    maxTextureSize: 128
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -129,106 +129,148 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Enemy_SkyRuler_0
+      name: Enemy_Chaser_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 48
-        width: 48
-        height: 48
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3a26428b8611cc0438e5730518201417
-      internalID: -414097951
+      spriteID: 8e11a3443a8d86f418917df4641ffbfa
+      internalID: 2044781520
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy_SkyRuler_1
+      name: Enemy_Chaser_1
       rect:
         serializedVersion: 2
-        x: 48
-        y: 48
-        width: 48
-        height: 48
+        x: 32
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9e2022c1fdf482b44b533b24f048d88d
-      internalID: 735998257
+      spriteID: ee0edd3fc31109343943e34af26a7d99
+      internalID: -1091312302
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy_SkyRuler_2
+      name: Enemy_Chaser_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 957bda087d347cd4bbde657c365190b1
+      internalID: 1189233982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Enemy_Chaser_3
       rect:
         serializedVersion: 2
         x: 96
-        y: 48
-        width: 48
-        height: 48
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 746ec50677bcfa345a260b3936d5c692
-      internalID: -1706074650
+      spriteID: 23969dea107526f4cad8f40c21b73d5c
+      internalID: -793785259
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy_SkyRuler_3
+      name: Enemy_Chaser_4
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 48
-        height: 48
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 594eaa4d2ae3a9b4e92ba75e8209a265
-      internalID: -1387466275
+      spriteID: 43116af44ac8f2645aa5cfe40950a370
+      internalID: 978947953
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy_SkyRuler_4
+      name: Enemy_Chaser_5
       rect:
         serializedVersion: 2
-        x: 48
+        x: 32
         y: 0
-        width: 48
-        height: 48
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 72b669241e71cc3498cb7a2edce75ac3
-      internalID: 1732404690
+      spriteID: 6c4765ed5b155f14184ee2c2a3c6c38b
+      internalID: -1264943524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Enemy_Chaser_6
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 956bec7ff78dcab43aaeea6f79c20ca5
+      internalID: 1575991114
       vertices: []
       indices: 
       edges: []
@@ -244,11 +286,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Enemy_SkyRuler_0: -414097951
-      Enemy_SkyRuler_3: -1387466275
-      Enemy_SkyRuler_4: 1732404690
-      Enemy_SkyRuler_1: 735998257
-      Enemy_SkyRuler_2: -1706074650
+      Enemy_Chaser_1: -1091312302
+      Enemy_Chaser_4: 978947953
+      Enemy_Chaser_5: -1264943524
+      Enemy_Chaser_0: 2044781520
+      Enemy_Chaser_6: 1575991114
+      Enemy_Chaser_3: -793785259
+      Enemy_Chaser_2: 1189233982
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

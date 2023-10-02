@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1173881088831586018}
   - component: {fileID: 1173881088831586017}
   m_Layer: 11
-  m_Name: SkyRuler
+  m_Name: Diver
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

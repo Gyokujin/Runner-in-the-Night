@@ -8,6 +8,10 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private int maxHp;
     private int hp;
+    
+    [Header("Move")]
+    [SerializeField]
+    protected Vector2 moveVec;
 
     [Header("Component")]
     protected Rigidbody2D rigid;
