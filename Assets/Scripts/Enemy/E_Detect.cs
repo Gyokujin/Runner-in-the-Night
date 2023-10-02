@@ -9,10 +9,15 @@ public class E_Detect : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             GameObject player = collision.gameObject;
-
-            if (transform.parent.GetComponent<E_Chase>())
+            Enemy enemy = GetComponentInParent<Enemy>();
+            
+            if (enemy.type == Enemy.EnemyType.Chase)
             {
-                transform.parent.GetComponent<E_Chase>().Detect(player);
+                enemy.GetComponent<E_Chase>().Detect(player);
+            }
+            else if (enemy.type == Enemy.EnemyType.Patrol)
+            {
+                enemy.GetComponent<E_Patrol>().Detect(player);
             }
 
             gameObject.SetActive(false);

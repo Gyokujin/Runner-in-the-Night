@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public enum EnemyType
+    {
+        Fixed, // 고정형
+        LineMove, // 일자 이동형
+        Chase, // 추적형
+        Patrol // 순찰형
+    }
+
+    public EnemyType type;
+
     [Header("Status")]
     [SerializeField]
     private int maxHp;
@@ -32,6 +42,21 @@ public class Enemy : MonoBehaviour
         hp = maxHp;
     }
 
+    void Damage()
+    {
+        hp--;
+        
+        if (hp <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        animator.SetTrigger("doDie");
+    }
+
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("PlayerBullet"))
@@ -41,7 +66,6 @@ public class Enemy : MonoBehaviour
 
         if (collision.gameObject.layer == 10) // Deadzone
         {
-            Debug.Log("Deadzone");
             gameObject.SetActive(false);
         }
     }

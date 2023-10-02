@@ -12,7 +12,7 @@ public class E_Chase : Enemy
 
     void Start()
     {
-        rigid.velocity = moveVec;
+        rigid.velocity = moveVec * moveSpeed;
     }
 
     public void Detect(GameObject target)

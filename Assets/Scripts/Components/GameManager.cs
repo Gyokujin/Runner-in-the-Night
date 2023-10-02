@@ -9,8 +9,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
     public bool isLive = false;
-    [SerializeField]
-    private float delayTime = 1.5f;
+    // [SerializeField]
+    // private float delayTime = 1.5f;
 
     public enum StageType
     {
