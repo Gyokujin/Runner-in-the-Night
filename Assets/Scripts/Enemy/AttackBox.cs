@@ -7,7 +7,7 @@ public class AttackBox : MonoBehaviour
 {
     public enum AttackType
     {
-        Obstacle, Enemy, EnemyBullet, Deadzone
+        Obstacle, Enemy, EnemyBullet
     }
 
     public AttackType attackType;
@@ -31,10 +31,6 @@ public class AttackBox : MonoBehaviour
                         collision.GetComponent<PlayerController>().Damage(false);
                         Destroy(gameObject);
                     }
-                    break;
-
-                case AttackType.Deadzone:
-                    collision.GetComponent<PlayerController>().Damage(true);
                     break;
             }
         }

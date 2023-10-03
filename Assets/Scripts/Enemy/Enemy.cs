@@ -26,12 +26,14 @@ public class Enemy : MonoBehaviour
     protected Vector2 moveVec;
 
     [Header("Component")]
+    protected SpriteRenderer sprite;
+    protected Animator animator;
     protected Rigidbody2D rigid;
     protected BoxCollider2D collider;
-    protected Animator animator;
 
     void Awake()
     {
+        sprite = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
         collider = GetComponent<BoxCollider2D>();
         animator = GetComponent<Animator>();
@@ -52,9 +54,10 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void Die()
+    public void Die()
     {
         animator.SetTrigger("doDie");
+        Destroy(gameObject);
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -62,11 +65,6 @@ public class Enemy : MonoBehaviour
         if (collision.CompareTag("PlayerBullet"))
         {
             Debug.Log("Enemy ÇÇ°Ý");
-        }
-
-        if (collision.gameObject.layer == 10) // Deadzone
-        {
-            gameObject.SetActive(false);
         }
     }
 }

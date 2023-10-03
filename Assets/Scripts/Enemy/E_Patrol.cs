@@ -4,19 +4,33 @@ using UnityEngine;
 
 public class E_Patrol : Enemy
 {
-    private bool onMove = false;
-    private bool onDetect = false;
+    [Header("Move")]
     [SerializeField]
     private bool onGround = true; // 지상, 공중 몬스터를 구분
+    private bool onMove = false;
     [SerializeField]
-    private Vector2 landVec;
-
+    private Transform[] landVec; // 0 : 왼쪽, 1 : 오른쪽
+    [SerializeField]
+    private float groundDis; // 발판 검사를 할 때 쏘는 레이의 길이
     [SerializeField]
     private float patrolTime;
+    
+    [Header("Detector")]
+    [SerializeField]
+    private GameObject detector;
+    private bool onDetect = false;
+
+    [Header("Attack")]
     [SerializeField]
     private float patternDelay;
     [SerializeField]
     private float attackDelay;
+    [SerializeField]
+    private float shootSpeed;
+    [SerializeField]
+    private Transform emitter;
+    [SerializeField]
+    private GameObject bullet;
 
     void Start()
     {
@@ -26,25 +40,30 @@ public class E_Patrol : Enemy
     void Think()
     {
         if (onDetect)
-            return;
-
-        int pattern = Random.Range(0, 5);
-
-        switch (pattern)
         {
-            case 0:
-            case 1:
-                Patrol(Vector2.left);
-                break;
+            animator.SetBool("onDetect", true);
+        }
+        else
+        {
+            animator.SetBool("onDetect", false);
+            int pattern = Random.Range(0, 5);
 
-            case 2:
-                Invoke("Think", patternDelay);
-                break;
+            switch (pattern)
+            {
+                case 0:
+                case 1:
+                    Patrol(Vector2.left);
+                    break;
 
-            case 3:
-            case 4:
-                Patrol(Vector2.right);
-                break;
+                case 2:
+                    Invoke("Think", patternDelay);
+                    break;
+
+                case 3:
+                case 4:
+                    Patrol(Vector2.right);
+                    break;
+            }
         }
     }
 
@@ -52,6 +71,7 @@ public class E_Patrol : Enemy
     {
         onMove = true;
         moveVec = dir;
+        sprite.flipX = dir == Vector2.left ? false : true; // 왼쪽을 갈때는 flipX를 비활성화 오른쪽은 활성화한다.
         animator.SetBool("onMove", true);
         StartCoroutine("PatrolProcess");
     }
@@ -61,39 +81,61 @@ public class E_Patrol : Enemy
         float time = patrolTime;
         rigid.velocity = moveVec * moveSpeed;
 
-        while (time > 0 && GroundCheck(moveVec))
+        while (time > 0 && GroundCheck())
         {
             time -= Time.deltaTime;
             yield return null;
         }
 
         onMove = false;
+        animator.SetBool("onMove", false);
         rigid.velocity = Vector2.zero;
+
+        new WaitForSeconds(patternDelay);
+        Think();
     }
 
-    bool GroundCheck(Vector2 dir)
+    bool GroundCheck()
     {
-        bool check = false;
+        Vector2 start = rigid.position;
+        Vector2 dis = rigid.velocity.x < 0 ? landVec[0].localPosition : landVec[1].localPosition; // 좌 : landVec[0], 우 : landVec[1]
+        start += dis; 
 
-        return check;
+        Debug.DrawRay(start, Vector2.down * groundDis, Color.green);
+        RaycastHit2D platCheck = Physics2D.Raycast(start, Vector2.down, groundDis, LayerMask.GetMask("Ground"));
+        return platCheck;
     }
 
     public void Detect(GameObject target)
     {
-        if (!onDetect)
-        {
-            onDetect = true;
-            rigid.velocity = Vector2.zero;
-            animator.SetBool("onMove", false);
-            animator.SetBool("onDetect", true);
-            StartCoroutine("Attack", target);
-        }
+        if (onDetect)
+            return;
+
+        onDetect = true;
+        rigid.velocity = Vector2.zero;
+        Vector2 targetPos = target.transform.position;
+        sprite.flipX = false; // 왼쪽으로만 쏜다
+
+        animator.SetBool("onMove", false);
+        animator.SetBool("onDetect", true);
+        StartCoroutine("Attack", targetPos);
     }
 
-    IEnumerator Attack(GameObject vec)
+    IEnumerator Attack(Vector2 pos)
     {
-
         yield return new WaitForSeconds(attackDelay);
-        animator.SetTrigger("doAttack");
+        animator.SetBool("onAttack", true);
+        Vector2 dir = (pos - rigid.position).normalized;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        Quaternion rotation = Quaternion.AngleAxis(angle - 180f, Vector3.forward); // 블레스의 각도를 플레이어로 향하게 한다.
+
+        GameObject spawnBullet = Instantiate(bullet, emitter.position, rotation);
+        spawnBullet.GetComponent<Bullet>().Shoot(dir, shootSpeed);
+
+        yield return new WaitForSeconds(patternDelay); // 텀을 주고 디텍터를 활성화
+        animator.SetBool("onAttack", false);
+        onDetect = false;
+        detector.SetActive(true);
+        Think();
     }
 }
