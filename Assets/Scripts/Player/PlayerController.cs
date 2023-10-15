@@ -41,7 +41,6 @@ public class PlayerController : MonoBehaviour
 
     // Component
     private PlayerStatus status;
-    private PlayerAudio audio;
     private SpriteRenderer sprite;
     private Rigidbody2D rigid;
     private BoxCollider2D collider;
@@ -50,7 +49,6 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         status = GetComponent<PlayerStatus>();
-        audio = GetComponent<PlayerAudio>();
         sprite = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
         collider = GetComponent<BoxCollider2D>();
@@ -159,7 +157,6 @@ public class PlayerController : MonoBehaviour
             rigid.velocity = Vector2.zero;
             rigid.AddForce(Vector2.up * jumpFoece);
             animator.SetTrigger("doJump");
-            audio.PlaySound("jump");
             Invoke("JumpCool", jumpCool);
             Invoke("JumpTime", jumpTime); // 연속적인 Jump와 착지 오류를 막기위해 onJump에 딜레이를 준다.
         }
@@ -198,7 +195,6 @@ public class PlayerController : MonoBehaviour
     {
         onSlide = true;
         animator.SetBool("onSlide", true);
-        audio.PlaySound("slide");
         StartCoroutine("InvincibleTime", slideTime);
         UIManager.instance.ButtonCooldown("slide", slideCool); // 슬라이드의 쿨타임 계산
 
@@ -245,7 +241,6 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator DamageProcess(bool onOut)
     {
-        audio.PlaySound("damage");
         sprite.color = new Color(1, 1, 1, 0.7f);
 
         if (onOut) // 낙사(DeadZone)로 인한 재등장
@@ -279,7 +274,6 @@ public class PlayerController : MonoBehaviour
 
         rigid.simulated = true;
         sprite.enabled = true;
-        audio.PlaySound("respawn");
         UIManager.instance.RespawnFX(transform.position);
     }
 
@@ -313,7 +307,6 @@ public class PlayerController : MonoBehaviour
         isDead = true;
         collider.enabled = false;
         animator.SetTrigger("doDie");
-        audio.PlaySound("die");
         rigid.velocity = Vector2.zero;
         rigid.AddForce(Vector2.up * bounce);
         GameManager.instance.GameOver();

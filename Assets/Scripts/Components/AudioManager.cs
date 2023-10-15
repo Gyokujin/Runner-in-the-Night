@@ -11,19 +11,36 @@ public class AudioManager : MonoBehaviour
     private AudioClip[] bgmClips; // 0 : 기본 스테이지, 1 :보스 스테이지
     [SerializeField][Range(0, 1)]
     private float bgmVolume;
-    private AudioSource bgmPlayer;
+    private AudioSource bgmAudio;
 
-    [Header("SFX")]
+    [Header("System")]
     [SerializeField]
-    private AudioClip[] sfxClips;
+    private AudioClip[] systemClips;
     [SerializeField][Range(0, 1)]
-    private float sfxVolume;
-    [SerializeField]
-    private int channels;
-    private int channelIndex;
-    private AudioSource[] sfxPlayers;
+    private float systemVolume;
+    private AudioSource systemAudio;
 
-    public enum Sfx { Jump, Shoot, Slide, Hit, Respawn, Die, Button, GameOver }
+    [Header("Player")]
+    [SerializeField]
+    private AudioClip[] playerClips;
+    [SerializeField][Range(0, 1)]
+    private float playerVolume;
+    [SerializeField]
+    private int playerCh;
+    private int playerIndex;
+    private AudioSource[] playerAudios;
+
+    [Header("Enemy")]
+    [SerializeField]
+    private AudioClip[] enemyClips;
+    [SerializeField][Range(0, 1)]
+    private float enemyVolume;
+    [SerializeField]
+    private int enemyCh;
+    private int enemyIndex;
+    private AudioSource[] enemyAudios;
+
+    public enum Sfx { Jump, Shoot, Slide, Hit, Respawn, Die }
 
     void Awake()
     {
@@ -42,24 +59,43 @@ public class AudioManager : MonoBehaviour
     void Init()
     {
         // BGM 초기화
-        GameObject bgmObject = new GameObject("BgmPlayer");
+        GameObject bgmObject = new GameObject("BgmAudio");
         bgmObject.transform.parent = transform;
-        bgmPlayer = bgmObject.AddComponent<AudioSource>();
-        bgmPlayer.playOnAwake = true;
-        bgmPlayer.loop = true;
-        bgmPlayer.volume = bgmVolume;
-        bgmPlayer.clip = bgmClips[0];
+        bgmAudio = bgmObject.AddComponent<AudioSource>();
+        bgmAudio.loop = true;
+        bgmAudio.volume = bgmVolume;
+        bgmAudio.clip = bgmClips[0];
+        bgmAudio.Play();
 
-        // SFX 초기화
-        GameObject sfxObject = new GameObject("SfxPlayer");
-        sfxObject.transform.parent = transform;
-        sfxPlayers = new AudioSource[channels];
+        // System 초기화
+        GameObject systemObject = new GameObject("SystemAudio");
+        systemObject.transform.parent = transform;
+        systemAudio = systemObject.AddComponent<AudioSource>();
+        systemAudio.loop = false;
+        systemAudio.volume = systemVolume;
 
-        for (int i = 0; i < channels; i++)
+        // Player 초기화
+        GameObject playerObject = new GameObject("PlayerAudio");
+        playerObject.transform.parent = transform;
+        playerAudios = new AudioSource[playerCh];
+
+        for (int i = 0; i < playerCh; i++)
         {
-            sfxPlayers[i] = sfxObject.AddComponent<AudioSource>();
-            sfxPlayers[i].playOnAwake = false;
-            sfxPlayers[i].volume = sfxVolume;
+            playerAudios[i] = playerObject.AddComponent<AudioSource>();
+            playerAudios[i].playOnAwake = false;
+            playerAudios[i].volume = playerVolume;
+        }
+
+        // Enemy 초기화
+        GameObject enemyObject = new GameObject("EnemyAudio");
+        enemyObject.transform.parent = transform;
+        enemyAudios = new AudioSource[enemyCh];
+
+        for (int j = 0; j < enemyCh; j++)
+        {
+            enemyAudios[j] = enemyObject.AddComponent<AudioSource>();
+            enemyAudios[j].playOnAwake = false;
+            enemyAudios[j].volume = enemyVolume;
         }
     }
 

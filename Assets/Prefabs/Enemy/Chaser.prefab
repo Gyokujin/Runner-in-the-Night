@@ -276,8 +276,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  maxHp: 3
-  moveSpeed: 1.5
+  maxHp: 2
+  moveSpeed: 1
   moveVec: {x: -1, y: 0}
   detectTime: 0.75
-  chaseSpeed: 1
+  chaseSpeed: 1.3
