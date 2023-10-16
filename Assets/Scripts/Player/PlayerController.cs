@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     private float jumpFoece;
     private float slideTime;
     private float slideCool;
+    private float attackCool;
+    private float putGunCool;
     private int maxLife;
     private float knockback;
     private float bounce;
@@ -30,6 +32,9 @@ public class PlayerController : MonoBehaviour
     private float invincibleTime = 0; // 현재 남은 무적 시간을 계산
     private float respawnPosY = 5f; // 낙사로 인한 리스폰시에 이동시킬 Y 좌표
 
+    // Attack
+    private bool onAttack = false;
+
     // Hit
     private int life;
     private bool onDamage = false;
@@ -37,6 +42,8 @@ public class PlayerController : MonoBehaviour
 
     // yield return time
     private WaitForSeconds slideWait;
+    private WaitForSeconds attackWait;
+    private WaitForSeconds putGunWait;
     private WaitForSeconds hitWait;
 
     // Component
@@ -70,6 +77,8 @@ public class PlayerController : MonoBehaviour
         jumpFoece = status.JumpFoce;
         slideTime = status.SlideTime;
         slideCool = status.SlideCoolTime;
+        attackCool = status.AttackCoolTime;
+        putGunCool = status.PutGunTime;
         maxLife = status.MaxLife;
         knockback = status.KnockbackForce;
         bounce = status.BounceForce;
@@ -90,6 +99,8 @@ public class PlayerController : MonoBehaviour
     void WaitTimeSetting()
     {
         slideWait = new WaitForSeconds(slideTime);
+        attackWait = new WaitForSeconds(attackCool);
+        putGunWait = new WaitForSeconds(putGunCool);
         hitWait = new WaitForSeconds(hitTime);
     }
 
@@ -121,6 +132,11 @@ public class PlayerController : MonoBehaviour
             UIManager.instance.JumpCount(jumpCount);
         }
 
+        if (onAttack)
+        {
+            AttackCancel();
+        }
+
         animator.SetBool("onGround", true);
         animator.SetBool("onFall", false);
     }
@@ -144,6 +160,11 @@ public class PlayerController : MonoBehaviour
             if (onSlide)
             {
                 SlideCancel();
+            }
+
+            if (onAttack)
+            {
+                AttackCancel();
             }
 
             onGround = false;
@@ -190,6 +211,11 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine("SlideProcess");
         }
+
+        if (onAttack)
+        {
+            AttackCancel();
+        }
     }
 
     IEnumerator SlideProcess()
@@ -213,9 +239,33 @@ public class PlayerController : MonoBehaviour
         gameObject.layer = playerLayer;
     }
 
-    public void Shoot()
+    public void Attack()
     {
+        if (!onAttack && !isDead && !onDamage && !onSlide)
+        {
+            StopCoroutine("AttackProcess");
+            StartCoroutine("AttackProcess");
+        }
+    }
+
+    IEnumerator AttackProcess()
+    {
+        onAttack = true;
+        animator.SetBool("onAttack", true);
         AudioManager.instance.PlayPlayerSFX(AudioManager.PlayerSFX.Shoot);
+
+        yield return attackWait;
+        onAttack = false;
+
+        yield return putGunWait;
+        animator.SetBool("onAttack", false);
+    }
+
+    void AttackCancel()
+    {
+        StopCoroutine("AttackProcess");
+        onAttack = false;
+        animator.SetBool("onAttack", false);
     }
 
     public void Damage(bool outSide)
@@ -234,6 +284,11 @@ public class PlayerController : MonoBehaviour
             rigid.velocity = Vector2.zero;
             Move(false);
             AudioManager.instance.PlayPlayerSFX(AudioManager.PlayerSFX.Hit);
+
+            if (onAttack)
+            {
+                AttackCancel();
+            }
 
             if (life <= 0)
             {

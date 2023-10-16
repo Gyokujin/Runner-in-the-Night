@@ -108,6 +108,32 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
+    private float attackCoolTime = 0.15f;
+    public float AttackCoolTime
+    {
+        get
+        {
+            return attackCoolTime;
+        }
+        set
+        {
+            AttackCoolTime = value;
+        }
+    }
+
+    private float putGunTime = 1f;
+    public float PutGunTime
+    {
+        get
+        {
+            return putGunTime;
+        }
+        set
+        {
+            PutGunTime = value;
+        }
+    }
+
     private int maxLife = 5;
     public int MaxLife
     {
