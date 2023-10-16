@@ -181,7 +181,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a911585eeed32a46bb92e874831aed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  kind: 1
   type: 1
-  maxHp: 1
+  hp: 1
   moveSpeed: 2.25
   moveVec: {x: -1, y: -1}

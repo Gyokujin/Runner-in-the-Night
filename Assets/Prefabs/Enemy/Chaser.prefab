@@ -275,9 +275,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d86e2b863e6ae4042bc5a0a2bb1073e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  kind: 2
   type: 2
-  maxHp: 2
-  moveSpeed: 1
+  hp: 2
+  moveSpeed: 2.75
   moveVec: {x: -1, y: 0}
   detectTime: 0.75
-  chaseSpeed: 1.3
+  chaseSpeed: 5.5

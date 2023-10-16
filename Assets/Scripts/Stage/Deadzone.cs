@@ -12,7 +12,7 @@ public class Deadzone : MonoBehaviour
         }
         else if (collision.CompareTag("Enemy"))
         {
-            collision.GetComponent<Enemy>().Die();
+            collision.GetComponent<Enemy>().Die(true);
         }
         else if (collision.CompareTag("PlayerBullet") || collision.CompareTag("EnemyBullet"))
         {

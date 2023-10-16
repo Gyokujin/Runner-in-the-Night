@@ -13,12 +13,19 @@ public class Bullet : MonoBehaviour
     private BulletType type;
 
     private Rigidbody2D rigid;
+    private BoxCollider2D collider;
     private Animator animator;
 
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
+        collider = GetComponent<BoxCollider2D>();
         animator = GetComponent<Animator>();
+    }
+
+    void OnEnable()
+    {
+        collider.enabled = true;
     }
 
     public void Shoot(Vector2 direction, float speed)
@@ -30,7 +37,11 @@ public class Bullet : MonoBehaviour
     {
         if (type == BulletType.Player && collision.gameObject.layer == 11)
         {
+            Enemy enemy = collision.GetComponent<Enemy>();
+            enemy.Damage();
             animator.SetTrigger("doHit");
+            collider.enabled = false;
+            AudioManager.instance.PlaySystemSFX(AudioManager.SystemSFX.Hit);
         }
         else if (type == BulletType.Enemy && collision.gameObject.layer == 6)
         {

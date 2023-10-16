@@ -108,7 +108,7 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
-    private float attackCoolTime = 0.15f;
+    private float attackCoolTime = 0.22f;
     public float AttackCoolTime
     {
         get
@@ -121,7 +121,7 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
-    private float putGunTime = 1f;
+    private float putGunTime = 0.6f;
     public float PutGunTime
     {
         get

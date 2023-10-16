@@ -124,6 +124,10 @@ public class E_Patrol : Enemy
     IEnumerator Attack(Vector2 pos)
     {
         yield return new WaitForSeconds(attackDelay);
+
+        if (onDie || transform.position.x < pos.x)
+            yield break;
+
         animator.SetBool("onAttack", true);
         Vector2 dir = (pos - rigid.position).normalized;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
@@ -131,6 +135,13 @@ public class E_Patrol : Enemy
 
         GameObject spawnBullet = Instantiate(bullet, emitter.position, rotation);
         spawnBullet.GetComponent<Bullet>().Shoot(dir, shootSpeed);
+
+        switch (kind)
+        {
+            case EnemyKind.Blazer:
+                AudioManager.instance.PlayEnemySFX(AudioManager.EnemySfx.BlazerAttack);
+                break;
+        }
 
         yield return new WaitForSeconds(patternDelay); // 텀을 주고 디텍터를 활성화
         animator.SetBool("onAttack", false);

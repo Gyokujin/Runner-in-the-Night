@@ -23,7 +23,7 @@ public class AudioManager : MonoBehaviour
     private int systemCh;
     private int systemIndex;
     private AudioSource[] systemAudios;
-    public enum SystemSFX { Detect, Click, GameOver }
+    public enum SystemSFX { Click, Hit, Detect, GameOver }
 
     [Header("Player")]
     [SerializeField]
@@ -137,6 +137,22 @@ public class AudioManager : MonoBehaviour
             playerIndex = loopIndex;
             playerAudios[loopIndex].clip = playerClips[(int)sfx];
             playerAudios[loopIndex].Play();
+            break;
+        }
+    }
+
+    public void PlayEnemySFX(EnemySfx sfx)
+    {
+        for (int i = 0; i < enemyAudios.Length; i++)
+        {
+            int loopIndex = (i + enemyIndex) % enemyAudios.Length;
+
+            if (enemyAudios[loopIndex].isPlaying)
+                continue;
+
+            enemyIndex = loopIndex;
+            enemyAudios[loopIndex].clip = enemyClips[(int)sfx];
+            enemyAudios[loopIndex].Play();
             break;
         }
     }

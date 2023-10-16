@@ -34,6 +34,12 @@ public class PlayerController : MonoBehaviour
 
     // Attack
     private bool onAttack = false;
+    [SerializeField]
+    private Transform emitter;
+    [SerializeField]
+    private GameObject bullet;
+    [SerializeField]
+    private float bulletSpeed;
 
     // Hit
     private int life;
@@ -125,16 +131,12 @@ public class PlayerController : MonoBehaviour
     void Land()
     {
         onGround = true;
+        AttackCancel();
 
         if (jumpCount != 2)
         {
             jumpCount = 2;
             UIManager.instance.JumpCount(jumpCount);
-        }
-
-        if (onAttack)
-        {
-            AttackCancel();
         }
 
         animator.SetBool("onGround", true);
@@ -162,11 +164,7 @@ public class PlayerController : MonoBehaviour
                 SlideCancel();
             }
 
-            if (onAttack)
-            {
-                AttackCancel();
-            }
-
+            AttackCancel();
             onGround = false;
             onJumping = true;
             onFall = false;
@@ -252,6 +250,8 @@ public class PlayerController : MonoBehaviour
     {
         onAttack = true;
         animator.SetBool("onAttack", true);
+        GameObject spawnBullet = Instantiate(bullet, emitter.position, Quaternion.identity);
+        spawnBullet.GetComponent<Bullet>().Shoot(Vector2.right, bulletSpeed);
         AudioManager.instance.PlayPlayerSFX(AudioManager.PlayerSFX.Shoot);
 
         yield return attackWait;
@@ -284,11 +284,7 @@ public class PlayerController : MonoBehaviour
             rigid.velocity = Vector2.zero;
             Move(false);
             AudioManager.instance.PlayPlayerSFX(AudioManager.PlayerSFX.Hit);
-
-            if (onAttack)
-            {
-                AttackCancel();
-            }
+            AttackCancel();
 
             if (life <= 0)
             {
