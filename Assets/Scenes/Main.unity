@@ -829,8 +829,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 71633504}
-  - {fileID: 676495896}
   - {fileID: 1091654423}
+  - {fileID: 676495896}
   m_Father: {fileID: 60088145}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1556,7 +1556,7 @@ GameObject:
   - component: {fileID: 676495901}
   - component: {fileID: 676495900}
   m_Layer: 5
-  m_Name: AttackButton
+  m_Name: ShootButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1576,13 +1576,13 @@ RectTransform:
   m_Children:
   - {fileID: 1125795680}
   m_Father: {fileID: 307365298}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 90, y: 10}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -20, y: 10}
   m_SizeDelta: {x: 60, y: 60}
-  m_Pivot: {x: 0, y: 0}
+  m_Pivot: {x: 1, y: 0}
 --- !u!114 &676495898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1664,7 +1664,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 676495898}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1854409583}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: Shoot
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &676495901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2638,11 +2650,11 @@ RectTransform:
   m_Children:
   - {fileID: 1498150166}
   m_Father: {fileID: 307365298}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -20, y: 10}
+  m_AnchoredPosition: {x: -90, y: 10}
   m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1091654425
@@ -3059,12 +3071,13 @@ MonoBehaviour:
   bgmClips:
   - {fileID: 8300000, guid: 658cef2307cbb4960b9de6eb248cf613, type: 3}
   - {fileID: 8300000, guid: d0bf1437f6cbd164baba5d661ba6e976, type: 3}
-  bgmVolume: 0.5
+  bgmVolume: 0.4
   systemClips:
   - {fileID: 8300000, guid: 96ab9b5582310d940b7605ae17442201, type: 3}
   - {fileID: 8300000, guid: cbae0b2d3c51c9348956fb6f3d050ed8, type: 3}
   - {fileID: 8300000, guid: cbbc00cb47ac0654aadac129f5592961, type: 3}
   systemVolume: 0.5
+  systemCh: 10
   playerClips:
   - {fileID: 8300000, guid: 6502456b47346ff489bc73b8cd914834, type: 3}
   - {fileID: 8300000, guid: 7c763a6e2a4bd1a4b80751148389fab2, type: 3}
@@ -3072,8 +3085,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: db505d2e6dc2ab94f80e741e40214485, type: 3}
   - {fileID: 8300000, guid: 3bbfe312fd524ea479ef58ec5d4f0815, type: 3}
   - {fileID: 8300000, guid: bf16a3dc0e048174a81060025d89854e, type: 3}
-  playerVolume: 0.7
-  playerCh: 3
+  playerVolume: 0.6
+  playerCh: 5
   enemyClips:
   - {fileID: 8300000, guid: 65a87cef68a952a4597bd9c769e8fef3, type: 3}
   - {fileID: 8300000, guid: 6ff8b4f7c5db81d459ff9a9c612a12ce, type: 3}

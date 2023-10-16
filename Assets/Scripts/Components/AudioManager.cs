@@ -8,17 +8,22 @@ public class AudioManager : MonoBehaviour
 
     [Header("BGM")]
     [SerializeField]
-    private AudioClip[] bgmClips; // 0 : 기본 스테이지, 1 :보스 스테이지
+    private AudioClip[] bgmClips;
     [SerializeField][Range(0, 1)]
     private float bgmVolume;
     private AudioSource bgmAudio;
+    public enum Bgm { Run, Boss }
 
     [Header("System")]
     [SerializeField]
     private AudioClip[] systemClips;
     [SerializeField][Range(0, 1)]
     private float systemVolume;
-    private AudioSource systemAudio;
+    [SerializeField]
+    private int systemCh;
+    private int systemIndex;
+    private AudioSource[] systemAudios;
+    public enum SystemSFX { Detect, Click, GameOver }
 
     [Header("Player")]
     [SerializeField]
@@ -29,6 +34,7 @@ public class AudioManager : MonoBehaviour
     private int playerCh;
     private int playerIndex;
     private AudioSource[] playerAudios;
+    public enum PlayerSFX { Jump, Shoot, Slide, Hit, Respawn, Die }
 
     [Header("Enemy")]
     [SerializeField]
@@ -39,8 +45,7 @@ public class AudioManager : MonoBehaviour
     private int enemyCh;
     private int enemyIndex;
     private AudioSource[] enemyAudios;
-
-    public enum Sfx { Jump, Shoot, Slide, Hit, Respawn, Die }
+    public enum EnemySfx { GuardianMove, GuardianDie, DiverMove, DiverDie, ChaserChase, ChaserDie, WandererDie, BlazerAttack, BlazerDie }
 
     void Awake()
     {
@@ -70,20 +75,25 @@ public class AudioManager : MonoBehaviour
         // System 초기화
         GameObject systemObject = new GameObject("SystemAudio");
         systemObject.transform.parent = transform;
-        systemAudio = systemObject.AddComponent<AudioSource>();
-        systemAudio.loop = false;
-        systemAudio.volume = systemVolume;
+        systemAudios = new AudioSource[systemCh];
+
+        for (int i = 0; i < systemCh; i++)
+        {
+            systemAudios[i] = systemObject.AddComponent<AudioSource>();
+            systemAudios[i].playOnAwake = false;
+            systemAudios[i].volume = systemVolume;
+        }
 
         // Player 초기화
         GameObject playerObject = new GameObject("PlayerAudio");
         playerObject.transform.parent = transform;
         playerAudios = new AudioSource[playerCh];
 
-        for (int i = 0; i < playerCh; i++)
+        for (int j = 0; j < playerCh; j++)
         {
-            playerAudios[i] = playerObject.AddComponent<AudioSource>();
-            playerAudios[i].playOnAwake = false;
-            playerAudios[i].volume = playerVolume;
+            playerAudios[j] = playerObject.AddComponent<AudioSource>();
+            playerAudios[j].playOnAwake = false;
+            playerAudios[j].volume = playerVolume;
         }
 
         // Enemy 초기화
@@ -91,28 +101,43 @@ public class AudioManager : MonoBehaviour
         enemyObject.transform.parent = transform;
         enemyAudios = new AudioSource[enemyCh];
 
-        for (int j = 0; j < enemyCh; j++)
+        for (int k = 0; k < enemyCh; k++)
         {
-            enemyAudios[j] = enemyObject.AddComponent<AudioSource>();
-            enemyAudios[j].playOnAwake = false;
-            enemyAudios[j].volume = enemyVolume;
+            enemyAudios[k] = enemyObject.AddComponent<AudioSource>();
+            enemyAudios[k].playOnAwake = false;
+            enemyAudios[k].volume = enemyVolume;
         }
     }
 
-    /*
-    public void PlaySound(string sound)
+    public void PlaySystemSFX(SystemSFX sfx)
     {
-        switch (sound)
+        for (int i = 0; i < systemAudios.Length; i++)
         {
-            case "button":
-                GetComponent<AudioSource>().clip = buttonClip;
-                break;
-            case "gameOver":
-                GetComponent<AudioSource>().clip = gameOverClip;
-                break;
-        }
+            int loopIndex = (i + systemIndex) % systemAudios.Length;
 
-        GetComponent<AudioSource>().Play();
+            if (systemAudios[loopIndex].isPlaying)
+                continue;
+
+            systemIndex = loopIndex;
+            systemAudios[loopIndex].clip = systemClips[(int)sfx];
+            systemAudios[loopIndex].Play();
+            break;
+        }
     }
-    */
+
+    public void PlayPlayerSFX(PlayerSFX sfx)
+    {
+        for (int i = 0; i < playerAudios.Length; i++)
+        {
+            int loopIndex = (i + playerIndex) % playerAudios.Length;
+
+            if (playerAudios[loopIndex].isPlaying)
+                continue;
+
+            playerIndex = loopIndex;
+            playerAudios[loopIndex].clip = playerClips[(int)sfx];
+            playerAudios[loopIndex].Play();
+            break;
+        }
+    }
 }

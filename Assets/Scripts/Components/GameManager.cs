@@ -146,6 +146,7 @@ public class GameManager : MonoBehaviour
     void GameOverProcess()
     {
         gameoverUI.SetActive(true);
+        AudioManager.instance.PlaySystemSFX(AudioManager.SystemSFX.GameOver);
     }
 
     public void GameRestart()
@@ -153,6 +154,7 @@ public class GameManager : MonoBehaviour
         if (isGameOver)
         {
             restartButton.interactable = false;
+            AudioManager.instance.PlaySystemSFX(AudioManager.SystemSFX.Click);
             Invoke("GameRestartProcess", 1f);
         }
     }

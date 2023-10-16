@@ -157,6 +157,7 @@ public class PlayerController : MonoBehaviour
             rigid.velocity = Vector2.zero;
             rigid.AddForce(Vector2.up * jumpFoece);
             animator.SetTrigger("doJump");
+            AudioManager.instance.PlayPlayerSFX(AudioManager.PlayerSFX.Jump);
             Invoke("JumpCool", jumpCool);
             Invoke("JumpTime", jumpTime); // 연속적인 Jump와 착지 오류를 막기위해 onJump에 딜레이를 준다.
         }
@@ -196,6 +197,7 @@ public class PlayerController : MonoBehaviour
         onSlide = true;
         animator.SetBool("onSlide", true);
         StartCoroutine("InvincibleTime", slideTime);
+        AudioManager.instance.PlayPlayerSFX(AudioManager.PlayerSFX.Slide);
         UIManager.instance.ButtonCooldown("slide", slideCool); // 슬라이드의 쿨타임 계산
 
         yield return slideWait;
@@ -209,6 +211,11 @@ public class PlayerController : MonoBehaviour
         onSlide = false;
         animator.SetBool("onSlide", false);
         gameObject.layer = playerLayer;
+    }
+
+    public void Shoot()
+    {
+        AudioManager.instance.PlayPlayerSFX(AudioManager.PlayerSFX.Shoot);
     }
 
     public void Damage(bool outSide)
@@ -226,6 +233,7 @@ public class PlayerController : MonoBehaviour
             onDamage = true;
             rigid.velocity = Vector2.zero;
             Move(false);
+            AudioManager.instance.PlayPlayerSFX(AudioManager.PlayerSFX.Hit);
 
             if (life <= 0)
             {
@@ -274,7 +282,9 @@ public class PlayerController : MonoBehaviour
 
         rigid.simulated = true;
         sprite.enabled = true;
+
         UIManager.instance.RespawnFX(transform.position);
+        AudioManager.instance.PlayPlayerSFX(AudioManager.PlayerSFX.Respawn);
     }
 
     IEnumerator HitProcess()
@@ -309,6 +319,7 @@ public class PlayerController : MonoBehaviour
         animator.SetTrigger("doDie");
         rigid.velocity = Vector2.zero;
         rigid.AddForce(Vector2.up * bounce);
+        AudioManager.instance.PlayPlayerSFX(AudioManager.PlayerSFX.Die);
         GameManager.instance.GameOver();
 
         yield return new WaitForSeconds(1f);
