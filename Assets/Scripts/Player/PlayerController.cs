@@ -43,7 +43,8 @@ public class PlayerController : MonoBehaviour
 
     // Hit
     private int life;
-    private bool onDamage = false;
+    [HideInInspector]
+    public bool onDamage = false;
     private bool isDead = false;
 
     // yield return time

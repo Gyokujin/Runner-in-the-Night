@@ -186,7 +186,7 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
-    private float damageTime = 4f;
+    private float damageTime = 1.5f;
     public float DamageTime
     {
         get

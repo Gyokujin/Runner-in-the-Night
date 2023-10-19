@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -36,12 +35,6 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Button restartButton;
 
-    [Header("AnimatorType")]
-    [SerializeField]
-    private AnimatorController runAnimator;
-    [SerializeField]
-    private AnimatorController battleAnimator;
-
     [Header("Respawn")]
     [SerializeField]
     private float spawnOffX;
@@ -64,12 +57,13 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this);
         }
+
+        Application.targetFrameRate = 60;
     }
 
     void Start()
     {
         stageType = StageType.run;
-        ChangeAnimator();
         isLive = true;
     }
     
@@ -83,21 +77,6 @@ public class GameManager : MonoBehaviour
         if (!scoreGetting)
         {
             StartCoroutine("ProgressScore");
-        }
-    }
-
-    void ChangeAnimator()
-    {
-        Animator playerAnimator = player.GetComponent<Animator>();
-
-        switch (stageType)
-        {
-            case StageType.run:
-                playerAnimator.runtimeAnimatorController  = runAnimator;
-                break;
-            case StageType.battle:
-                playerAnimator.runtimeAnimatorController = battleAnimator;
-                break;
         }
     }
 
@@ -162,5 +141,10 @@ public class GameManager : MonoBehaviour
     void GameRestartProcess()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void GameQuit()
+    {
+        Application.Quit();
     }
 }

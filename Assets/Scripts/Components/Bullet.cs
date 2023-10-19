@@ -46,8 +46,12 @@ public class Bullet : MonoBehaviour
         else if (type == BulletType.Enemy && collision.gameObject.layer == 6)
         {
             PlayerController player = collision.GetComponent<PlayerController>();
-            player.Damage(false);
-            animator.SetTrigger("doHit");
+
+            if (!player.onDamage)
+            {
+                player.Damage(false);
+                animator.SetTrigger("doHit");
+            }
         }
     }
 
