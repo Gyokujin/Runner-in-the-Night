@@ -8,8 +8,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
     public bool isLive = false;
-    // [SerializeField]
-    // private float delayTime = 1.5f;
 
     public enum StageType
     {
@@ -24,16 +22,6 @@ public class GameManager : MonoBehaviour
     private float scoreDelay = 0.5f;
     private bool scoreGetting = false;
     public bool isGameOver = false;
-
-    [Header("UI")]
-    [SerializeField]
-    private GameObject background;
-    [SerializeField]
-    private Text scoreText;
-    [SerializeField]
-    private GameObject gameoverUI;
-    [SerializeField]
-    private Button restartButton;
 
     [Header("Respawn")]
     [SerializeField]
@@ -64,7 +52,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         stageType = StageType.run;
-        isLive = true;
+        GameLive(true);
     }
     
     void Update()
@@ -85,8 +73,7 @@ public class GameManager : MonoBehaviour
         if (!isGameOver)
         {
             score += newScore;
-            string printScore = string.Format("{0:D4}", score);
-            scoreText.text = printScore;
+            UIManager.instance.ScoreModify(score);
         }
     }
 
@@ -99,9 +86,9 @@ public class GameManager : MonoBehaviour
         scoreGetting = false;
     }
 
-    public void GamePause()
+    public void GameLive(bool live)
     {
-        isLive = false;
+        isLive = live;
     }
 
     public void CameraPause()
@@ -109,10 +96,18 @@ public class GameManager : MonoBehaviour
         camera.StopCamera();
     }
 
+    public void GamePause()
+    {
+        Time.timeScale = 0;
+        AudioManager.instance.PlaySystemSFX(AudioManager.SystemSFX.Click);
+        UIManager.instance.ShowPausePanel(true);
+    }
+
     public void GameResume()
     {
-        //camera.ActCamera();
-        isLive = true;
+        Time.timeScale = 1;
+        AudioManager.instance.PlaySystemSFX(AudioManager.SystemSFX.Click);
+        UIManager.instance.ShowPausePanel(false);
     }
 
     public void GameOver()
@@ -124,7 +119,8 @@ public class GameManager : MonoBehaviour
 
     void GameOverProcess()
     {
-        gameoverUI.SetActive(true);
+        UIManager.instance.ShowGameOverPanel(true);
+        UIManager.instance.restartButton.interactable = true;
         AudioManager.instance.PlaySystemSFX(AudioManager.SystemSFX.GameOver);
     }
 
@@ -132,7 +128,7 @@ public class GameManager : MonoBehaviour
     {
         if (isGameOver)
         {
-            restartButton.interactable = false;
+            UIManager.instance.restartButton.interactable = false;
             AudioManager.instance.PlaySystemSFX(AudioManager.SystemSFX.Click);
             Invoke("GameRestartProcess", 1f);
         }

@@ -124,7 +124,7 @@ public class PlayerController : MonoBehaviour
         Fall(rigid.velocity.y < -0.1f ? true : false); // 0일 경우는 작은 반동에도 애니메이션 오류가 나타난다.
     }
 
-    void Move(bool move)
+    public void Move(bool move)
     {
         animator.SetBool("onMove", move);
     }
@@ -273,7 +273,7 @@ public class PlayerController : MonoBehaviour
     {
         if (outSide || !onDamage) // 낙사이거나 피격 상태가 아닐때만 실행
         {
-            GameManager.instance.GamePause(); // 캐릭터외의 진행을 멈춘다. 스크롤링 일시정지
+            GameManager.instance.GameLive(false); // 캐릭터외의 진행을 멈춘다. 스크롤링 일시정지
 
             if (!onDamage) // 낙사라도 데미지 메서드 실행은 하되 라이프를 깎지는 않는다.
             {
@@ -310,7 +310,7 @@ public class PlayerController : MonoBehaviour
         else // 일반적인 피격
         {
             yield return StartCoroutine("HitProcess");
-            GameManager.instance.GameResume(); // 피격은 바로 게임을 진행 / 낙사는 타이밍을 따로 정해서 진행한다.
+            GameManager.instance.GameLive(true); // 피격은 바로 게임을 진행 / 낙사는 타이밍을 따로 정해서 진행한다.
         }
         
         onDamage = false;
@@ -325,7 +325,7 @@ public class PlayerController : MonoBehaviour
         rigid.simulated = false; // 리스폰 처리 중에는 rigidbody를 비활성화한다.
         sprite.enabled = false;
         transform.position = new Vector2(transform.position.x, respawnPosY);
-        GameManager.instance.GameResume();
+        GameManager.instance.GameLive(true);
 
         while (!GroundCheck(6f))
         {

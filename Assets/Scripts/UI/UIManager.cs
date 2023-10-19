@@ -20,6 +20,13 @@ public class UIManager : MonoBehaviour
     [Header("UI")]
     [SerializeField]
     private Image[] hpIcons;
+    [SerializeField]
+    private Text scoreText;
+    [SerializeField]
+    private GameObject gameoverUI;
+    [SerializeField]
+    private GameObject pauseUI;
+    public Button restartButton;
 
     [Header("FX")]
     [SerializeField]
@@ -45,7 +52,7 @@ public class UIManager : MonoBehaviour
         {
             jumpButton.interactable = true;
         }
-        else if (count == 0) // 남은 점프 횟수가 없으면 비활성화 한다.
+        else if (count == 0)
         {
             jumpButton.interactable = false;
         }
@@ -78,6 +85,12 @@ public class UIManager : MonoBehaviour
         slideCoolText.gameObject.SetActive(false);
     }
 
+    public void ScoreModify(int score)
+    {
+        string printScore = string.Format("{0:D4}", score);
+        scoreText.text = printScore;
+    }
+
     public void DamageUI(int index)
     {
         GameObject hpIcon = hpIcons[index].gameObject;
@@ -90,5 +103,15 @@ public class UIManager : MonoBehaviour
         playerSpawnFX.transform.position = offset + playerPos;
         playerSpawnFX.SetActive(false);
         playerSpawnFX.SetActive(true);
+    }
+
+    public void ShowGameOverPanel(bool onShow)
+    {
+        gameoverUI.SetActive(onShow);
+    }
+
+    public void ShowPausePanel(bool onShow)
+    {
+        pauseUI.SetActive(onShow);
     }
 }
