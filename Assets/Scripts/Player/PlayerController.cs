@@ -251,7 +251,8 @@ public class PlayerController : MonoBehaviour
     {
         onAttack = true;
         animator.SetBool("onAttack", true);
-        GameObject spawnBullet = Instantiate(bullet, emitter.position, Quaternion.identity);
+        GameObject spawnBullet = PoolManager.instance.Get(PoolManager.PoolType.Bullet, 0);
+        spawnBullet.transform.position = emitter.position;
         spawnBullet.GetComponent<Bullet>().Shoot(Vector2.right, bulletSpeed);
         AudioManager.instance.PlayPlayerSFX(AudioManager.PlayerSFX.Shoot);
 

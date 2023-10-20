@@ -16,7 +16,7 @@ public class Deadzone : MonoBehaviour
         }
         else if (collision.CompareTag("PlayerBullet") || collision.CompareTag("EnemyBullet"))
         {
-            Destroy(collision.gameObject);
+            collision.gameObject.SetActive(false);
         }
     }
 }

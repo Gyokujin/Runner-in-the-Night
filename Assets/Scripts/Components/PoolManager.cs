@@ -4,24 +4,88 @@ using UnityEngine;
 
 public class PoolManager : MonoBehaviour
 {
+    public static PoolManager instance = null;
+
+    public enum PoolType
+    {
+        Bullet,
+        Enemy
+    }
+
+    [Header("Bullet")]
     public GameObject[] bullets;
-    private List<GameObject>[] pools;
-    private List<GameObject> pool;
+    private List<GameObject>[] bulletPool;
+
+    [Header("Enemy")]
+    public GameObject[] enemies;
+    private List<GameObject>[] enemyPool;
 
     void Awake()
     {
-        pools = new List<GameObject>[bullets.Length];
-
-        for (int i = 0; i < pools.Length; i++)
+        if (instance == null)
         {
-            pools[i] = new List<GameObject>();
+            instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+
+        bulletPool = new List<GameObject>[bullets.Length];
+        enemyPool = new List<GameObject>[enemies.Length];
+
+        for (int i = 0; i < bulletPool.Length; i++)
+        {
+            bulletPool[i] = new List<GameObject>();
+        }
+
+        for (int j = 0; j < enemies.Length; j++)
+        {
+            enemyPool[j] = new List<GameObject>();
         }
     }
 
-    public GameObject Get(int index)
+    public GameObject Get(PoolType type, int index)
     {
         GameObject select = null;
 
+        if (type == PoolType.Bullet)
+        {
+            foreach (GameObject bullet in bulletPool[index])
+            {
+                if (!bullet.activeSelf)
+                {
+                    select = bullet;
+                    select.SetActive(true);
+                    break;
+                }
+            }
+
+            if (!select)
+            {
+                select = Instantiate(bullets[index], transform);
+                bulletPool[index].Add(select);
+            }
+        }
+        else if (type == PoolType.Enemy)
+        {
+            foreach (GameObject enemy in enemyPool[index])
+            {
+                if (!enemy.activeSelf)
+                {
+                    select = enemy;
+                    select.SetActive(true);
+                    break;
+                }
+            }
+
+            if (!select)
+            {
+                select = Instantiate(enemies[index], transform);
+                enemyPool[index].Add(select);
+            }
+        }
+        
         return select;
     }
 }

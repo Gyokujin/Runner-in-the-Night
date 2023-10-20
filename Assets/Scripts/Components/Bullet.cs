@@ -42,6 +42,7 @@ public class Bullet : MonoBehaviour
             animator.SetTrigger("doHit");
             collider.enabled = false;
             AudioManager.instance.PlaySystemSFX(AudioManager.SystemSFX.Hit);
+            Invoke("Hide", 2f);
         }
         else if (type == BulletType.Enemy && collision.gameObject.layer == 6)
         {
@@ -51,12 +52,13 @@ public class Bullet : MonoBehaviour
             {
                 player.Damage(false);
                 animator.SetTrigger("doHit");
+                Invoke("Hide", 2f);
             }
         }
     }
 
     void Hide()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }

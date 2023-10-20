@@ -133,7 +133,10 @@ public class E_Patrol : Enemy
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         Quaternion rotation = Quaternion.AngleAxis(angle - 180f, Vector3.forward); // 블레스의 각도를 플레이어로 향하게 한다.
 
-        GameObject spawnBullet = Instantiate(bullet, emitter.position, rotation);
+        GameObject spawnBullet = PoolManager.instance.Get(PoolManager.PoolType.Bullet, 1);
+        spawnBullet.transform.position = emitter.position;
+        spawnBullet.transform.rotation = rotation;
+        // GameObject spawnBullet = Instantiate(bullet, emitter.position, rotation);
         spawnBullet.GetComponent<Bullet>().Shoot(dir, shootSpeed);
 
         switch (kind)

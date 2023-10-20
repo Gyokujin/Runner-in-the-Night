@@ -170,6 +170,12 @@ MonoBehaviour:
   bullets:
   - {fileID: 6327911530340690291, guid: 874a677eaa344e64e8953eb07a932d39, type: 3}
   - {fileID: 158897348814544613, guid: 8ed07574bc8a66c4d8c79e4af24361eb, type: 3}
+  enemies:
+  - {fileID: 6655335912637321127, guid: 97e271d301211314a9e95bda26390393, type: 3}
+  - {fileID: 1173881088831586025, guid: 94799330095a0c045846d2ad02d3220f, type: 3}
+  - {fileID: 4011649071199067911, guid: 414d70806bdba33449699e20d9613bd7, type: 3}
+  - {fileID: 5686926475658502070, guid: 90de2f78ef968f34aa3dd28ab19ef011, type: 3}
+  - {fileID: 3538906271429629668, guid: 313ecc884a416014c8248ade19d1c666, type: 3}
 --- !u!1 &60088141
 GameObject:
   m_ObjectHideFlags: 0
@@ -2600,7 +2606,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 40, y: -1.5}
+  m_AnchoredPosition: {x: 40, y: -3.5}
   m_SizeDelta: {x: 190, y: 30}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &935581499
