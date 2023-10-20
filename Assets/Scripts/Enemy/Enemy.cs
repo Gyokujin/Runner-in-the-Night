@@ -49,6 +49,11 @@ public class Enemy : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+    void OnEnable()
+    {
+        collider.enabled = true;
+    }
+
     public void Damage()
     {
         hp--;

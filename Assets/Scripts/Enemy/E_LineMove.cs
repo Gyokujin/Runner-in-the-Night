@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class E_LineMove : Enemy
 {
-    void Start()
+    void OnEnable()
     {
         Move();
     }
