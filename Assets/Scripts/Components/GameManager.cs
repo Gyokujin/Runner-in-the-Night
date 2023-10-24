@@ -9,13 +9,6 @@ public class GameManager : MonoBehaviour
     public static GameManager instance = null;
     public bool isLive = false;
 
-    public enum StageType
-    {
-        run, battle
-    }
-
-    public StageType stageType;
-
     [Header("StageInfo")]
     public float stageTime = 0;
     public int score = 0;
@@ -51,7 +44,6 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        stageType = StageType.run;
         GameLive(true);
     }
     
