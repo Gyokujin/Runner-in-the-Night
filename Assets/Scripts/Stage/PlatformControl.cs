@@ -5,8 +5,9 @@ using UnityEngine;
 public class PlatformControl : MonoBehaviour
 {
     private GameObject[] platforms;
+    
+    [Header("Transfer")]
     private int moveIndex = 0;
-
     [SerializeField]
     private float minXPos;
     private float lastYPos;
@@ -19,9 +20,15 @@ public class PlatformControl : MonoBehaviour
     [SerializeField]
     private float transferYLimit;
 
+    [Header("Spawn")]
+    [SerializeField]
+    private float[] spawnPosX;
+    private SpawnData spawnData;
+
     void Awake()
     {
         Init();
+        spawnData = GetComponent<SpawnData>();
     }
 
     void Init()
@@ -38,15 +45,38 @@ public class PlatformControl : MonoBehaviour
     {
         if (platforms[moveIndex].transform.position.x < minXPos)
         {
-            PlatformTransfer(platforms[moveIndex]);
+            PlatformTransfer(moveIndex);
         }
     }
 
-    void PlatformTransfer(GameObject platform)
+    void PlatformTransfer(int platformIndex)
     {
         float transferY = Random.Range(Mathf.Max(lastYPos - transferYLimit, transferYMin), Mathf.Min(lastYPos  + transferYLimit, transferYMax));
         lastYPos = transferY;
-        platform.transform.position = new Vector2(transferX, transferY);
+        platforms[platformIndex].transform.position = new Vector2(transferX, transferY);
+        PlatformSetting(platformIndex);
         moveIndex = (moveIndex + 1) % (platforms.Length);
+    }
+
+    void PlatformSetting(int platformIndex)
+    {
+        for (int i = 0; i < spawnPosX.Length; i++)
+        {
+            int spawnType = Random.Range(0, 5); // 0 : 장애물, 1, 2 : 몬스터
+            GameObject spawnObject = null;
+
+            switch (spawnType)
+            {
+                case 0:
+                    spawnObject = PoolManager.instance.Get(PoolManager.PoolType.Obstacle, 0);
+                    break;
+
+                case 1:
+                case 2:
+                    int enemyKind = spawnData.SelectEnemy();
+                    spawnObject = PoolManager.instance.Get(PoolManager.PoolType.Enemy, enemyKind);
+                    break;
+            }
+        }
     }
 }

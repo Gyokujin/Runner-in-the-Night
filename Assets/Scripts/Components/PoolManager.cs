@@ -9,12 +9,17 @@ public class PoolManager : MonoBehaviour
     public enum PoolType
     {
         Bullet,
+        Obstacle,
         Enemy
     }
 
     [Header("Bullet")]
     public GameObject[] bullets;
     private List<GameObject>[] bulletPool;
+
+    [Header("Obstacle")]
+    public GameObject obstacle;
+    private List<GameObject> obstaclePool;
 
     [Header("Enemy")]
     public GameObject[] enemies;
@@ -65,6 +70,24 @@ public class PoolManager : MonoBehaviour
             {
                 select = Instantiate(bullets[index], transform);
                 bulletPool[index].Add(select);
+            }
+        }
+        else if (type == PoolType.Obstacle)
+        {
+            foreach (GameObject obstacle in obstaclePool)
+            {
+                if (!obstacle.activeSelf)
+                {
+                    select = obstacle;
+                    select.SetActive(true);
+                    break;
+                }
+            }
+
+            if (!select)
+            {
+                select = Instantiate(obstacle, transform);
+                obstaclePool.Add(select);
             }
         }
         else if (type == PoolType.Enemy)
