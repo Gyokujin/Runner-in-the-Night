@@ -33,7 +33,9 @@ public class Enemy : MonoBehaviour
     protected float moveSpeed;
     [SerializeField]
     protected Vector2 moveVec;
-    protected bool onDie = false;
+    public bool onDie = false;
+    [SerializeField]
+    protected GameObject detector;
 
     [Header("Component")]
     protected SpriteRenderer sprite;
@@ -49,34 +51,35 @@ public class Enemy : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    void OnEnable()
+    public void Init()
     {
+        onDie = false;
         collider.enabled = true;
+        animator.enabled = true;
+        detector.SetActive(true);
+
+        sprite.color = new Color(1, 1, 1, 1);
+        rigid.velocity = Vector2.zero;
     }
 
     public void Damage()
     {
+        if (onDie)
+            return;
+
         hp--;
 
         if (hp <= 0)
         {
-            Die(false);
+            Die();
         }
     }
 
-    public void Die(bool outSide)
+    public void Die()
     {
         onDie = true;
         collider.enabled = false;
-
-        if (outSide)
-        {
-            gameObject.SetActive(false);
-        }
-        else
-        {
-            StartCoroutine("DieProcess");
-        }
+        StartCoroutine("DieProcess");
     }
 
     IEnumerator DieProcess()

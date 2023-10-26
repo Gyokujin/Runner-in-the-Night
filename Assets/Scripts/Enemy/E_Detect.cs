@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class E_Detect : MonoBehaviour
 {
-    private bool onDetect = false;
-
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -13,21 +11,21 @@ public class E_Detect : MonoBehaviour
             GameObject player = collision.gameObject;
             Enemy enemy = GetComponentInParent<Enemy>();
 
-            if (!onDetect)
+            switch (enemy.type)
             {
-                onDetect = true;
-                AudioManager.instance.PlaySystemSFX(AudioManager.SystemSFX.Detect);
+                case Enemy.EnemyType.LineMove:
+                    enemy.GetComponent<E_LineMove>().Detect();
+                    break;
+
+                case Enemy.EnemyType.Chase:
+                    enemy.GetComponent<E_Chase>().Detect(player);
+                    break;
+
+                case Enemy.EnemyType.Patrol:
+                    enemy.GetComponent<E_Patrol>().Detect(player);
+                    break;
             }
 
-            if (enemy.type == Enemy.EnemyType.Chase)
-            {
-                enemy.GetComponent<E_Chase>().Detect(player);
-            }
-            else if (enemy.type == Enemy.EnemyType.Patrol)
-            {
-                enemy.GetComponent<E_Patrol>().Detect(player);
-            }
-            
             gameObject.SetActive(false);
         }
     }

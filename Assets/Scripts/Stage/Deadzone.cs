@@ -16,27 +16,12 @@ public class Deadzone : MonoBehaviour
                     collision.GetComponent<PlayerController>().Damage(true);
                     break;
                 case "Enemy":
-                    collision.GetComponent<Enemy>().Die(true);
-                    break;
                 case "PlayerBullet":
                 case "EnemyBullet":
                 case "Obstacle":
-                    collision.gameObject.SetActive(false);
+                    PoolManager.instance.Return(collision.gameObject);
                     break;
             }
         }
-
-        //if (collision.CompareTag("Player"))
-        //{
-            
-        //}
-        //else if (collision.CompareTag("Enemy"))
-        //{
-            
-        //}
-        //else if (collision.CompareTag("PlayerBullet") || collision.CompareTag("EnemyBullet"))
-        //{
-
-        //}
     }
 }

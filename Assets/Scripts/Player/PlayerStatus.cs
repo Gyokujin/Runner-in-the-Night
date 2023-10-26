@@ -108,7 +108,7 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
-    private float attackCoolTime = 0.22f;
+    private float attackCoolTime = 0.3f;
     public float AttackCoolTime
     {
         get
@@ -186,7 +186,7 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
-    private float damageTime = 1.5f;
+    private float damageTime = 4.5f;
     public float DamageTime
     {
         get

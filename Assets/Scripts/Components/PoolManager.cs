@@ -37,6 +37,7 @@ public class PoolManager : MonoBehaviour
         }
 
         bulletPool = new List<GameObject>[bullets.Length];
+        obstaclePool = new List<GameObject>();
         enemyPool = new List<GameObject>[enemies.Length];
 
         for (int i = 0; i < bulletPool.Length; i++)
@@ -107,8 +108,17 @@ public class PoolManager : MonoBehaviour
                 select = Instantiate(enemies[index], transform);
                 enemyPool[index].Add(select);
             }
+
+            select.GetComponent<Enemy>().Init();
         }
         
         return select;
+    }
+
+    public void Return(GameObject poolObject)
+    {
+        poolObject.transform.parent = null;
+        poolObject.transform.parent = gameObject.transform;
+        poolObject.SetActive(false);
     }
 }

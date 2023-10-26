@@ -4,15 +4,8 @@ using UnityEngine;
 
 public class E_LineMove : Enemy
 {
-    void OnEnable()
+    public void Detect()
     {
-        Move();
-    }
-
-    void Move()
-    {
-        rigid.velocity = moveVec * moveSpeed;
-
         switch (kind)
         {
             case EnemyKind.Guardian:
@@ -22,5 +15,12 @@ public class E_LineMove : Enemy
                 AudioManager.instance.PlayEnemySFX(AudioManager.EnemySfx.DiverMove);
                 break;
         }
+
+        Move();
+    }
+
+    void Move()
+    {
+        rigid.velocity = moveVec * moveSpeed;
     }
 }

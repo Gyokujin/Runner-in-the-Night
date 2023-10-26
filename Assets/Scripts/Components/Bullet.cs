@@ -11,6 +11,8 @@ public class Bullet : MonoBehaviour
 
     [SerializeField]
     private BulletType type;
+    [SerializeField]
+    private float launchTime;
 
     private Rigidbody2D rigid;
     private BoxCollider2D collider;
@@ -31,6 +33,7 @@ public class Bullet : MonoBehaviour
     public void Shoot(Vector2 direction, float speed)
     {
         rigid.velocity = (direction * speed);
+        Invoke("Hide", launchTime);
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -38,11 +41,15 @@ public class Bullet : MonoBehaviour
         if (type == BulletType.Player && collision.gameObject.layer == 11)
         {
             Enemy enemy = collision.GetComponent<Enemy>();
-            enemy.Damage();
-            animator.SetTrigger("doHit");
-            collider.enabled = false;
-            AudioManager.instance.PlaySystemSFX(AudioManager.SystemSFX.Hit);
-            Invoke("Hide", 2f);
+
+            if (!enemy.onDie)
+            {
+                enemy.Damage();
+                animator.SetTrigger("doHit");
+                collider.enabled = false;
+                AudioManager.instance.PlaySystemSFX(AudioManager.SystemSFX.Hit);
+                Invoke("Hide", launchTime);
+            }
         }
         else if (type == BulletType.Enemy && collision.gameObject.layer == 6)
         {
@@ -52,7 +59,7 @@ public class Bullet : MonoBehaviour
             {
                 player.Damage(false);
                 animator.SetTrigger("doHit");
-                Invoke("Hide", 2f);
+                Invoke("Hide", launchTime);
             }
         }
     }

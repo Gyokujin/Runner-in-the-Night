@@ -62,21 +62,27 @@ public class PlatformControl : MonoBehaviour
     {
         for (int i = 0; i < spawnPosX.Length; i++)
         {
-            int spawnType = Random.Range(0, 5); // 0 : 장애물, 1, 2 : 몬스터
             GameObject spawnObject = null;
+            int spawnType = Random.Range(0, 6); // 0 : 장애물, 1, 2 : 몬스터
 
             switch (spawnType)
             {
                 case 0:
                     spawnObject = PoolManager.instance.Get(PoolManager.PoolType.Obstacle, 0);
+                    spawnObject.transform.parent = platforms[platformIndex].transform;
+                    spawnObject.transform.localPosition = new Vector2(spawnPosX[i], spawnData.spikePosY);
                     break;
 
                 case 1:
                 case 2:
                     int enemyKind = spawnData.SelectEnemy();
                     spawnObject = PoolManager.instance.Get(PoolManager.PoolType.Enemy, enemyKind);
+                    spawnObject.transform.parent = platforms[platformIndex].transform;
+                    spawnObject.transform.localPosition = new Vector2(spawnPosX[i], spawnData.enemyPosY[enemyKind]);
                     break;
             }
+
+            
         }
     }
 }

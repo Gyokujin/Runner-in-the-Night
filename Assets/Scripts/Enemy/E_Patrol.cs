@@ -16,8 +16,6 @@ public class E_Patrol : Enemy
     private float patrolTime;
     
     [Header("Detector")]
-    [SerializeField]
-    private GameObject detector;
     private bool onDetect = false;
 
     [Header("Attack")]
@@ -27,6 +25,7 @@ public class E_Patrol : Enemy
     private float attackDelay;
     [SerializeField]
     private float shootSpeed;
+    private bool onAttack;
     [SerializeField]
     private Transform emitter;
     [SerializeField]
@@ -108,14 +107,18 @@ public class E_Patrol : Enemy
 
     public void Detect(GameObject target)
     {
-        if (onDetect)
+        if (onAttack)
             return;
 
-        onDetect = true;
+        if (!onDetect)
+        {
+            onDetect = true;
+            AudioManager.instance.PlaySystemSFX(AudioManager.SystemSFX.Detect);
+        }
+
         rigid.velocity = Vector2.zero;
         Vector2 targetPos = target.transform.position;
         sprite.flipX = false; // 왼쪽으로만 쏜다
-
         animator.SetBool("onMove", false);
         animator.SetBool("onDetect", true);
         StartCoroutine("Attack", targetPos);
@@ -136,7 +139,6 @@ public class E_Patrol : Enemy
         GameObject spawnBullet = PoolManager.instance.Get(PoolManager.PoolType.Bullet, 1);
         spawnBullet.transform.position = emitter.position;
         spawnBullet.transform.rotation = rotation;
-        // GameObject spawnBullet = Instantiate(bullet, emitter.position, rotation);
         spawnBullet.GetComponent<Bullet>().Shoot(dir, shootSpeed);
 
         switch (kind)
@@ -148,7 +150,7 @@ public class E_Patrol : Enemy
 
         yield return new WaitForSeconds(patternDelay); // 텀을 주고 디텍터를 활성화
         animator.SetBool("onAttack", false);
-        onDetect = false;
+        onAttack = false;
         detector.SetActive(true);
         Think();
     }

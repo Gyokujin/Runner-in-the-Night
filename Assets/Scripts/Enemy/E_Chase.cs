@@ -14,11 +14,14 @@ public class E_Chase : Enemy
         rigid.velocity = moveVec * moveSpeed;
     }
 
+
+
     public void Detect(GameObject target)
     {
         rigid.velocity = Vector2.zero;
         animator.SetBool("onDetect", true);
         StartCoroutine("Chase", target);
+        AudioManager.instance.PlaySystemSFX(AudioManager.SystemSFX.Detect);
     }
 
     IEnumerator Chase(GameObject vec)
