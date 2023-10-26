@@ -277,7 +277,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   kind: 1
   type: 1
-  hp: 1
+  maxHp: 1
   moveSpeed: 1.25
   moveVec: {x: -1, y: -1}
   onDie: 0

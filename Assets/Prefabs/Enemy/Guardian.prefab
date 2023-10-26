@@ -184,8 +184,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   kind: 0
   type: 1
-  hp: 1
-  moveSpeed: 0.8
+  maxHp: 1
+  moveSpeed: 0.4
   moveVec: {x: -1, y: 0}
   onDie: 0
   detector: {fileID: 6842005066488825130}

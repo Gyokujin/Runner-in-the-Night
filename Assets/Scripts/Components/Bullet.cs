@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -14,12 +15,14 @@ public class Bullet : MonoBehaviour
     [SerializeField]
     private float launchTime;
 
+    private SpriteRenderer sprite;
     private Rigidbody2D rigid;
     private BoxCollider2D collider;
     private Animator animator;
 
     void Awake()
     {
+        sprite = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
         collider = GetComponent<BoxCollider2D>();
         animator = GetComponent<Animator>();
@@ -27,6 +30,7 @@ public class Bullet : MonoBehaviour
 
     void OnEnable()
     {
+        sprite.enabled = true;
         collider.enabled = true;
     }
 
@@ -48,7 +52,6 @@ public class Bullet : MonoBehaviour
                 animator.SetTrigger("doHit");
                 collider.enabled = false;
                 AudioManager.instance.PlaySystemSFX(AudioManager.SystemSFX.Hit);
-                Invoke("Hide", launchTime);
             }
         }
         else if (type == BulletType.Enemy && collision.gameObject.layer == 6)
@@ -59,13 +62,14 @@ public class Bullet : MonoBehaviour
             {
                 player.Damage(false);
                 animator.SetTrigger("doHit");
-                Invoke("Hide", launchTime);
             }
         }
     }
 
     void Hide()
     {
-        gameObject.SetActive(false);
+        sprite.enabled = false;
+        collider.enabled = false;
+        PoolManager.instance.Return(gameObject);
     }
 }

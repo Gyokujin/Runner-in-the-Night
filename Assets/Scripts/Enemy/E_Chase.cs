@@ -15,7 +15,6 @@ public class E_Chase : Enemy
     }
 
 
-
     public void Detect(GameObject target)
     {
         rigid.velocity = Vector2.zero;

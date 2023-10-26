@@ -26,8 +26,9 @@ public class Enemy : MonoBehaviour
 
     [Header("Status")]
     [SerializeField]
+    private int maxHp;
     private int hp;
-    
+
     [Header("Action")]
     [SerializeField]
     protected float moveSpeed;
@@ -53,6 +54,7 @@ public class Enemy : MonoBehaviour
 
     public void Init()
     {
+        hp = maxHp;
         onDie = false;
         collider.enabled = true;
         animator.enabled = true;
@@ -67,6 +69,7 @@ public class Enemy : MonoBehaviour
         if (onDie)
             return;
 
+        Debug.Log("Hit");
         hp--;
 
         if (hp <= 0)
@@ -77,8 +80,8 @@ public class Enemy : MonoBehaviour
 
     public void Die()
     {
-        onDie = true;
         collider.enabled = false;
+        onDie = true;
         StartCoroutine("DieProcess");
     }
 
