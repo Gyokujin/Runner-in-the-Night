@@ -81,8 +81,6 @@ public class PlatformControl : MonoBehaviour
                     spawnObject.transform.localPosition = new Vector2(spawnPosX[i], spawnData.enemyPosY[enemyKind]);
                     break;
             }
-
-            
         }
     }
 }

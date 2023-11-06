@@ -105,7 +105,7 @@ public class E_Patrol : Enemy
         return platCheck;
     }
 
-    public void Detect(GameObject target)
+    public void Detect(Vector2 target)
     {
         if (onAttack)
             return;
@@ -117,7 +117,7 @@ public class E_Patrol : Enemy
         }
 
         rigid.velocity = Vector2.zero;
-        Vector2 targetPos = target.transform.position;
+        Vector2 targetPos = target;
         sprite.flipX = false; // ¿ÞÂÊÀ¸·Î¸¸ ½ð´Ù
         animator.SetBool("onMove", false);
         animator.SetBool("onDetect", true);

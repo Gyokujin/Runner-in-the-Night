@@ -7,6 +7,8 @@ public class E_Chase : Enemy
     [SerializeField]
     private float detectTime;
     [SerializeField]
+    private float detectDelay;
+    [SerializeField]
     private float chaseSpeed;
 
     void Start()
@@ -15,15 +17,25 @@ public class E_Chase : Enemy
     }
 
 
-    public void Detect(GameObject target)
+    public void Detect(Vector2 target)
     {
         rigid.velocity = Vector2.zero;
-        animator.SetBool("onDetect", true);
-        StartCoroutine("Chase", target);
+        animator.SetTrigger("doDetect");
         AudioManager.instance.PlaySystemSFX(AudioManager.SystemSFX.Detect);
+        StartCoroutine("ReadyChase", target.y);
     }
 
-    IEnumerator Chase(GameObject vec)
+    IEnumerator ReadyChase(float movePosY)
+    {
+        yield return new WaitForSeconds(detectDelay);
+        transform.position = new Vector3(transform.position.x, movePosY);
+        animator.SetTrigger("doReady");
+
+        yield return new WaitForSeconds(detectDelay);
+        StartCoroutine("Chase");
+    }
+
+    IEnumerator Chase()
     {
         yield return new WaitForSeconds(detectTime);
 
@@ -34,7 +46,6 @@ public class E_Chase : Enemy
                 break;
         }
 
-        moveVec = (vec.transform.position - transform.position).normalized;
         rigid.velocity = moveVec * chaseSpeed;
         animator.SetTrigger("doChase");
     }

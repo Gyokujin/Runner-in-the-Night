@@ -69,7 +69,6 @@ public class Enemy : MonoBehaviour
         if (onDie)
             return;
 
-        Debug.Log("Hit");
         hp--;
 
         if (hp <= 0)

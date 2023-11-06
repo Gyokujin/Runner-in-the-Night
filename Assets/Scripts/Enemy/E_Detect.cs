@@ -8,7 +8,6 @@ public class E_Detect : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            GameObject player = collision.gameObject;
             Enemy enemy = GetComponentInParent<Enemy>();
 
             switch (enemy.type)
@@ -18,11 +17,11 @@ public class E_Detect : MonoBehaviour
                     break;
 
                 case Enemy.EnemyType.Chase:
-                    enemy.GetComponent<E_Chase>().Detect(player);
+                    enemy.GetComponent<E_Chase>().Detect(collision.transform.position);
                     break;
 
                 case Enemy.EnemyType.Patrol:
-                    enemy.GetComponent<E_Patrol>().Detect(player);
+                    enemy.GetComponent<E_Patrol>().Detect(collision.transform.position);
                     break;
             }
 

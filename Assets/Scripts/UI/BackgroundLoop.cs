@@ -4,30 +4,21 @@ using UnityEngine;
 
 public class BackgroundLoop : MonoBehaviour
 {
-    public enum LoopType { Scroll, Relocation }
-    public LoopType loopType;
-
     [SerializeField]
-    private float targetPosX; // ÀÌµ¿ÇÒ X ÁÂÇ¥
-
-    void Awake()
-    {
-        if (loopType == LoopType.Scroll)
-        {
-            targetPosX = GetComponent<BoxCollider2D>().size.x;
-        }
-    }
+    private float minXPos;
+    [SerializeField]
+    private float transferX;
 
     void Update()
     {
-        if (transform.position.x <= -targetPosX)
+        if (transform.position.x <= minXPos)
         {
-            Reposition();
+            PlatformTransfer();
         }
     }
 
-    void Reposition()
+    void PlatformTransfer()
     {
-        transform.position = new Vector2(targetPosX, transform.position.y);
+        transform.position = new Vector2(transferX, transform.position.y);
     }
 }
