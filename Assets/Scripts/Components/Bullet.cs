@@ -51,6 +51,7 @@ public class Bullet : MonoBehaviour
                 enemy.Damage();
                 animator.SetTrigger("doHit");
                 collider.enabled = false;
+                Hide();
                 AudioManager.instance.PlaySystemSFX(AudioManager.SystemSFX.Hit);
             }
         }
