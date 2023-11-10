@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.UIElements;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -12,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private float slideTime;
     private float slideCool;
     private float attackCool;
+    private float hitTime;
     private float putGunCool;
     private int maxLife;
     private float knockback;
@@ -53,9 +55,9 @@ public class PlayerController : MonoBehaviour
     // yield return time
     private WaitForSeconds slideWait;
     private WaitForSeconds attackWait;
+    private WaitForSeconds hitWait;
     private WaitForSeconds putGunWait;
     private WaitForSeconds respawnWait;
-    private WaitForSeconds invincibleWait;
 
     // Component
     private PlayerStatus status;
@@ -89,6 +91,7 @@ public class PlayerController : MonoBehaviour
         slideTime = status.SlideTime;
         slideCool = status.SlideCoolTime;
         attackCool = status.AttackCoolTime;
+        hitTime = status.HitTime;
         putGunCool = status.PutGunTime;
         maxLife = status.MaxLife;
         knockback = status.KnockbackForce;
@@ -111,9 +114,9 @@ public class PlayerController : MonoBehaviour
     {
         slideWait = new WaitForSeconds(slideTime);
         attackWait = new WaitForSeconds(attackCool);
+        hitWait = new WaitForSeconds(hitTime);
         putGunWait = new WaitForSeconds(putGunCool);
         respawnWait = new WaitForSeconds(respawnTime);
-        invincibleWait = new WaitForSeconds(invincibleTime);
     }
 
     void Update()
@@ -127,6 +130,7 @@ public class PlayerController : MonoBehaviour
         }
 
         Fall(rigid.velocity.y < -0.1f ? true : false); // 0일 경우는 작은 반동에도 애니메이션 오류가 나타난다.
+        Invincible();
     }
 
     public void Move(bool move)
@@ -226,7 +230,7 @@ public class PlayerController : MonoBehaviour
     {
         onSlide = true;
         animator.SetBool("onSlide", true);
-        StartCoroutine("InvincibleTime", slideTime);
+        leftInvincible += slideTime;
         AudioManager.instance.PlayPlayerSFX(AudioManager.PlayerSFX.Slide);
         UIManager.instance.ButtonCooldown("slide", slideCool); // 슬라이드의 쿨타임 계산
 
@@ -277,21 +281,53 @@ public class PlayerController : MonoBehaviour
 
     public void Hit()
     {
+        if (!onDamage)
+        {
+            StartCoroutine("HitProcess");
+        }
+    }
 
+    IEnumerator HitProcess()
+    {
+        yield return StartCoroutine("LoseHP");
+        GameManager.instance.GameLive(false); // 캐릭터외의 진행을 멈춘다. 스크롤링 일시정지
+        onDamage = true;     
+        Move(false);
+        rigid.velocity = Vector2.zero;
+        AttackCancel();
+
+        animator.SetTrigger("onHit");
+        rigid.AddForce(Vector2.left * knockback);
+        AudioManager.instance.PlayPlayerSFX(AudioManager.PlayerSFX.Hit);
+
+        yield return hitWait;
+        GameManager.instance.GameLive(true);
+        sprite.color = new Color(1, 1, 1, 0.7f);
+        onDamage = false;
+        Move(true);
+
+        leftInvincible += invincibleTime;
+        yield return new WaitForSeconds(leftInvincible);
+        sprite.color = new Color(1, 1, 1, 1);
     }
 
     public void FallDown()
     {
+        StartCoroutine("FallDownProcess");
+    }
+
+    IEnumerator FallDownProcess()
+    {
         if (!onDamage)
         {
-            LoseHP();
+            yield return StartCoroutine("LoseHP");
         }
 
         onDamage = true;
         StartCoroutine("Respawn");
     }
 
-    void LoseHP()
+    IEnumerator LoseHP()
     {
         life--;
         UIManager.instance.DamageUI(life);
@@ -300,6 +336,8 @@ public class PlayerController : MonoBehaviour
         {
             Die();
         }
+
+        yield return null;
     }
 
     IEnumerator Respawn()
@@ -321,9 +359,13 @@ public class PlayerController : MonoBehaviour
             onDamage = false;
             rigid.simulated = true;
             sprite.enabled = true;
-            StartCoroutine("InvincibleTime", invincibleTime);
+            sprite.color = new Color(1, 1, 1, 0.7f);
             UIManager.instance.RespawnFX(transform.position);
             AudioManager.instance.PlayPlayerSFX(AudioManager.PlayerSFX.Respawn);
+
+            leftInvincible += invincibleTime;
+            yield return new WaitForSeconds(leftInvincible);
+            sprite.color = new Color(1, 1, 1, 1);
         }
     }
 
@@ -352,82 +394,16 @@ public class PlayerController : MonoBehaviour
         rigid.simulated = false;
     }
 
-    IEnumerator InvincibleTime(float time)
+    void Invincible()
     {
-        leftInvincible = Mathf.Max(leftInvincible, time);
-        gameObject.layer = invincibleLayer;
-
-        while (leftInvincible > 0) // 기존에 무적시간이 있을경우 새로 대입한다.
+        if (leftInvincible > 0)
         {
+            gameObject.layer = invincibleLayer;
             leftInvincible -= Time.deltaTime;
-            yield return null;
         }
-
-        gameObject.layer = defaultLayer;
+        else
+        {
+            gameObject.layer = defaultLayer;
+        }
     }
-
-    //public void Damage(bool outSide)
-    //{
-    //    if (outSide || !onDamage) // 낙사이거나 피격 상태가 아닐때만 실행
-    //    {
-    //        GameManager.instance.GameLive(false); // 캐릭터외의 진행을 멈춘다. 스크롤링 일시정지
-
-    //        if (!onDamage) // 연속적인 데미지 처리 방지
-    //        {
-    //            life--;
-    //            UIManager.instance.DamageUI(life);
-    //        }
-
-    //        onDamage = true;
-    //        rigid.velocity = Vector2.zero;
-    //        Move(false);
-    //        AudioManager.instance.PlayPlayerSFX(AudioManager.PlayerSFX.Hit);
-    //        AttackCancel();
-
-    //        if (life <= 0)
-    //        {
-    //            StartCoroutine("Die");
-    //        }
-    //        else
-    //        {
-    //            StopCoroutine("DamageProcess");
-    //            StartCoroutine("DamageProcess", outSide);
-    //        }
-    //    }
-    //}
-
-    //IEnumerator DamageProcess(bool onOut)
-    //{
-    //    sprite.color = new Color(1, 1, 1, 0.7f);
-
-    //    if (onOut) // 낙사(DeadZone)로 인한 재등장
-    //    {
-    //        yield return StartCoroutine("Respawn");
-    //    }
-    //    else // 일반적인 피격
-    //    {
-    //        yield return StartCoroutine("HitProcess");
-    //        GameManager.instance.GameLive(true); // 피격은 바로 게임을 진행 / 낙사는 타이밍을 따로 정해서 진행한다.
-    //    }
-
-    //    onDamage = false;
-    //    Move(true);
-
-    //    yield return StartCoroutine("InvincibleTime", damageTime);
-    //    sprite.color = new Color(1, 1, 1, 1);
-    //}
-
-
-
-    //IEnumerator HitProcess()
-    //{
-    //    animator.SetTrigger("onHit");
-    //    rigid.AddForce(Vector2.left * knockback);
-
-    //    yield return hitWait; // 1초 뒤에 바닥을 검사해서 있을 경우 그대로 진행 없을 경우 새로 진행한다.
-    //}
-
-
-
-
 }

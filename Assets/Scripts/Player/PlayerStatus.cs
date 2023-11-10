@@ -121,6 +121,19 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
+    private float hitTime = 2f;
+    public float HitTime
+    {
+        get
+        {
+            return hitTime;
+        }
+        set
+        {
+            HitTime = value;
+        }
+    }
+
     private float putGunTime = 0.6f;
     public float PutGunTime
     {
@@ -173,7 +186,7 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
-    private float invincibleTime = 2.5f;
+    private float invincibleTime = 3.5f;
     public float InvincibleTime
     {
         get
