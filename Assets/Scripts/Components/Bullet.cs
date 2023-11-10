@@ -42,7 +42,7 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (type == BulletType.Player && collision.gameObject.layer == 11)
+        if (type == BulletType.Player && collision.gameObject.layer == LayerMask.GetMask("Enemy"))
         {
             Enemy enemy = collision.GetComponent<Enemy>();
 
@@ -55,13 +55,13 @@ public class Bullet : MonoBehaviour
                 AudioManager.instance.PlaySystemSFX(AudioManager.SystemSFX.Hit);
             }
         }
-        else if (type == BulletType.Enemy && collision.gameObject.layer == 6)
+        else if (type == BulletType.Enemy && collision.gameObject.layer == LayerMask.GetMask("Player"))
         {
             PlayerController player = collision.GetComponent<PlayerController>();
 
             if (!player.onDamage)
             {
-                player.Damage(false);
+                player.Hit();
                 animator.SetTrigger("doHit");
             }
         }

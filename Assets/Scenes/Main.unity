@@ -4777,6 +4777,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d8b49bd02d50f945963e0e736a67392, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultLayer: 6
+  invincibleLayer: 7
+  respawnPosY: 6.5
   emitter: {fileID: 1640697675}
   bullet: {fileID: 6327911530340690291, guid: 874a677eaa344e64e8953eb07a932d39, type: 3}
   bulletSpeed: 6.5

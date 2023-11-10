@@ -173,29 +173,29 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
-    private float hitTime = 2f;
-    public float HitTime
+    private float invincibleTime = 2.5f;
+    public float InvincibleTime
     {
         get
         {
-            return hitTime;
+            return invincibleTime;
         }
         set
         {
-            hitTime = value;
+            invincibleTime = value;
         }
     }
 
-    private float damageTime = 4.5f;
-    public float DamageTime
+    private float respawnTime = 0.1f;
+    public float RespawnTime
     {
         get
         {
-            return damageTime;
+            return respawnTime;
         }
         set
         {
-            damageTime = value;
+            respawnTime = value;
         }
     }
 }

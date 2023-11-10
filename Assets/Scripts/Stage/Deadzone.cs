@@ -13,7 +13,7 @@ public class Deadzone : MonoBehaviour
             switch (objectTag)
             {
                 case "Player":
-                    collision.GetComponent<PlayerController>().Damage(true);
+                    collision.GetComponent<PlayerController>().FallDown();
                     break;
                 case "Enemy":
                 case "PlayerBullet":

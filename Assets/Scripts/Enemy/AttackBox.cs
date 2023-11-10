@@ -22,13 +22,13 @@ public class AttackBox : MonoBehaviour
                 case AttackType.Enemy:
                     if (collision.gameObject.layer == 6)
                     {
-                        collision.GetComponent<PlayerController>().Damage(false);
+                        collision.GetComponent<PlayerController>().Hit();
                     }
                     break;
                 case AttackType.EnemyBullet:
                     if (collision.gameObject.layer == 6) // 6 : 플레이어, 7 : 무적 상태
                     {
-                        collision.GetComponent<PlayerController>().Damage(false);
+                        collision.GetComponent<PlayerController>().Hit();
                         Destroy(gameObject);
                     }
                     break;
