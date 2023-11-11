@@ -28,6 +28,8 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private int maxHp;
     private int hp;
+    [SerializeField]
+    protected int getPoint;
 
     [Header("Action")]
     [SerializeField]
@@ -37,6 +39,8 @@ public class Enemy : MonoBehaviour
     public bool onDie = false;
     [SerializeField]
     protected GameObject detector;
+    private float dieDelay;
+    private WaitForSeconds dieWait;
 
     [Header("Component")]
     protected SpriteRenderer sprite;
@@ -50,6 +54,11 @@ public class Enemy : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         collider = GetComponent<BoxCollider2D>();
         animator = GetComponent<Animator>();
+    }
+
+    void Start()
+    {
+        dieWait = new WaitForSeconds(dieDelay);
     }
 
     public void Init()
@@ -109,8 +118,9 @@ public class Enemy : MonoBehaviour
         yield return null;
         animator.enabled = false;
         sprite.color = new Color(1, 1, 1, 0.65f);
+        GameManager.instance.AddScore(getPoint);
 
-        yield return new WaitForSeconds(1f);
+        yield return dieWait;
         gameObject.SetActive(false);
     }
 }

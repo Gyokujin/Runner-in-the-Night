@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -42,7 +43,7 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (type == BulletType.Player && collision.gameObject.layer == LayerMask.GetMask("Enemy"))
+        if (type == BulletType.Player && collision.GetComponent<Enemy>())
         {
             Enemy enemy = collision.GetComponent<Enemy>();
 
@@ -55,7 +56,7 @@ public class Bullet : MonoBehaviour
                 AudioManager.instance.PlaySystemSFX(AudioManager.SystemSFX.Hit);
             }
         }
-        else if (type == BulletType.Enemy && collision.gameObject.layer == LayerMask.GetMask("Player"))
+        else if (type == BulletType.Enemy && collision.GetComponent<PlayerController>())
         {
             PlayerController player = collision.GetComponent<PlayerController>();
 

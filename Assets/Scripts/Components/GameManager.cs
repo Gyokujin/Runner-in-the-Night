@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     [Header("StageInfo")]
     public float stageTime = 0;
     public int score = 0;
-    private float scoreDelay = 0.5f;
+    private float scoreDelay = 0.25f;
     private bool scoreGetting = false;
     public bool isGameOver = false;
 

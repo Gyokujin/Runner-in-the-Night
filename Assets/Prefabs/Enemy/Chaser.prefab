@@ -278,10 +278,11 @@ MonoBehaviour:
   kind: 2
   type: 2
   maxHp: 3
+  getPoint: 15
   moveSpeed: 0.5
   moveVec: {x: -1, y: 0}
   onDie: 0
   detector: {fileID: 4011649070768298903}
-  detectTime: 0.25
+  detectTime: 0.1
   detectDelay: 0.5
   chaseSpeed: 3
