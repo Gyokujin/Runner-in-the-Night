@@ -7,13 +7,16 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
+    [HideInInspector]
     public bool isLive = false;
 
     [Header("StageInfo")]
-    public float stageTime = 0;
+    public int maxScore;
     public int score = 0;
+    [SerializeField]
     private float scoreDelay = 0.25f;
     private bool scoreGetting = false;
+    [HideInInspector]
     public bool isGameOver = false;
 
     [Header("Respawn")]
@@ -52,8 +55,6 @@ public class GameManager : MonoBehaviour
         if (!isLive)
             return;
 
-        stageTime += Time.deltaTime;
-
         if (!scoreGetting)
         {
             StartCoroutine("ProgressScore");
@@ -65,7 +66,7 @@ public class GameManager : MonoBehaviour
         if (!isGameOver)
         {
             score += newScore;
-            UIManager.instance.ScoreModify(score);
+            UIManager.instance.ProgressModify(score);
         }
     }
 
@@ -81,6 +82,7 @@ public class GameManager : MonoBehaviour
     public void GameLive(bool live)
     {
         isLive = live;
+        UIManager.instance.ProgressCha(live);
     }
 
     public void CameraPause()

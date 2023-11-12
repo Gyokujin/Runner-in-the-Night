@@ -75,6 +75,7 @@ public class PlatformControl : MonoBehaviour
 
                 case 1:
                 case 2:
+                case 3:
                     int enemyKind = spawnData.SelectEnemy();
                     spawnObject = PoolManager.instance.Get(PoolManager.PoolType.Enemy, enemyKind);
                     spawnObject.transform.parent = platforms[platformIndex].transform;

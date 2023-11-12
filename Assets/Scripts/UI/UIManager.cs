@@ -27,6 +27,14 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject pauseUI;
     public Button restartButton;
+    [SerializeField]
+    private Animator progressCha;
+    [SerializeField]
+    private int progressPosXMin;
+    [SerializeField]
+    private int progressPosXMax;
+    [SerializeField]
+    private float progressPosY;
 
     [Header("FX")]
     [SerializeField]
@@ -85,10 +93,11 @@ public class UIManager : MonoBehaviour
         slideCoolText.gameObject.SetActive(false);
     }
 
-    public void ScoreModify(int score)
+    public void ProgressModify(int score)
     {
-        string printScore = string.Format("{0:D4}", score);
-        scoreText.text = printScore;
+        float progress = (float)score / (float)GameManager.instance.maxScore;
+        int xPos = (int)Mathf.Lerp(progressPosXMin, progressPosXMax, progress);
+        progressCha.transform.localPosition = new Vector2(xPos, progressPosY);
     }
 
     public void DamageUI(int index)
@@ -113,5 +122,10 @@ public class UIManager : MonoBehaviour
     public void ShowPausePanel(bool onShow)
     {
         pauseUI.SetActive(onShow);
+    }
+
+    public void ProgressCha(bool live)
+    {
+        progressCha.SetBool("onLive", live);
     }
 }

@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
     private bool onSlide = false;
     [SerializeField]
     private int defaultLayer; // 플레이어 레이어
+    private bool onInvincible;
     [SerializeField]
     private int invincibleLayer; // 무적상태 레이어
     private float leftInvincible = 0; // 현재 남은 무적 시간을 계산
@@ -281,7 +282,7 @@ public class PlayerController : MonoBehaviour
 
     public void Hit()
     {
-        if (!onDamage)
+        if (!onInvincible && !onDamage)
         {
             StartCoroutine("HitProcess");
         }
@@ -318,7 +319,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator FallDownProcess()
     {
-        if (!onDamage)
+        if (!onInvincible && !onDamage)
         {
             yield return StartCoroutine("LoseHP");
         }
@@ -358,6 +359,7 @@ public class PlayerController : MonoBehaviour
 
             onDamage = false;
             rigid.simulated = true;
+            rigid.velocity = Vector2.zero;
             sprite.enabled = true;
             sprite.color = new Color(1, 1, 1, 0.7f);
             UIManager.instance.RespawnFX(transform.position);
@@ -398,11 +400,13 @@ public class PlayerController : MonoBehaviour
     {
         if (leftInvincible > 0)
         {
+            onInvincible = true;
             gameObject.layer = invincibleLayer;
             leftInvincible -= Time.deltaTime;
         }
         else
         {
+            onInvincible = false;
             gameObject.layer = defaultLayer;
         }
     }

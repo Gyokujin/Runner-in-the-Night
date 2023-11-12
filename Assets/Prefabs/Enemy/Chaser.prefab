@@ -278,7 +278,7 @@ MonoBehaviour:
   kind: 2
   type: 2
   maxHp: 3
-  getPoint: 15
+  getPoint: 20
   moveSpeed: 0.5
   moveVec: {x: -1, y: 0}
   onDie: 0

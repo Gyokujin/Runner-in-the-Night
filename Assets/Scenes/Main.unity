@@ -560,8 +560,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLive: 0
-  stageTime: 0
+  maxScore: 1500
   score: 0
+  scoreDelay: 0.2
   isGameOver: 0
   spawnOffX: -2
   spawnOffY: 2.5
@@ -1097,6 +1098,10 @@ MonoBehaviour:
   gameoverUI: {fileID: 192890125}
   pauseUI: {fileID: 1605502569}
   restartButton: {fileID: 2063394364}
+  progressCha: {fileID: 1336191597}
+  progressPosXMin: -53
+  progressPosXMax: 53
+  progressPosY: -2
   playerSpawnFX: {fileID: 1418493082767679888}
 --- !u!1 &382654877
 GameObject:
@@ -3392,7 +3397,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -53, y: 1.6}
+  m_AnchoredPosition: {x: -53, y: 1.15}
   m_SizeDelta: {x: 22, y: 32}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!95 &1336191597
