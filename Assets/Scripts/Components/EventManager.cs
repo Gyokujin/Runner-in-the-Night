@@ -44,5 +44,6 @@ public class EventManager : MonoBehaviour
     {
         director.playableAsset = timelines[(int)index];
         director.Play();
+        Debug.Log(index + "Ω««‡¡ﬂ");
     }
 }
