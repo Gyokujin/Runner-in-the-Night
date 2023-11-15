@@ -7,7 +7,7 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance = null;
 
-    [Header("Player")]
+    [Header("Control")]
     [SerializeField]
     private Button jumpButton;
     [SerializeField]
@@ -17,16 +17,13 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text slideCoolText;
 
-    [Header("UI")]
+    [Header("Status")]
     [SerializeField]
     private Image[] hpIcons;
+
+    [Header("System")]
     [SerializeField]
-    private Text scoreText;
-    [SerializeField]
-    private GameObject gameoverUI;
-    [SerializeField]
-    private GameObject pauseUI;
-    public Button restartButton;
+    private GameObject dangerUI;
     [SerializeField]
     private Animator progressCha;
     [SerializeField]
@@ -35,6 +32,15 @@ public class UIManager : MonoBehaviour
     private int progressPosXMax;
     [SerializeField]
     private float progressPosY;
+
+    [Header("UI")]
+    [SerializeField]
+    private GameObject gameoverUI;
+    [SerializeField]
+    private GameObject pauseUI;
+    public Button restartButton;
+    [SerializeField]
+    private GameObject controllers;
 
     [Header("FX")]
     [SerializeField]
@@ -127,5 +133,15 @@ public class UIManager : MonoBehaviour
     public void ProgressCha(bool live)
     {
         progressCha.SetBool("onLive", live);
+    }
+
+    public void ShowDangerPanel()
+    {
+        dangerUI.SetActive(true);
+    }
+
+    public void ShowController(bool onShow)
+    {
+        controllers.SetActive(onShow);
     }
 }

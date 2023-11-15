@@ -12,7 +12,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField][Range(0, 1)]
     private float bgmVolume;
     private AudioSource bgmAudio;
-    public enum Bgm { Run, Boss }
+    public enum Bgm { Run, Boss, Mute }
 
     [Header("System")]
     [SerializeField]
@@ -106,6 +106,21 @@ public class AudioManager : MonoBehaviour
             enemyAudios[k] = enemyObject.AddComponent<AudioSource>();
             enemyAudios[k].playOnAwake = false;
             enemyAudios[k].volume = enemyVolume;
+        }
+    }
+
+    public void SwitchBGM(int bgmIndex)
+    {
+        switch (bgmIndex)
+        {
+            case 0:
+            case 1:
+                bgmAudio.clip = bgmClips[bgmIndex];
+                bgmAudio.Play();
+                break;
+            case 2:
+                bgmAudio.Stop();
+                break;
         }
     }
 

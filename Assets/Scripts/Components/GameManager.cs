@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
+
     [HideInInspector]
     public bool isLive = false;
 
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour
     private bool scoreGetting = false;
     [HideInInspector]
     public bool isGameOver = false;
+    private bool isArrive = false;
 
     [Header("Respawn")]
     [SerializeField]
@@ -52,10 +54,15 @@ public class GameManager : MonoBehaviour
     
     void Update()
     {
-        if (!isLive)
-            return;
+        if (isLive)
+        {
+            ScoreProcess();
+        }
+    }
 
-        if (!scoreGetting)
+    void ScoreProcess()
+    {
+        if (!scoreGetting && !isArrive)
         {
             StartCoroutine("ProgressScore");
         }
@@ -67,6 +74,11 @@ public class GameManager : MonoBehaviour
         {
             score += newScore;
             UIManager.instance.ProgressModify(score);
+        }
+
+        if (score >= maxScore)
+        {
+            ArriveBoss();
         }
     }
 
@@ -83,6 +95,22 @@ public class GameManager : MonoBehaviour
     {
         isLive = live;
         UIManager.instance.ProgressCha(live);
+    }
+
+    void ArriveBoss()
+    {
+        isArrive = true;
+        GameLive(false);
+        player.Move(false);
+        AudioManager.instance.SwitchBGM(2);
+        UIManager.instance.ShowController(false);
+        StartCoroutine("ArriveBossProcess");
+    }
+
+    IEnumerator ArriveBossProcess()
+    {
+        UIManager.instance.ShowDangerPanel();
+        yield return StartCoroutine(EventManager.instance.BossEvent());
     }
 
     public void CameraPause()
