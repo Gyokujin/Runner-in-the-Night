@@ -42,6 +42,12 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject controllers;
 
+    [Header("Fade")]
+    [SerializeField]
+    private Image fadeImage;
+    [SerializeField]
+    private float fadeTime = 2f;
+
     [Header("FX")]
     [SerializeField]
     private GameObject playerSpawnFX;
@@ -143,5 +149,35 @@ public class UIManager : MonoBehaviour
     public void ShowController(bool onShow)
     {
         controllers.SetActive(onShow);
+    }
+
+    public IEnumerator FadeIn()
+    {
+        fadeImage.gameObject.SetActive(true);
+        fadeImage.color = new Color(0, 0, 0, 1);
+        float time = fadeTime;
+
+        while (time > 0)
+        {
+            time -= Time.deltaTime;
+            fadeImage.color = new Color(0, 0, 0, time / fadeTime);
+            yield return null;
+        }
+
+        fadeImage.gameObject.SetActive(false);
+    }
+
+    public IEnumerator FadeOut()
+    {
+        fadeImage.gameObject.SetActive(true);
+        fadeImage.color = new Color(0, 0, 0, 0);
+        float time = fadeTime;
+
+        while (time > 0)
+        {
+            time -= Time.deltaTime;
+            fadeImage.color = new Color(0, 0, 0, (1 - time) / fadeTime);
+            yield return null;
+        }
     }
 }

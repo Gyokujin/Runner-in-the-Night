@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private PlayerController player;
     [SerializeField]
+    private PlatformControl platform;
+    [SerializeField]
     private targetCamera camera;
 
     void Awake()
@@ -110,7 +112,18 @@ public class GameManager : MonoBehaviour
     IEnumerator ArriveBossProcess()
     {
         UIManager.instance.ShowDangerPanel();
+        yield return StartCoroutine(EventManager.instance.DangerEvent());
+        yield return StartCoroutine(UIManager.instance.FadeOut());
+        platform.PlatformChange();
+
+        yield return new WaitForSeconds(1f);
+        yield return StartCoroutine(UIManager.instance.FadeIn());
         yield return StartCoroutine(EventManager.instance.BossEvent());
+
+        GameLive(true);
+        player.Move(true);
+        AudioManager.instance.SwitchBGM(1);
+        UIManager.instance.ShowController(true);
     }
 
     public void CameraPause()

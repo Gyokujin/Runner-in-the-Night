@@ -4,26 +4,44 @@ using UnityEngine;
 
 public class PlatformControl : MonoBehaviour
 {
-    private GameObject[] platforms;
-    
-    [Header("Transfer")]
-    private int moveIndex = 0;
-    [SerializeField]
-    private float minXPos;
-    private float lastYPos;
-    [SerializeField]
-    private float transferX;
-    [SerializeField]
-    private float transferYMin;
-    [SerializeField]
-    private float transferYMax;
-    [SerializeField]
-    private float transferYLimit;
+    [HideInInspector]
+    public PlatformType platformType;
 
-    [Header("Spawn")]
+    [SerializeField]
+    private GameObject[] randomPlatforms;
+    [SerializeField]
+    private GameObject[] linePlatforms;
+
+    public enum PlatformType
+    {
+        Random,
+        Line
+    }
+
+    [Header("PlatformData")]
+    private int moveIndex = 0;
     [SerializeField]
     private float[] spawnPosX;
     private SpawnData spawnData;
+
+    [Header("RandomPlatform")]
+    [SerializeField]
+    private float randomPlatformMinX;
+    private float lastYPos;
+    [SerializeField]
+    private float randomPlatfromTransferX;
+    [SerializeField]
+    private float randomPlatfromYMin;
+    [SerializeField]
+    private float randomPlatfromYMax;
+    [SerializeField]
+    private float randomPlatfromYLimit;
+
+    [Header("LinePlatform")]
+    [SerializeField]
+    private float linePlatformMinX;
+    [SerializeField]
+    private float linePlatfromTransferX;
 
     void Awake()
     {
@@ -33,17 +51,13 @@ public class PlatformControl : MonoBehaviour
 
     void Init()
     {
-        platforms = new GameObject[transform.childCount];
-
-        for (int i = 0; i < platforms.Length; i++)
-        {
-            platforms[i] = transform.GetChild(i).gameObject;
-        }
+        platformType = PlatformType.Random;
     }
 
     void Update()
     {
-        if (platforms[moveIndex].transform.position.x < minXPos)
+        if ((platformType == PlatformType.Random && randomPlatforms[moveIndex].transform.position.x < randomPlatformMinX) || 
+            (platformType == PlatformType.Line && linePlatforms[moveIndex].transform.position.x < linePlatformMinX))
         {
             PlatformTransfer(moveIndex);
         }
@@ -51,11 +65,55 @@ public class PlatformControl : MonoBehaviour
 
     void PlatformTransfer(int platformIndex)
     {
-        float transferY = Random.Range(Mathf.Max(lastYPos - transferYLimit, transferYMin), Mathf.Min(lastYPos  + transferYLimit, transferYMax));
-        lastYPos = transferY;
-        platforms[platformIndex].transform.position = new Vector2(transferX, transferY);
-        PlatformSetting(platformIndex);
-        moveIndex = (moveIndex + 1) % (platforms.Length);
+        if (this.platformType == PlatformType.Random)
+        {
+            GameObject platform = randomPlatforms[platformIndex];
+            float transferY = Random.Range(Mathf.Max(lastYPos - randomPlatfromYLimit, randomPlatfromYMin), Mathf.Min(lastYPos + randomPlatfromYLimit, randomPlatfromYMax));
+            lastYPos = transferY;
+            platform.transform.position = new Vector2(randomPlatfromTransferX, transferY);
+            PlatformSetting(platformIndex);
+            moveIndex = (moveIndex + 1) % (randomPlatforms.Length);
+        }
+        else if (this.platformType == PlatformType.Line)
+        {
+            GameObject platform = linePlatforms[platformIndex];
+            platform.transform.position = new Vector2(linePlatfromTransferX, platform.transform.position.y);
+            moveIndex = (moveIndex + 1) % (linePlatforms.Length);
+        }
+    }
+
+    public void PlatformChange()
+    {
+        if (platformType == PlatformType.Random) // 현재 플랫폼타입에서 다른 타입으로 변형한다.
+        {
+            platformType = PlatformType.Line;
+            
+            foreach (GameObject platform in randomPlatforms)
+            {
+                platform.SetActive(false);
+            }
+
+            foreach (GameObject platform in linePlatforms)
+            {
+                platform.SetActive(true);
+            }
+        }
+        else
+        {
+            platformType = PlatformType.Random;
+
+            foreach (GameObject platform in randomPlatforms)
+            {
+                platform.SetActive(true);
+            }
+
+            foreach (GameObject platform in linePlatforms)
+            {
+                platform.SetActive(false);
+            }
+        }
+
+        moveIndex = 0; // 발판 이동 순번을 초기화한다.
     }
 
     void PlatformSetting(int platformIndex)
@@ -69,7 +127,7 @@ public class PlatformControl : MonoBehaviour
             {
                 case 0:
                     spawnObject = PoolManager.instance.Get(PoolManager.PoolType.Obstacle, 0);
-                    spawnObject.transform.parent = platforms[platformIndex].transform;
+                    spawnObject.transform.parent = randomPlatforms[platformIndex].transform;
                     spawnObject.transform.localPosition = new Vector2(spawnPosX[i], spawnData.spikePosY);
                     break;
 
@@ -78,7 +136,7 @@ public class PlatformControl : MonoBehaviour
                 case 3:
                     int enemyKind = spawnData.SelectEnemy();
                     spawnObject = PoolManager.instance.Get(PoolManager.PoolType.Enemy, enemyKind);
-                    spawnObject.transform.parent = platforms[platformIndex].transform;
+                    spawnObject.transform.parent = randomPlatforms[platformIndex].transform;
                     spawnObject.transform.localPosition = new Vector2(spawnPosX[i], spawnData.enemyPosY[enemyKind]);
                     break;
             }

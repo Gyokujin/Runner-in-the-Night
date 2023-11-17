@@ -32,12 +32,16 @@ public class EventManager : MonoBehaviour
         director = GetComponent<PlayableDirector>();
     }
 
-    public IEnumerator BossEvent()
+    public IEnumerator DangerEvent()
     {
         PlayTimeLine(Timeline.Danger);
-
         yield return new WaitForSeconds((float)timelines[(int)Timeline.Danger].duration);
+    }
+
+    public IEnumerator BossEvent()
+    {
         PlayTimeLine(Timeline.BossAppear);
+        yield return new WaitForSeconds((float)timelines[(int)Timeline.BossAppear].duration);
     }
 
     public void PlayTimeLine(Timeline index)
