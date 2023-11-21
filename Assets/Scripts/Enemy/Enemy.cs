@@ -39,7 +39,8 @@ public class Enemy : MonoBehaviour
     public bool onDie = false;
     [SerializeField]
     protected GameObject detector;
-    private float dieDelay;
+    [SerializeField]
+    private float dieDelay = 2f;
     private WaitForSeconds dieWait;
 
     [Header("Component")]
@@ -54,11 +55,6 @@ public class Enemy : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         collider = GetComponent<BoxCollider2D>();
         animator = GetComponent<Animator>();
-    }
-
-    void Start()
-    {
-        dieWait = new WaitForSeconds(dieDelay);
     }
 
     public void Init()
@@ -120,7 +116,7 @@ public class Enemy : MonoBehaviour
         sprite.color = new Color(1, 1, 1, 0.65f);
         GameManager.instance.AddScore(getPoint);
 
-        yield return dieWait;
+        yield return new WaitForSeconds(dieDelay);
         gameObject.SetActive(false);
     }
 }

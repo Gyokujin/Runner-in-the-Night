@@ -190,6 +190,7 @@ MonoBehaviour:
   moveVec: {x: -1, y: 0}
   onDie: 0
   detector: {fileID: 6842005066488825130}
+  dieDelay: 1.5
 --- !u!1 &6842005066488825130
 GameObject:
   m_ObjectHideFlags: 0

@@ -170,6 +170,7 @@ MonoBehaviour:
   bullets:
   - {fileID: 6327911530340690291, guid: 874a677eaa344e64e8953eb07a932d39, type: 3}
   - {fileID: 158897348814544613, guid: 8ed07574bc8a66c4d8c79e4af24361eb, type: 3}
+  - {fileID: 4976415385964773204, guid: 58e34600af23c8141bbad93c5d5f7435, type: 3}
   obstacle: {fileID: 3246353126285679318, guid: 5f202882424fe924fb7b22c69d79290f, type: 3}
   enemies:
   - {fileID: 6655335912637321127, guid: 97e271d301211314a9e95bda26390393, type: 3}
@@ -2450,13 +2451,16 @@ GameObject:
   - component: {fileID: 599513595}
   - component: {fileID: 599513594}
   - component: {fileID: 599513596}
+  - component: {fileID: 599513598}
+  - component: {fileID: 599513597}
+  - component: {fileID: 599513599}
   m_Layer: 0
   m_Name: Boss_Excel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &599513594
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2546,6 +2550,69 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!61 &599513597
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 599513593}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.001058, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 3.75, y: 1.40625}
+    newSize: {x: 3.75, y: 1.40625}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3.752, y: 1.40625}
+  m_EdgeRadius: 0
+--- !u!50 &599513598
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 599513593}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
+--- !u!114 &599513599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 599513593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eea347c8c80f7e4c9bfed1e5a12c96d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 40
+  patternDelay: 2.5
+  emitter: {fileID: 149207952}
+  generalSpeed: 10
 --- !u!1 &629654931
 GameObject:
   m_ObjectHideFlags: 0
@@ -2702,7 +2769,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 160.8, y: 4}
+  m_Size: {x: 270, y: 4}
   m_EdgeRadius: 0
 --- !u!61 &651783825
 BoxCollider2D:
@@ -2717,7 +2784,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -46.4, y: 9.75}
+  m_Offset: {x: -107.5, y: 9.75}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -2755,7 +2822,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 107.3, y: 9.75}
+  m_Offset: {x: 167.5, y: 9.75}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -2792,7 +2859,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 160.8, y: 4}
+  m_Size: {x: 270, y: 4}
   m_EdgeRadius: 0
 --- !u!1 &654478705
 GameObject:

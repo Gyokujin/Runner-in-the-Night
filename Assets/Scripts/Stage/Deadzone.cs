@@ -19,6 +19,7 @@ public class Deadzone : MonoBehaviour
                 case "PlayerBullet":
                 case "EnemyBullet":
                 case "Obstacle":
+                    collision.gameObject.transform.position = Vector2.zero;
                     PoolManager.instance.Return(collision.gameObject);
                     break;
             }

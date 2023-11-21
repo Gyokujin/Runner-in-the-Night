@@ -29,15 +29,11 @@ public class Bullet : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    void OnEnable()
-    {
-        sprite.enabled = true;
-        collider.enabled = true;
-    }
-
     public void Shoot(Vector2 direction, float speed)
     {
         rigid.velocity = (direction * speed);
+        collider.enabled = true;
+        animator.SetBool("onHit", false);
         Invoke("Hide", launchTime);
     }
 
@@ -50,7 +46,7 @@ public class Bullet : MonoBehaviour
             if (!enemy.onDie)
             {
                 enemy.Damage();
-                animator.SetTrigger("doHit");
+                animator.SetBool("onHit", true);
                 collider.enabled = false;
                 Hide();
                 AudioManager.instance.PlaySystemSFX(AudioManager.SystemSFX.Hit);
@@ -63,15 +59,13 @@ public class Bullet : MonoBehaviour
             if (!player.onDamage)
             {
                 player.Hit();
-                animator.SetTrigger("doHit");
+                animator.SetBool("onHit", true);
             }
         }
     }
 
     void Hide()
     {
-        sprite.enabled = false;
-        collider.enabled = false;
         PoolManager.instance.Return(gameObject);
     }
 }
