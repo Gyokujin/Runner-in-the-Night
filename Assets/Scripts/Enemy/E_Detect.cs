@@ -24,7 +24,7 @@ public class E_Detect : MonoBehaviour
                     enemy.GetComponent<E_Patrol>().Detect(collision.transform.position);
                     break;
             }
-
+            
             gameObject.SetActive(false);
         }
     }

@@ -21,11 +21,23 @@ public class B_Excel : MonoBehaviour
     [SerializeField]
     private float patternDelay;
 
+    [Header("Action")]
+    [SerializeField]
+    private B_Detect detector;
+
     [Header("Attack")]
     [SerializeField]
     private Transform emitter;
     [SerializeField]
     private float generalSpeed;
+    [SerializeField]
+    private float attackDelay;
+    [SerializeField]
+    private float attackDis; // 공격 유효거리
+
+    // yield return time
+    private WaitForSeconds patternWait;
+    private WaitForSeconds attackWait;
 
     [Header("Component")]
     private Animator animator;
@@ -45,15 +57,21 @@ public class B_Excel : MonoBehaviour
     {
         phase = Phase.Phase1;
         hp = maxHp;
+
+        patternWait = new WaitForSeconds(patternDelay);
+        attackWait = new WaitForSeconds(attackDelay);
     }
 
     void Start()
     {
-        Think();
+        Invoke("Think", patternDelay);
     }
 
     void Think()
     {
+        detector.gameObject.SetActive(true);
+        Vector2 target = detector.targetPos;
+
         int patternIndex = 0;
 
         switch (phase)
@@ -69,21 +87,29 @@ public class B_Excel : MonoBehaviour
                 break;
         }
 
-        switch (patternIndex)
-        {
-            case 0:
-                GeneralShot();
-                break;
-        }
+        StartCoroutine("PatternChoice", patternIndex);
     }
 
-    void GeneralShot()
+    IEnumerator PatternChoice(int pattern)
+    {
+        switch (pattern)
+        {
+            case 0:
+                yield return StartCoroutine("GeneralShot");
+                break;
+        }
+
+        yield return patternWait;
+        Think();
+    }
+
+    IEnumerator GeneralShot()
     {
         GameObject spawnBullet = PoolManager.instance.Get(PoolManager.PoolType.Bullet, 2);
         spawnBullet.gameObject.SetActive(true);
         spawnBullet.transform.position = emitter.position;
         spawnBullet.GetComponent<Bullet>().Shoot(Vector2.left, generalSpeed);
 
-        Invoke("Think", patternDelay);
+        yield return attackDelay;
     }
 }

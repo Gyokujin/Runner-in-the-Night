@@ -15,6 +15,7 @@ public class Bullet : MonoBehaviour
     private BulletType type;
     [SerializeField]
     private float launchTime;
+    private float currentLaunch;
 
     private SpriteRenderer sprite;
     private Rigidbody2D rigid;
@@ -31,10 +32,20 @@ public class Bullet : MonoBehaviour
 
     public void Shoot(Vector2 direction, float speed)
     {
+        currentLaunch = launchTime; // 풀링으로 회수한 총알의 발사 시간을 초기화한다.
         rigid.velocity = (direction * speed);
         collider.enabled = true;
         animator.SetBool("onHit", false);
-        Invoke("Hide", launchTime);
+    }
+
+    void Update()
+    {
+        currentLaunch -= Time.deltaTime;
+
+        if (currentLaunch <= 0)
+        {
+            Hide();
+        }
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -60,12 +71,14 @@ public class Bullet : MonoBehaviour
             {
                 player.Hit();
                 animator.SetBool("onHit", true);
+                Hide();
             }
         }
     }
 
     void Hide()
     {
+        gameObject.transform.position = Vector2.zero;
         PoolManager.instance.Return(gameObject);
     }
 }
