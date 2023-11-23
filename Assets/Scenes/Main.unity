@@ -2613,9 +2613,9 @@ MonoBehaviour:
   attackDis: 11.6
   moveSpeed: 2
   emitter: {fileID: 149207952}
-  generalSpeed: 7.5
-  patternDelay: 1.5
-  attackDelay: 2.5
+  generalShotSpeed: 5.5
+  patternDelay: 4
+  generalShotDelay: 0.5
 --- !u!1 &629654931
 GameObject:
   m_ObjectHideFlags: 0

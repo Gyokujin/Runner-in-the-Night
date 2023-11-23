@@ -29,15 +29,15 @@ public class B_Excel : MonoBehaviour
     [SerializeField]
     private Transform emitter;
     [SerializeField]
-    private float generalSpeed;
+    private float generalShotSpeed;
     [SerializeField]
     private float patternDelay; // 패턴 실행전 딜레이
     [SerializeField]
-    private float attackDelay; // 공격후 딜레이
+    private float generalShotDelay; // 기본 공격후 딜레이
 
     // yield return time
     private WaitForSeconds patternWait;
-    private WaitForSeconds attackWait;
+    private WaitForSeconds generalShotWait;
 
     [Header("Component")]
     private Animator animator;
@@ -66,7 +66,7 @@ public class B_Excel : MonoBehaviour
         player = GameObject.Find("Player");
 
         patternWait = new WaitForSeconds(patternDelay);
-        attackWait = new WaitForSeconds(attackDelay);
+        generalShotWait = new WaitForSeconds(generalShotDelay);
     }
 
     IEnumerator PatternCycle()
@@ -129,13 +129,17 @@ public class B_Excel : MonoBehaviour
 
     IEnumerator GeneralShot()
     {
-        Debug.Log("Shot");
-        GameObject spawnBullet = PoolManager.instance.Get(PoolManager.PoolType.Bullet, 2);
-        spawnBullet.gameObject.SetActive(true);
-        spawnBullet.transform.position = emitter.position;
-        spawnBullet.GetComponent<Bullet>().Shoot(Vector2.left, generalSpeed);
+        int shotCount = Random.Range(1, 3); // 최대 2발까지 쏜다.
 
-        yield return attackWait;
+        for (int i = 0; i < shotCount; i++)
+        {
+            GameObject spawnBullet = PoolManager.instance.Get(PoolManager.PoolType.Bullet, 2);
+            spawnBullet.gameObject.SetActive(true);
+            spawnBullet.transform.position = emitter.position;
+            spawnBullet.GetComponent<Bullet>().Shoot(Vector2.left, generalShotSpeed);
+            yield return generalShotWait;
+        }
+
         StartCoroutine("PatternCycle");
     }
 }

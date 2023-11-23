@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 701c9977e3403ad41b18ecd2f4308cbc
+guid: 35187483659ee774bb0e520a5e4272ad
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -67,7 +67,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 64
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -129,13 +129,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Excel_Shoot_0
+      name: Excel_Shoot 1_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 16
-        width: 16
-        height: 16
+        y: 32
+        width: 63
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -143,20 +143,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4fbc5741e56aeb24397d30c06adbfe2d
-      internalID: 264960203
+      spriteID: b6857bff2a2ec644fa23b761a80ee514
+      internalID: 1658243972
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Excel_Shoot_1
+      name: Excel_Shoot 1_1
       rect:
         serializedVersion: 2
-        x: 16
-        y: 16
-        width: 16
-        height: 16
+        x: 63
+        y: 32
+        width: 63
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -164,20 +164,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 357ebd664b7b1df4988a89a62335878a
-      internalID: 1199242340
+      spriteID: 478e11541b170e94e8cb55d21f9a6ec8
+      internalID: 1058394530
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Excel_Shoot_2
+      name: Excel_Shoot 1_2
       rect:
         serializedVersion: 2
-        x: 32
-        y: 16
-        width: 16
-        height: 16
+        x: 126
+        y: 32
+        width: 63
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -185,20 +185,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9744bf914472a6347bf982252f7c88a7
-      internalID: -1229886112
+      spriteID: 9e39752307997da42a504bce351673e9
+      internalID: -1697371084
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Excel_Shoot_3
+      name: Excel_Shoot 1_3
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 32
+        width: 63
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45105f65847f0bd488e38f18126fdf13
+      internalID: 1116034341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Excel_Shoot 1_4
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 16
-        height: 16
+        width: 63
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -206,20 +227,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d0f6faa2651015f448c53bf0ecd73058
-      internalID: -1636924603
+      spriteID: 55410e9a86f0a6e4a977a390242fb6b3
+      internalID: -1318521935
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Excel_Shoot_4
+      name: Excel_Shoot 1_5
       rect:
         serializedVersion: 2
-        x: 16
+        x: 63
         y: 0
-        width: 16
-        height: 16
+        width: 63
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -227,8 +248,71 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1ab044dcbd61ff249bf829af91c2314e
-      internalID: 1320626434
+      spriteID: f64d2893f89a0c145a6ce210c6ad3325
+      internalID: 614236585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Excel_Shoot 1_6
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 0
+        width: 63
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 827eb4cd2cf2d9746a0f4f8faf283b9c
+      internalID: 140549742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Excel_Shoot 1_7
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 0
+        width: 63
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a851b3618f27fec47913d68a755465d5
+      internalID: -2143822026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Excel_Shoot 1_8
+      rect:
+        serializedVersion: 2
+        x: 252
+        y: 0
+        width: 63
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aaa8c71bedb4b9643a7a099f6d40bbb9
+      internalID: 1035112309
       vertices: []
       indices: 
       edges: []
@@ -244,11 +328,15 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Excel_Shoot_0: 264960203
-      Excel_Shoot_1: 1199242340
-      Excel_Shoot_3: -1636924603
-      Excel_Shoot_2: -1229886112
-      Excel_Shoot_4: 1320626434
+      Excel_Shoot 1_1: 1058394530
+      Excel_Shoot 1_8: 1035112309
+      Excel_Shoot 1_4: -1318521935
+      Excel_Shoot 1_5: 614236585
+      Excel_Shoot 1_0: 1658243972
+      Excel_Shoot 1_2: -1697371084
+      Excel_Shoot 1_7: -2143822026
+      Excel_Shoot 1_6: 140549742
+      Excel_Shoot 1_3: 1116034341
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

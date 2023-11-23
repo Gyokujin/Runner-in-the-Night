@@ -16,6 +16,7 @@ public class Bullet : MonoBehaviour
     [SerializeField]
     private float launchTime;
     private float currentLaunch;
+    private bool onHit;
 
     private SpriteRenderer sprite;
     private Rigidbody2D rigid;
@@ -32,6 +33,7 @@ public class Bullet : MonoBehaviour
 
     public void Shoot(Vector2 direction, float speed)
     {
+        onHit = false;
         currentLaunch = launchTime; // 풀링으로 회수한 총알의 발사 시간을 초기화한다.
         rigid.velocity = (direction * speed);
         collider.enabled = true;
@@ -40,11 +42,14 @@ public class Bullet : MonoBehaviour
 
     void Update()
     {
-        currentLaunch -= Time.deltaTime;
-
-        if (currentLaunch <= 0)
+        if (!onHit)
         {
-            Hide();
+            currentLaunch -= Time.deltaTime;
+
+            if (currentLaunch <= 0)
+            {
+                Hide();
+            }
         }
     }
 
@@ -57,9 +62,9 @@ public class Bullet : MonoBehaviour
             if (!enemy.onDie)
             {
                 enemy.Damage();
+                onHit = true;
                 animator.SetBool("onHit", true);
                 collider.enabled = false;
-                Hide();
                 AudioManager.instance.PlaySystemSFX(AudioManager.SystemSFX.Hit);
             }
         }
@@ -70,8 +75,8 @@ public class Bullet : MonoBehaviour
             if (!player.onDamage)
             {
                 player.Hit();
+                onHit = true;
                 animator.SetBool("onHit", true);
-                Hide();
             }
         }
     }
