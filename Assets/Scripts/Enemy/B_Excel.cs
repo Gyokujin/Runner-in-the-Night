@@ -143,6 +143,7 @@ public class B_Excel : MonoBehaviour
             spawnBullet.gameObject.SetActive(true);
             spawnBullet.transform.position = emitter.position;
             spawnBullet.GetComponent<Bullet>().Shoot(Vector2.left, generalShotSpeed);
+            AudioManager.instance.PlayEnemySFX(AudioManager.EnemySfx.ExcelShot);
         }
 
         StartCoroutine("PatternCycle");

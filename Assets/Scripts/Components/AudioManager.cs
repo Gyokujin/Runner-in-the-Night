@@ -45,7 +45,7 @@ public class AudioManager : MonoBehaviour
     private int enemyCh;
     private int enemyIndex;
     private AudioSource[] enemyAudios;
-    public enum EnemySfx { GuardianMove, GuardianDie, DiverMove, DiverDie, ChaserChase, ChaserDie, WandererDie, BlazerAttack, BlazerDie }
+    public enum EnemySfx { GuardianMove, GuardianDie, DiverMove, DiverDie, ChaserChase, ChaserDie, WandererDie, BlazerAttack, BlazerDie, ExcelShot }
 
     void Awake()
     {

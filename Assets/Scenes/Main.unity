@@ -2454,9 +2454,9 @@ GameObject:
   - component: {fileID: 599513598}
   - component: {fileID: 599513597}
   - component: {fileID: 599513599}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Boss_Excel
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5131,6 +5131,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8e829c20b3c8f1240a4340cbcb85c871, type: 3}
   - {fileID: 8300000, guid: 98460e357499cc4438a77786b29d0867, type: 3}
   - {fileID: 8300000, guid: 7d879a2a0cd7bf54081ad20c907785c9, type: 3}
+  - {fileID: 8300000, guid: b0142fcee81d87a41a1649f9f6a6872c, type: 3}
   enemyVolume: 0.5
   enemyCh: 20
 --- !u!82 &1446963650
