@@ -18,12 +18,12 @@ public class B_Excel : MonoBehaviour
     [SerializeField]
     private int maxHp;
     private int hp;
-    [SerializeField]
-    private float patternDelay;
 
     [Header("Action")]
     [SerializeField]
-    private B_Detect detector;
+    private float attackDis = 8.8f; // 공격전에 플레이어와의 간격을 유지
+    [SerializeField]
+    private float moveSpeed;
 
     [Header("Attack")]
     [SerializeField]
@@ -31,9 +31,9 @@ public class B_Excel : MonoBehaviour
     [SerializeField]
     private float generalSpeed;
     [SerializeField]
-    private float attackDelay;
+    private float patternDelay; // 패턴 실행전 딜레이
     [SerializeField]
-    private float attackDis; // 공격 유효거리
+    private float attackDelay; // 공격후 딜레이
 
     // yield return time
     private WaitForSeconds patternWait;
@@ -43,6 +43,7 @@ public class B_Excel : MonoBehaviour
     private Animator animator;
     private Rigidbody2D rigid;
     private BoxCollider2D collider;
+    private GameObject player;
 
     void Awake()
     {
@@ -53,25 +54,37 @@ public class B_Excel : MonoBehaviour
         Init();
     }
 
+    void Start()
+    {
+        StartCoroutine("PatternCycle");
+    }
+
     void Init()
     {
         phase = Phase.Phase1;
         hp = maxHp;
+        player = GameObject.Find("Player");
 
         patternWait = new WaitForSeconds(patternDelay);
         attackWait = new WaitForSeconds(attackDelay);
     }
 
-    void Start()
+    IEnumerator PatternCycle()
     {
-        Invoke("Think", patternDelay);
+        yield return StartCoroutine("Move");
+        yield return patternWait;
+        int pattern = PatternChoice();
+        
+        switch (pattern)
+        {
+            case 0:
+                StartCoroutine("GeneralShot");
+                break;
+        }
     }
 
-    void Think()
+    int PatternChoice()
     {
-        detector.gameObject.SetActive(true);
-        Vector2 target = detector.targetPos;
-
         int patternIndex = 0;
 
         switch (phase)
@@ -87,29 +100,42 @@ public class B_Excel : MonoBehaviour
                 break;
         }
 
-        StartCoroutine("PatternChoice", patternIndex);
+        return patternIndex;
     }
 
-    IEnumerator PatternChoice(int pattern)
+    IEnumerator Move()
     {
-        switch (pattern)
+        float destX = player.transform.position.x + attackDis;
+
+        if (transform.position.x > destX) // 왼쪽으로 이동
         {
-            case 0:
-                yield return StartCoroutine("GeneralShot");
-                break;
+            while (transform.position.x > destX)
+            {
+                rigid.velocity = Vector2.left * moveSpeed;
+                yield return null;
+            }
+        }
+        else if (transform.position.x < destX)// 오른쪽으로 이동
+        {
+            while (transform.position.x < destX)
+            {
+                rigid.velocity = Vector2.right * moveSpeed;
+                yield return null;
+            }
         }
 
-        yield return patternWait;
-        Think();
+        rigid.velocity = Vector2.zero;
     }
 
     IEnumerator GeneralShot()
     {
+        Debug.Log("Shot");
         GameObject spawnBullet = PoolManager.instance.Get(PoolManager.PoolType.Bullet, 2);
         spawnBullet.gameObject.SetActive(true);
         spawnBullet.transform.position = emitter.position;
         spawnBullet.GetComponent<Bullet>().Shoot(Vector2.left, generalSpeed);
 
-        yield return attackDelay;
+        yield return attackWait;
+        StartCoroutine("PatternCycle");
     }
 }
