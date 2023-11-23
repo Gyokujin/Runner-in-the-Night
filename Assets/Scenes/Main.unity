@@ -2521,7 +2521,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 599513593}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.2, y: -0.05, z: 0}
+  m_LocalPosition: {x: 9.78, y: -0.05, z: 0}
   m_LocalScale: {x: 1.6, y: 1.6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2610,8 +2610,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHp: 40
-  attackDis: 11.6
+  attackDis: 12
+  attackPosY: -0.05
   moveSpeed: 2
+  maxMoveTime: 2
   emitter: {fileID: 149207952}
   generalShotSpeed: 5.5
   patternDelay: 4

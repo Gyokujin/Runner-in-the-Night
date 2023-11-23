@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class B_Excel : MonoBehaviour
 {
@@ -23,7 +24,11 @@ public class B_Excel : MonoBehaviour
     [SerializeField]
     private float attackDis = 8.8f; // 공격전에 플레이어와의 간격을 유지
     [SerializeField]
+    private float attackPosY = -0.05f; // 공격을 시작할 포지션Y
+    [SerializeField]
     private float moveSpeed;
+    [SerializeField]
+    private float maxMoveTime = 2f; // 최대 이동시간. 이를 초과하면 이동 중지
 
     [Header("Attack")]
     [SerializeField]
@@ -133,11 +138,11 @@ public class B_Excel : MonoBehaviour
 
         for (int i = 0; i < shotCount; i++)
         {
+            yield return generalShotWait;
             GameObject spawnBullet = PoolManager.instance.Get(PoolManager.PoolType.Bullet, 2);
             spawnBullet.gameObject.SetActive(true);
             spawnBullet.transform.position = emitter.position;
             spawnBullet.GetComponent<Bullet>().Shoot(Vector2.left, generalShotSpeed);
-            yield return generalShotWait;
         }
 
         StartCoroutine("PatternCycle");
