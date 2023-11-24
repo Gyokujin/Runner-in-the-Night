@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4976415385964773201}
   - component: {fileID: 4976415385964773200}
   m_Layer: 9
-  m_Name: ExcelBullet1
+  m_Name: Excel_GeneralShot
   m_TagString: EnemyBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

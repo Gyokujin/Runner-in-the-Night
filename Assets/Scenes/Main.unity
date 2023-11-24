@@ -171,6 +171,7 @@ MonoBehaviour:
   - {fileID: 6327911530340690291, guid: 874a677eaa344e64e8953eb07a932d39, type: 3}
   - {fileID: 158897348814544613, guid: 8ed07574bc8a66c4d8c79e4af24361eb, type: 3}
   - {fileID: 4976415385964773204, guid: 58e34600af23c8141bbad93c5d5f7435, type: 3}
+  - {fileID: 6553404564455426372, guid: 52bd952250888f644bbe3ee6b0365bf4, type: 3}
   obstacle: {fileID: 3246353126285679318, guid: 5f202882424fe924fb7b22c69d79290f, type: 3}
   enemies:
   - {fileID: 6655335912637321127, guid: 97e271d301211314a9e95bda26390393, type: 3}
@@ -541,7 +542,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 149207951}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.53, y: 0.4, z: 0}
+  m_LocalPosition: {x: -0.75, y: 0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2521,7 +2522,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 599513593}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.78, y: -0.05, z: 0}
+  m_LocalPosition: {x: 7.5, y: -0.05, z: 0}
   m_LocalScale: {x: 1.6, y: 1.6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2610,14 +2611,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHp: 40
-  attackDis: 12
+  patternDelay: 1.25
+  attackDisMin: 10.5
+  attackDisMax: 14
   attackPosY: -0.05
-  moveSpeed: 2
-  maxMoveTime: 2
+  moveSpeed: 6
   emitter: {fileID: 149207952}
-  generalShotSpeed: 5.5
-  patternDelay: 4
-  generalShotDelay: 0.5
+  attackDelay: 2
+  generalShotSpeed: 5.8
+  impactShotSpeed: 9.5
+  shotDelay: 0.5
 --- !u!1 &629654931
 GameObject:
   m_ObjectHideFlags: 0
@@ -5132,6 +5135,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 98460e357499cc4438a77786b29d0867, type: 3}
   - {fileID: 8300000, guid: 7d879a2a0cd7bf54081ad20c907785c9, type: 3}
   - {fileID: 8300000, guid: b0142fcee81d87a41a1649f9f6a6872c, type: 3}
+  - {fileID: 8300000, guid: 24df4923349069547944d77de2a6fe82, type: 3}
   enemyVolume: 0.5
   enemyCh: 20
 --- !u!82 &1446963650
