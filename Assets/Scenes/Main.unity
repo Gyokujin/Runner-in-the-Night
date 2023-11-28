@@ -2610,6 +2610,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7eea347c8c80f7e4c9bfed1e5a12c96d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  phase: 0
   maxHp: 40
   patternDelay: 1.25
   attackDisMin: 10.5
@@ -2624,7 +2625,7 @@ MonoBehaviour:
   impactShotSpeed: 9.5
   shotDelay: 0.5
   comboShotCount: 8
-  comboShotDelay: 0.5
+  comboShotDelay: 0.75
 --- !u!1 &629654931
 GameObject:
   m_ObjectHideFlags: 0

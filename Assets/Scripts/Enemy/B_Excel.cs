@@ -11,7 +11,7 @@ public class B_Excel : MonoBehaviour
         Phase3,
     }
 
-    private Phase phase; // 1 ~ 3페이즈까지 있으며 공격 패턴의 경우의 수를 구분한다.
+    public Phase phase; // 1 ~ 3페이즈까지 있으며 공격 패턴의 경우의 수를 구분한다.
 
     [Header("Status")]
     [SerializeField]
@@ -74,7 +74,7 @@ public class B_Excel : MonoBehaviour
 
     void Init()
     {
-        phase = Phase.Phase2;
+        phase = Phase.Phase1;
         hp = maxHp;
         player = GameObject.Find("Player");
 
@@ -100,16 +100,36 @@ public class B_Excel : MonoBehaviour
         {
             int pattern = PatternChoice();
 
-            switch (pattern) // 0 : GeneralShot / 1 : ImpactShot / 2 : TripleShot
+            switch (phase)
             {
-                case 0:
-                    StartCoroutine("GeneralShot");
+                case Phase.Phase1: // 1페이즈 패턴 : GeneralShot(80%), ImpactShot(20%)
+                    switch (pattern)
+                    {
+                        case 0:
+                        case 1:
+                        case 2:
+                        case 3:
+                            StartCoroutine("GeneralShot");
+                            break;
+                        case 4:
+                            StartCoroutine("ImpactShot");
+                            break;
+                    }
                     break;
-                case 1:
-                    StartCoroutine("ImpactShot");
-                    break;
-                case 2:
-                    StartCoroutine("ComboShot");
+
+                case Phase.Phase2: // 2페이즈 패턴 : ImpactShot(60%), ComboShot(40%)
+                    switch (pattern)
+                    {
+                        case 0:
+                        case 1:
+                        case 2:
+                            StartCoroutine("ImpactShot");
+                            break;
+                        case 3:
+                        case 4:
+                            StartCoroutine("ComboShot");
+                            break;
+                    }
                     break;
             }
         }
@@ -124,11 +144,11 @@ public class B_Excel : MonoBehaviour
         {
             case Phase.Phase1:
                 patternMin = 0;
-                patternMax = 1;
+                patternMax = 5;
                 break;
             case Phase.Phase2:
-                patternMin = 1;
-                patternMax = 3;
+                patternMin = 0;
+                patternMax = 5;
                 break;
             case Phase.Phase3:
                 break;
