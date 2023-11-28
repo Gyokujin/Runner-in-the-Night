@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: fan-Animation
+  m_Name: VehicleTurbo_BoostStart
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,9 +20,19 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 21300000, guid: 0a8af60acd63e6045a712c1ade264157, type: 3}
+      value: {fileID: -621322519, guid: 7b53ddf155c654842838524f7060dd21, type: 3}
     - time: 0.083333336
-      value: {fileID: 21300000, guid: a1faf71b057771d4099350f84d6187c1, type: 3}
+      value: {fileID: 1195599989, guid: 7b53ddf155c654842838524f7060dd21, type: 3}
+    - time: 0.16666667
+      value: {fileID: -171045402, guid: 7b53ddf155c654842838524f7060dd21, type: 3}
+    - time: 0.25
+      value: {fileID: 1372112009, guid: 7b53ddf155c654842838524f7060dd21, type: 3}
+    - time: 0.33333334
+      value: {fileID: -1468863730, guid: 7b53ddf155c654842838524f7060dd21, type: 3}
+    - time: 0.41666666
+      value: {fileID: -1315704927, guid: 7b53ddf155c654842838524f7060dd21, type: 3}
+    - time: 0.5
+      value: {fileID: 1195887573, guid: 7b53ddf155c654842838524f7060dd21, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -42,19 +52,24 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 21300000, guid: 0a8af60acd63e6045a712c1ade264157, type: 3}
-    - {fileID: 21300000, guid: a1faf71b057771d4099350f84d6187c1, type: 3}
+    - {fileID: -621322519, guid: 7b53ddf155c654842838524f7060dd21, type: 3}
+    - {fileID: 1195599989, guid: 7b53ddf155c654842838524f7060dd21, type: 3}
+    - {fileID: -171045402, guid: 7b53ddf155c654842838524f7060dd21, type: 3}
+    - {fileID: 1372112009, guid: 7b53ddf155c654842838524f7060dd21, type: 3}
+    - {fileID: -1468863730, guid: 7b53ddf155c654842838524f7060dd21, type: 3}
+    - {fileID: -1315704927, guid: 7b53ddf155c654842838524f7060dd21, type: 3}
+    - {fileID: 1195887573, guid: 7b53ddf155c654842838524f7060dd21, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.16666667
+    m_StopTime: 0.5833333
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
     m_HasAdditiveReferencePose: 0
-    m_LoopTime: 1
+    m_LoopTime: 0
     m_LoopBlend: 0
     m_LoopBlendOrientation: 0
     m_LoopBlendPositionY: 0
