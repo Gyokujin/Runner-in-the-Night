@@ -2614,13 +2614,17 @@ MonoBehaviour:
   patternDelay: 1.25
   attackDisMin: 10.5
   attackDisMax: 14
-  attackPosY: -0.05
-  moveSpeed: 6
+  attackPosY:
+  - -0.05
+  - 1.95
+  moveSpeed: 8
   emitter: {fileID: 149207952}
   attackDelay: 2
   generalShotSpeed: 5.8
   impactShotSpeed: 9.5
   shotDelay: 0.5
+  comboShotCount: 8
+  comboShotDelay: 0.5
 --- !u!1 &629654931
 GameObject:
   m_ObjectHideFlags: 0

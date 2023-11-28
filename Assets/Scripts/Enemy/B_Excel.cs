@@ -9,10 +9,9 @@ public class B_Excel : MonoBehaviour
         Phase1,
         Phase2,
         Phase3,
-        Phase4,
     }
 
-    private Phase phase; // 1 ~ 4페이즈까지 있으며 공격 패턴의 경우의 수를 구분한다.
+    private Phase phase; // 1 ~ 3페이즈까지 있으며 공격 패턴의 경우의 수를 구분한다.
 
     [Header("Status")]
     [SerializeField]
@@ -27,7 +26,7 @@ public class B_Excel : MonoBehaviour
     [SerializeField]
     private float attackDisMax = 8.8f; // 공격전에 유지할 간격 최대값
     [SerializeField]
-    private float attackPosY = -0.05f; // 공격을 시작할 포지션Y
+    private float[] attackPosY; // 공격을 시작할 포지션Y
     [SerializeField]
     private float moveSpeed;
 
@@ -42,11 +41,16 @@ public class B_Excel : MonoBehaviour
     private float impactShotSpeed;
     [SerializeField]
     private float shotDelay; // 기본 공격후 딜레이
+    [SerializeField]
+    private int comboShotCount;
+    [SerializeField]
+    private float comboShotDelay = 0.3f; // 트리플샷 공격 간의 딜레이
 
     // yield return time
     private WaitForSeconds attackWait;
     private WaitForSeconds patternWait;
     private WaitForSeconds shotWait;
+    private WaitForSeconds comboShotWait;
 
     [Header("Component")]
     private Animator animator;
@@ -77,6 +81,7 @@ public class B_Excel : MonoBehaviour
         attackWait = new WaitForSeconds(attackDelay);
         patternWait = new WaitForSeconds(patternDelay);
         shotWait = new WaitForSeconds(shotDelay);
+        comboShotWait = new WaitForSeconds(comboShotDelay);
     }
 
     IEnumerator PatternCycle()
@@ -95,7 +100,7 @@ public class B_Excel : MonoBehaviour
         {
             int pattern = PatternChoice();
 
-            switch (pattern)
+            switch (pattern) // 0 : GeneralShot / 1 : ImpactShot / 2 : TripleShot
             {
                 case 0:
                     StartCoroutine("GeneralShot");
@@ -103,13 +108,15 @@ public class B_Excel : MonoBehaviour
                 case 1:
                     StartCoroutine("ImpactShot");
                     break;
+                case 2:
+                    StartCoroutine("ComboShot");
+                    break;
             }
         }
     }
 
     int PatternChoice()
     {
-        int patternIndex = 0;
         int patternMin = 0;
         int patternMax = 0;
 
@@ -120,16 +127,14 @@ public class B_Excel : MonoBehaviour
                 patternMax = 1;
                 break;
             case Phase.Phase2:
-                patternMin = 0;
-                patternMax = 2;
+                patternMin = 1;
+                patternMax = 3;
                 break;
             case Phase.Phase3:
                 break;
-            case Phase.Phase4:
-                break;
         }
 
-        patternIndex = Random.Range(patternMin, patternMax);
+        int patternIndex = Random.Range(patternMin, patternMax);
         return patternIndex;
     }
 
@@ -189,5 +194,96 @@ public class B_Excel : MonoBehaviour
 
         yield return attackWait;
         StartCoroutine("PatternCycle");
+    }
+
+    IEnumerator ComboShot()
+    {
+        int randomNum = -1;
+
+        for (int i = 0; i < comboShotCount; i++) // 총 8번 사격
+        {
+            if (i == 0)
+            {
+                randomNum = 0; // 첫 발은 제자리에서 사격
+            }
+            else
+            {
+                randomNum = ComboShotPos(randomNum);
+            }
+            
+            float posY = attackPosY[randomNum];
+            
+            if (rigid.position.y > posY) // 아래로 이동
+            {
+                while (true)
+                {
+                    rigid.velocity = Vector2.down * moveSpeed;
+
+                    if (rigid.position.y <= posY)
+                    {
+                        break;
+                    }
+
+                    yield return null;
+                }
+            }
+            else if (rigid.position.y < posY) // 위로 이동
+            {
+                while (true)
+                {
+                    rigid.velocity = Vector2.up * moveSpeed;
+
+                    if (rigid.position.y >= posY)
+                    {
+                        break;
+                    }
+
+                    yield return null;
+                }
+            }
+
+            rigid.velocity = Vector2.zero;
+            GameObject spawnBullet = PoolManager.instance.Get(PoolManager.PoolType.Bullet, 2);
+            spawnBullet.transform.position = emitter.position;
+            spawnBullet.GetComponent<Bullet>().Shoot(Vector2.left, generalShotSpeed);
+            AudioManager.instance.PlayEnemySFX(AudioManager.EnemySfx.ExcelGeneralShot);
+            yield return comboShotWait;
+        }
+
+        if (rigid.position.y > attackPosY[0]) // 공격후 제자리로 이동
+        {
+            while (true)
+            {
+                rigid.velocity = Vector2.down * moveSpeed;
+
+                if (rigid.position.y <= attackPosY[0])
+                {
+                    break;
+                }
+
+                yield return null;
+            }
+        }
+
+        rigid.velocity = Vector2.zero;
+        yield return attackWait;
+        StartCoroutine("PatternCycle");
+    }
+
+    int ComboShotPos(int num)
+    {
+        int randomNum = 0;
+
+        while (true)
+        {
+            randomNum = Random.Range(0, attackPosY.Length);
+
+            if (randomNum == num)
+                continue;
+            else
+                break;
+        }
+
+        return randomNum;
     }
 }
