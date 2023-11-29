@@ -45,6 +45,14 @@ public class B_Excel : MonoBehaviour
     private int comboShotCount;
     [SerializeField]
     private float comboShotDelay = 0.3f; // 트리플샷 공격 간의 딜레이
+    [SerializeField]
+    private float flameRushDis = 1f; // 플레임 러시로 플레이어에게 최대로 접근 하는 거리
+    [SerializeField]
+    private float flameRushSpeed = 2f;
+
+    [Header("Turbo")]
+    [SerializeField]
+    private Animator turboAnimator;
 
     // yield return time
     private WaitForSeconds attackWait;
@@ -74,9 +82,10 @@ public class B_Excel : MonoBehaviour
 
     void Init()
     {
-        phase = Phase.Phase1;
+        phase = Phase.Phase3;
         hp = maxHp;
         player = GameObject.Find("Player");
+        turboAnimator.SetBool("onEngine", true);
 
         attackWait = new WaitForSeconds(attackDelay);
         patternWait = new WaitForSeconds(patternDelay);
@@ -131,6 +140,15 @@ public class B_Excel : MonoBehaviour
                             break;
                     }
                     break;
+                
+                case Phase.Phase3: // 3페이즈 패턴 : FlameRush
+                    switch (pattern)
+                    {
+                        case 0:
+                            StartCoroutine("FlameRush");
+                            break;
+                    }
+                    break;
             }
         }
     }
@@ -143,17 +161,17 @@ public class B_Excel : MonoBehaviour
         switch (phase)
         {
             case Phase.Phase1:
-                patternMin = 0;
-                patternMax = 5;
-                break;
             case Phase.Phase2:
                 patternMin = 0;
                 patternMax = 5;
                 break;
+
             case Phase.Phase3:
+                patternMin = 0;
+                patternMax = 1;
                 break;
         }
-
+        
         int patternIndex = Random.Range(patternMin, patternMax);
         return patternIndex;
     }
@@ -305,5 +323,30 @@ public class B_Excel : MonoBehaviour
         }
 
         return randomNum;
+    }
+
+    IEnumerator FlameRush()
+    {
+        turboAnimator.SetBool("onEngine", false);
+
+        yield return attackWait;
+        animator.SetBool("onMove", true);
+        turboAnimator.SetBool("onBoost", true);
+        yield return attackWait; // 패턴 시작전 한번더 딜레이를 준다
+
+        while (true)
+        {
+            rigid.velocity = Vector2.left * flameRushSpeed;
+            float dis = rigid.position.x - player.transform.position.x;
+
+            if (dis <= flameRushDis)
+            {
+                break;
+            }
+
+            yield return null;
+        }
+
+        yield return StartCoroutine("Move", Vector2.right);
     }
 }
