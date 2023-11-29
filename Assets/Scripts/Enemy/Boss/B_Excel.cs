@@ -50,10 +50,6 @@ public class B_Excel : MonoBehaviour
     [SerializeField]
     private float flameRushSpeed = 2f;
 
-    [Header("Turbo")]
-    [SerializeField]
-    private Animator turboAnimator;
-
     // yield return time
     private WaitForSeconds attackWait;
     private WaitForSeconds patternWait;
@@ -64,6 +60,7 @@ public class B_Excel : MonoBehaviour
     private Animator animator;
     private Rigidbody2D rigid;
     private BoxCollider2D collider;
+    private B_ExcelTurbo turbo;
     private GameObject player;
 
     void Awake()
@@ -71,6 +68,8 @@ public class B_Excel : MonoBehaviour
         animator = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody2D>();
         collider = GetComponent<BoxCollider2D>();
+        turbo = GetComponentInChildren<B_ExcelTurbo>();
+        player = GameObject.Find("Player");
 
         Init();
     }
@@ -84,8 +83,7 @@ public class B_Excel : MonoBehaviour
     {
         phase = Phase.Phase3;
         hp = maxHp;
-        player = GameObject.Find("Player");
-        turboAnimator.SetBool("onEngine", true);
+        turbo.ControlEngine(true);
 
         attackWait = new WaitForSeconds(attackDelay);
         patternWait = new WaitForSeconds(patternDelay);
@@ -192,6 +190,7 @@ public class B_Excel : MonoBehaviour
         }
 
         rigid.velocity = Vector2.zero;
+        animator.SetBool("onDrive", false);
         StartCoroutine("PatternCycle");
     }
 
@@ -327,12 +326,10 @@ public class B_Excel : MonoBehaviour
 
     IEnumerator FlameRush()
     {
-        turboAnimator.SetBool("onEngine", false);
-
+        animator.SetBool("onDrive", true);
+        turbo.ControlEngine(false);
+        turbo.ControlBoost(true);
         yield return attackWait;
-        animator.SetBool("onMove", true);
-        turboAnimator.SetBool("onBoost", true);
-        yield return attackWait; // 패턴 시작전 한번더 딜레이를 준다
 
         while (true)
         {
@@ -347,6 +344,8 @@ public class B_Excel : MonoBehaviour
             yield return null;
         }
 
-        yield return StartCoroutine("Move", Vector2.right);
+        turbo.ControlEngine(true);
+        turbo.ControlBoost(false);
+        yield return StartCoroutine("Move", Vector2.right); // Move를 실행함으로 PatternCycle을 대체한다.
     }
 }
