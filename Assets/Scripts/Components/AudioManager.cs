@@ -175,4 +175,16 @@ public class AudioManager : MonoBehaviour
             break;
         }
     }
+
+    public void MuteEnemySFX(EnemySfx sfx)
+    {
+        for (int i = 0; i < enemyAudios.Length; i++)
+        {
+            if (enemyAudios[i].clip == enemyClips[(int)sfx])
+            {
+                enemyAudios[i].Stop();
+                break;
+            }
+        }
+    }
 }

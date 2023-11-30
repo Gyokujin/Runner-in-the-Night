@@ -2688,8 +2688,7 @@ MonoBehaviour:
   impactShotSpeed: 9.5
   comboShotCount: 8
   comboShotDelay: 0.75
-  flameRushDelay: 0.7
-  flameRushDis: 4
+  flameRushDis: 3.5
   flameRushSpeed: 2.75
 --- !u!1 &629654931
 GameObject:
@@ -5208,6 +5207,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 24df4923349069547944d77de2a6fe82, type: 3}
   - {fileID: 8300000, guid: a68290fd3e2f06746b89ccf47b59dcac, type: 3}
   - {fileID: 8300000, guid: 8392ad9159499744d922b00d5b8bd0bc, type: 3}
+  - {fileID: 8300000, guid: 2217ea6b05bb7a648a674e1f2758eb54, type: 3}
   enemyVolume: 0.5
   enemyCh: 20
 --- !u!82 &1446963650
