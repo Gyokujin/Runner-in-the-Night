@@ -36,15 +36,23 @@ public class B_Excel : MonoBehaviour
     [SerializeField]
     private float attackDelay; // 공격후 딜레이. 어떤 패턴이든 지연 시간을 발동한다.
     [SerializeField]
+    private float shotDelay; // 기본 공격후 딜레이
+
+    // GeneralShot
+    [SerializeField]
     private float generalShotSpeed;
+
+    // ImpactShot
     [SerializeField]
     private float impactShotSpeed;
-    [SerializeField]
-    private float shotDelay; // 기본 공격후 딜레이
+    
+    // ComboSHot
     [SerializeField]
     private int comboShotCount;
     [SerializeField]
     private float comboShotDelay = 0.3f; // 트리플샷 공격 간의 딜레이
+
+    // FlameRush
     [SerializeField]
     private float flameRushDis = 1f; // 플레임 러시로 플레이어에게 최대로 접근 하는 거리
     [SerializeField]
@@ -328,8 +336,7 @@ public class B_Excel : MonoBehaviour
     {
         animator.SetBool("onDrive", true);
         turbo.ControlEngine(false);
-        turbo.ControlBoost(true);
-        yield return attackWait;
+        turbo.BoostStart();
 
         while (true)
         {
@@ -344,8 +351,7 @@ public class B_Excel : MonoBehaviour
             yield return null;
         }
 
-        turbo.ControlEngine(true);
-        turbo.ControlBoost(false);
+        turbo.BoostEnd();
         yield return StartCoroutine("Move", Vector2.right); // Move를 실행함으로 PatternCycle을 대체한다.
     }
 }

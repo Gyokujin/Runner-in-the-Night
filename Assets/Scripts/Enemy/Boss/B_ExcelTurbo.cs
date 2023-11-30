@@ -6,6 +6,7 @@ public class B_ExcelTurbo : MonoBehaviour
 {
     private BoxCollider2D collider;
     private Animator animator;
+    private bool onTime;
 
     void Awake()
     {
@@ -13,15 +14,33 @@ public class B_ExcelTurbo : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+    private void Update()
+    {
+        // onTime
+    }
+
     public void ControlEngine(bool engine)
     {
         animator.SetBool("onEngine", engine);
     }
 
-    public void ControlBoost(bool boost)
+    public void BoostStart()
     {
-        collider.enabled = boost;
-        animator.SetBool("onBoost", boost);
+        animator.SetTrigger("actBoost");
+        AudioManager.instance.PlayEnemySFX(AudioManager.EnemySfx.ExcelBoostStart);
+    }
+
+    public void Boost() // Start의 애니메이션 이벤트로 실행
+    {
+        collider.enabled = true; // 공격 판정 활성화
+        animator.SetBool("onBoost", true);
+        AudioManager.instance.PlayEnemySFX(AudioManager.EnemySfx.ExcelBoost);
+    }
+
+    public void BoostEnd()
+    {
+        collider.enabled = false; // 공격 판정 비활성화
+        animator.SetBool("onBoost", false);
     }
 
     void OnTriggerEnter2D(Collider2D collision)
