@@ -147,10 +147,17 @@ public class B_Excel : MonoBehaviour
                     }
                     break;
                 
-                case Phase.Phase3: // 3페이즈 패턴 : FlameRush
+                case Phase.Phase3: // 3페이즈 패턴 : ImpactShot(10%), FlameRush(50%)
                     switch (pattern)
                     {
                         case 0:
+                            StartCoroutine("ImpactShot");
+                            break;
+                        case 1:
+                        case 2:
+                        case 3:
+                        case 4:
+                        case 5:
                             StartCoroutine("FlameRush");
                             break;
                     }
@@ -174,7 +181,7 @@ public class B_Excel : MonoBehaviour
 
             case Phase.Phase3:
                 patternMin = 0;
-                patternMax = 1;
+                patternMax = 6;
                 break;
         }
         
@@ -202,6 +209,19 @@ public class B_Excel : MonoBehaviour
         StartCoroutine("PatternCycle");
     }
 
+    IEnumerator MoveMaxDis() // 최대 사거리로 이동한다.
+    {
+        float movePosX = player.transform.position.x + attackDisMax; // 임팩트샷은 최대 사거리로 이동후 쏜다.
+
+        while (rigid.position.x <= movePosX)
+        {
+            rigid.velocity = Vector2.right * moveSpeed;
+            yield return null;
+        }
+
+        rigid.velocity = Vector2.zero;
+    }
+
     IEnumerator GeneralShot()
     {
         int shotCount = Random.Range(1, 3); // 최대 2발까지 쏜다.
@@ -221,16 +241,7 @@ public class B_Excel : MonoBehaviour
 
     IEnumerator ImpactShot()
     {
-        float movePosX = player.transform.position.x + attackDisMax; // 임팩트샷은 최대 사거리로 이동후 쏜다.
-        
-        while (rigid.position.x <= movePosX)
-        {
-            rigid.velocity = Vector2.right * moveSpeed;
-            yield return null;
-        }
-
-        rigid.velocity = Vector2.zero;
-
+        yield return StartCoroutine("MoveMaxDis"); // 최대 사거리로 이동
         yield return shotWait;
         GameObject spawnBullet = PoolManager.instance.Get(PoolManager.PoolType.Bullet, 3);
         spawnBullet.transform.position = emitter.position;
@@ -243,9 +254,10 @@ public class B_Excel : MonoBehaviour
 
     IEnumerator ComboShot()
     {
+        yield return StartCoroutine("MoveMaxDis"); // 최대 사거리로 이동
         int randomNum = -1;
 
-        for (int i = 0; i < comboShotCount; i++) // 총 8번 사격
+        for (int i = 0; i < comboShotCount; i++) // 총 10번 사격
         {
             if (i == 0)
             {
@@ -334,6 +346,7 @@ public class B_Excel : MonoBehaviour
 
     IEnumerator FlameRush()
     {
+        yield return StartCoroutine("MoveMaxDis"); // 최대 사거리로 이동
         animator.SetBool("onDrive", true);
         turbo.ControlEngine(false);
         turbo.BoostStart();
@@ -343,7 +356,7 @@ public class B_Excel : MonoBehaviour
             rigid.velocity = Vector2.left * flameRushSpeed;
             float dis = rigid.position.x - player.transform.position.x;
 
-            if (dis <= flameRushDis)
+            if (dis <= flameRushDis || rigid.position.x < player.transform.position.x) // 너무 가깝거나 플레이어보다 왼쪽으로 갈 경우 종료
             {
                 break;
             }
@@ -352,6 +365,8 @@ public class B_Excel : MonoBehaviour
         }
 
         turbo.BoostEnd();
+        rigid.velocity = Vector2.zero;
+        yield return attackWait;
         yield return StartCoroutine("Move", Vector2.right); // Move를 실행함으로 PatternCycle을 대체한다.
     }
 }
