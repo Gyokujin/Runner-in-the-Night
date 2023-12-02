@@ -2517,9 +2517,10 @@ GameObject:
   - component: {fileID: 599513598}
   - component: {fileID: 599513597}
   - component: {fileID: 599513599}
+  - component: {fileID: 599513600}
   m_Layer: 11
   m_Name: Boss_Excel
-  m_TagString: Enemy
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2688,8 +2689,28 @@ MonoBehaviour:
   impactShotSpeed: 9.5
   comboShotCount: 10
   comboShotDelay: 0.75
-  flameRushDis: 3.75
-  flameRushSpeed: 3
+  flameSpearDis: 1
+  flameSpearSpeed: 2
+  machDashStartDisX: 22.4
+  machDashCount: 5
+  machDashEndDisX: 9.5
+  machDashDirY: 0.1
+  machDashRotate: 10
+  machDashSpeed: 18
+  machDashDelay: 1.2
+--- !u!114 &599513600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 599513593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfee451767cc61f43b8f4b12be6a3a6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackType: 1
 --- !u!1 &629654931
 GameObject:
   m_ObjectHideFlags: 0

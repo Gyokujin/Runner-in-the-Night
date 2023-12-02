@@ -38,33 +38,52 @@ public class B_Excel : MonoBehaviour
     [SerializeField]
     private float shotDelay; // 기본 공격후 딜레이
 
-    // GeneralShot
+    [Header("Attack_GeneralShot")]
     [SerializeField]
     private float generalShotSpeed;
 
-    // ImpactShot
+    [Header("Attack_ImpactShot")]
     [SerializeField]
     private float impactShotSpeed;
-    
-    // ComboSHot
+
+    [Header("Attack_ComboShot")]
     [SerializeField]
     private int comboShotCount;
     [SerializeField]
     private float comboShotDelay = 0.3f; // 트리플샷 공격 간의 딜레이
 
-    // FlameRush
+    [Header("Attack_FlameSpear")]
     [SerializeField]
-    private float flameRushDis = 1f; // 플레임 러시로 플레이어에게 최대로 접근 하는 거리
+    private float flameSpearDis = 1f; // 플레임 스피어로 플레이어에게 최대로 접근 하는 거리
     [SerializeField]
-    private float flameRushSpeed = 2f;
+    private float flameSpearSpeed = 2f;
+
+    [Header("Attack_MachDash")]
+    [SerializeField]
+    private float machDashStartDisX = 22.4f; // 마하 대시를 시전하기 위한 플레이어와의 X 간격
+    [SerializeField]
+    private int machDashCount = 5;
+    private int machDashDirIndex = 4; // 공격 방향의 가짓수 (직선 이동 2, 대각선 이동 2)
+    [SerializeField]
+    private float machDashEndDisX = 8.6f; // 마하 대시를 끝내기 위한 플레이어와의 X 간격
+    [SerializeField]
+    private float machDashDirY = 0.2f; // 대각선 이동시의 Y 이동값.
+    [SerializeField]
+    private float machDashRotate; // 대각선 이동시의 rotation Z 값
+    [SerializeField]
+    private float machDashSpeed = 10f;
+    [SerializeField]
+    private float machDashDelay = 0.3f; // 마하대시 공격 간의 딜레이
 
     // yield return time
     private WaitForSeconds attackWait;
     private WaitForSeconds patternWait;
     private WaitForSeconds shotWait;
     private WaitForSeconds comboShotWait;
+    private WaitForSeconds machDashWait;
 
     [Header("Component")]
+    private SpriteRenderer sprite;
     private Animator animator;
     private Rigidbody2D rigid;
     private BoxCollider2D collider;
@@ -73,6 +92,7 @@ public class B_Excel : MonoBehaviour
 
     void Awake()
     {
+        sprite = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody2D>();
         collider = GetComponent<BoxCollider2D>();
@@ -97,6 +117,7 @@ public class B_Excel : MonoBehaviour
         patternWait = new WaitForSeconds(patternDelay);
         shotWait = new WaitForSeconds(shotDelay);
         comboShotWait = new WaitForSeconds(comboShotDelay);
+        machDashWait = new WaitForSeconds(machDashDelay);
     }
 
     IEnumerator PatternCycle()
@@ -147,7 +168,7 @@ public class B_Excel : MonoBehaviour
                     }
                     break;
                 
-                case Phase.Phase3: // 3페이즈 패턴 : ImpactShot(10%), FlameRush(50%)
+                case Phase.Phase3: // 3페이즈 패턴 : ImpactShot(10%), FlameSpear(50%)
                     switch (pattern)
                     {
                         case 0:
@@ -158,7 +179,13 @@ public class B_Excel : MonoBehaviour
                         case 3:
                         case 4:
                         case 5:
-                            StartCoroutine("FlameRush");
+                            StartCoroutine("FlameSpear");
+                            break;
+                        case 6:
+                        case 7:
+                        case 8:
+                        case 9:
+                            StartCoroutine("MachDash");
                             break;
                     }
                     break;
@@ -180,8 +207,8 @@ public class B_Excel : MonoBehaviour
                 break;
 
             case Phase.Phase3:
-                patternMin = 0;
-                patternMax = 6;
+                patternMin = 6;
+                patternMax = 10;
                 break;
         }
         
@@ -344,7 +371,7 @@ public class B_Excel : MonoBehaviour
         return randomNum;
     }
 
-    IEnumerator FlameRush()
+    IEnumerator FlameSpear()
     {
         yield return StartCoroutine("MoveMaxDis"); // 최대 사거리로 이동
         animator.SetBool("onDrive", true);
@@ -353,10 +380,10 @@ public class B_Excel : MonoBehaviour
 
         while (true)
         {
-            rigid.velocity = Vector2.left * flameRushSpeed;
+            rigid.velocity = Vector2.left * flameSpearSpeed;
             float dis = rigid.position.x - player.transform.position.x;
 
-            if (dis <= flameRushDis || rigid.position.x < player.transform.position.x) // 너무 가깝거나 플레이어보다 왼쪽으로 갈 경우 종료
+            if (dis <= flameSpearDis || rigid.position.x < player.transform.position.x) // 너무 가깝거나 플레이어보다 왼쪽으로 갈 경우 종료
             {
                 break;
             }
@@ -368,5 +395,76 @@ public class B_Excel : MonoBehaviour
         rigid.velocity = Vector2.zero;
         yield return attackWait;
         yield return StartCoroutine("Move", Vector2.right); // Move를 실행함으로 PatternCycle을 대체한다.
+    }
+
+    IEnumerator MachDash()
+    {
+        animator.SetBool("onDetect", true);
+        float targetPosX = player.transform.position.x + machDashStartDisX;
+
+        while (rigid.position.x <= targetPosX) // 기술을 시전하기 위해 카메라 밖으로 이동
+        {
+            rigid.velocity = Vector2.right * moveSpeed;
+            yield return null;
+        }
+
+        rigid.velocity = Vector2.zero;
+        
+        yield return attackWait; // 잠깐 딜레이를 준다.
+        transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+        animator.SetBool("onDetect", false);
+        animator.SetBool("onDrive", true);
+        Vector2 startPos = transform.position; // 공격을 시전한 최초 위치
+
+        for (int i = 0; i < machDashCount; i++) // 총 5번 공격한다.
+        {
+            int attackIndex = Random.Range(0, machDashDirIndex);
+            float endXPos = player.transform.position.x - machDashEndDisX;
+            Vector2 attackPos = Vector2.zero;
+            Vector2 dashDir = Vector2.zero; // 공격 방향의 벡터
+            Quaternion attackRotation = Quaternion.identity;
+
+            switch (attackIndex)
+            {
+                case 0: // 낮은 직선 이동
+                    attackPos = new Vector2(startPos.x, attackPosY[0]);
+                    dashDir = Vector2.left;
+                    break;
+                case 1: // 높은 직선 이동
+                    attackPos = new Vector2(startPos.x, attackPosY[1]);
+                    dashDir = Vector2.left;
+                    break;
+                case 2: // 높은 대각선 이동
+                    attackPos = new Vector2(startPos.x, attackPosY[0]);
+                    dashDir = new Vector2(-1, machDashDirY);
+                    attackRotation = Quaternion.Euler(new Vector3(0, 0, -machDashRotate));
+                    break;
+                case 3: // 낮은 대각선 이동
+                    attackPos = new Vector2(startPos.x, attackPosY[1]);
+                    dashDir = new Vector2(-1, -machDashDirY);
+                    attackRotation = Quaternion.Euler(new Vector3(0, 0, machDashRotate));
+                    break;
+            }
+
+            transform.position = attackPos;
+            transform.rotation = attackRotation;
+            yield return null;
+
+            while (rigid.position.x >= endXPos)
+            {
+                rigid.velocity = dashDir * machDashSpeed;
+                yield return null;
+            }
+
+            rigid.velocity = Vector2.zero;
+            yield return machDashWait; // 다음 공격 간의 텀을 둔다
+        }
+
+        transform.position = startPos; // 다시 위치와 각도 크기를 초기화한다.
+        transform.rotation = Quaternion.identity;
+        transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+
+        yield return attackWait;
+        StartCoroutine("PatternCycle");
     }
 }
