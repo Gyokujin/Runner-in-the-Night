@@ -399,6 +399,7 @@ public class B_Excel : MonoBehaviour
         }
 
         turbo.BoostEnd();
+        turbo.ControlEngine(true);
         rigid.velocity = Vector2.zero;
         yield return attackWait;
         yield return StartCoroutine("Move", Vector2.right); // Move를 실행함으로 PatternCycle을 대체한다.
