@@ -48,7 +48,7 @@ public class AudioManager : MonoBehaviour
     public enum EnemySfx 
     { 
         GuardianMove, GuardianDie, DiverMove, DiverDie, ChaserChase, ChaserDie, WandererDie, BlazerAttack, BlazerDie, 
-        ExcelGeneralShot, ExcelImpactShot, ExcelBoostStart, ExcelBoost, ExcelBoostEnd
+        ExcelGeneralShot, ExcelImpactShot, ExcelBoostStart, ExcelBoost, ExcelBoostEnd, ExcelMachStrike
     }
 
     void Awake()

@@ -2727,15 +2727,16 @@ MonoBehaviour:
   impactShotSpeed: 9.5
   comboShotCount: 10
   comboShotDelay: 0.75
-  flameSpearDis: 1
+  flameSpearDis: 4.75
   flameSpearSpeed: 2
   machStrikeStartDisX: 22.4
   machStrikeCount: 4
   machStrikeEndDisX: 9.5
   machStrikeDirY: 0.1
   machStrikeRotate: 10
-  machStrikeSpeed: 18
-  machStrikeDelay: 1.2
+  machStrikeSpeed: 19
+  machStrikeStartDelay: 0.8
+  machStrikeEndDelay: 0.3
   machStrikePaths:
   - {fileID: 1345666550}
   - {fileID: 779787990}
@@ -3483,7 +3484,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5294118, g: 0.04160734, b: 0.08179059, a: 0.39215687}
+  m_Color: {r: 0.5294118, g: 0.04160734, b: 0.08179059, a: 0.54901963}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3710,7 +3711,6 @@ GameObject:
   m_Component:
   - component: {fileID: 779787988}
   - component: {fileID: 779787990}
-  - component: {fileID: 779787989}
   m_Layer: 5
   m_Name: MachStrikePath2
   m_TagString: Untagged
@@ -3739,26 +3739,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 2.8}
   m_SizeDelta: {x: 0, y: 66}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!95 &779787989
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 779787987}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &779787990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3882,7 +3862,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5294118, g: 0.04160734, b: 0.08179059, a: 0.39215687}
+  m_Color: {r: 0.5294118, g: 0.04160734, b: 0.08179059, a: 0.54901963}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5291,7 +5271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5294118, g: 0.04160734, b: 0.08179059, a: 0.39215687}
+  m_Color: {r: 0.5294118, g: 0.04160734, b: 0.08179059, a: 0.54901963}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5439,7 +5419,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1265467130}
   - component: {fileID: 1265467132}
-  - component: {fileID: 1265467131}
   m_Layer: 5
   m_Name: MachStrikePath3
   m_TagString: Untagged
@@ -5468,26 +5447,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -20}
   m_SizeDelta: {x: 0, y: 66}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!95 &1265467131
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1265467129}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &1265467132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5683,7 +5642,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1345666548}
   - component: {fileID: 1345666550}
-  - component: {fileID: 1345666549}
   m_Layer: 5
   m_Name: MachStrikePath1
   m_TagString: Untagged
@@ -5712,26 +5670,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -74}
   m_SizeDelta: {x: 0, y: 66}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!95 &1345666549
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1345666547}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &1345666550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6023,7 +5961,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5294118, g: 0.04160734, b: 0.08179059, a: 0.39215687}
+  m_Color: {r: 0.5294118, g: 0.04160734, b: 0.08179059, a: 0.54901963}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -6128,6 +6066,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a68290fd3e2f06746b89ccf47b59dcac, type: 3}
   - {fileID: 8300000, guid: 8392ad9159499744d922b00d5b8bd0bc, type: 3}
   - {fileID: 8300000, guid: 2217ea6b05bb7a648a674e1f2758eb54, type: 3}
+  - {fileID: 8300000, guid: d1dfc88e496b33449bba51ad258ab0f5, type: 3}
   enemyVolume: 0.5
   enemyCh: 20
 --- !u!82 &1446963650
@@ -6349,7 +6288,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1462795968}
   - component: {fileID: 1462795970}
-  - component: {fileID: 1462795969}
   m_Layer: 5
   m_Name: MachStrikePath4
   m_TagString: Untagged
@@ -6378,26 +6316,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -46}
   m_SizeDelta: {x: 0, y: 66}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!95 &1462795969
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1462795967}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &1462795970
 MonoBehaviour:
   m_ObjectHideFlags: 0

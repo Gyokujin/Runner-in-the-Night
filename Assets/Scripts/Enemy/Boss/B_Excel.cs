@@ -74,7 +74,9 @@ public class B_Excel : MonoBehaviour
     [SerializeField]
     private float machStrikeSpeed = 10f;
     [SerializeField]
-    private float machStrikeDelay = 0.3f; // 마하대시 공격 간의 딜레이
+    private float machStrikeStartDelay = 1f; // 마하대시 공격 간의 딜레이
+    [SerializeField]
+    private float machStrikeEndDelay = 0.3f; // 마하대시 공격 간의 딜레이
     [SerializeField]
     private Slider[] machStrikePaths;
 
@@ -83,7 +85,8 @@ public class B_Excel : MonoBehaviour
     private WaitForSeconds patternWait;
     private WaitForSeconds shotWait;
     private WaitForSeconds comboShotWait;
-    private WaitForSeconds machDashWait;
+    private WaitForSeconds machDashStartWait;
+    private WaitForSeconds machDashEndWait;
 
     [Header("Component")]
     private SpriteRenderer sprite;
@@ -112,7 +115,7 @@ public class B_Excel : MonoBehaviour
 
     void Init()
     {
-        phase = Phase.Phase3;
+        phase = Phase.Phase1;
         hp = maxHp;
         turbo.ControlEngine(true);
 
@@ -120,7 +123,8 @@ public class B_Excel : MonoBehaviour
         patternWait = new WaitForSeconds(patternDelay);
         shotWait = new WaitForSeconds(shotDelay);
         comboShotWait = new WaitForSeconds(comboShotDelay);
-        machDashWait = new WaitForSeconds(machStrikeDelay);
+        machDashStartWait = new WaitForSeconds(machStrikeStartDelay);
+        machDashEndWait = new WaitForSeconds(machStrikeEndDelay);
     }
 
     IEnumerator PatternCycle()
@@ -210,7 +214,7 @@ public class B_Excel : MonoBehaviour
                 break;
 
             case Phase.Phase3:
-                patternMin = 6;
+                patternMin = 0;
                 patternMax = 10;
                 break;
         }
@@ -449,9 +453,14 @@ public class B_Excel : MonoBehaviour
                     break;
             }
 
+            machStrikePaths[attackIndex].gameObject.SetActive(true); // 공격 경로 UI 활성화
             transform.position = attackPos;
             transform.rotation = attackRotation;
-            yield return null;
+            
+            yield return machDashStartWait; // UI를 보고 예상할 시간을 준다.
+            machStrikePaths[attackIndex].gameObject.SetActive(false); // 공격 경로 UI 비활성화
+
+            AudioManager.instance.PlayEnemySFX(AudioManager.EnemySfx.ExcelMachStrike);
 
             while (rigid.position.x >= endXPos)
             {
@@ -460,7 +469,7 @@ public class B_Excel : MonoBehaviour
             }
 
             rigid.velocity = Vector2.zero;
-            yield return machDashWait; // 다음 공격 간의 텀을 둔다
+            yield return machDashEndWait; // 다음 공격 간의 텀을 둔다
         }
 
         transform.position = startPos; // 다시 위치와 각도 크기를 초기화한다.
