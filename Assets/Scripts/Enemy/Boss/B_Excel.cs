@@ -104,12 +104,12 @@ public class B_Excel : MonoBehaviour
         collider = GetComponent<BoxCollider2D>();
         turbo = GetComponentInChildren<B_ExcelTurbo>();
         player = GameObject.Find("Player");
-
-        Init();
     }
 
     void Start()
     {
+        Init();
+
         StartCoroutine("PatternCycle");
     }
 

@@ -87,15 +87,15 @@ public class PlatformControl : MonoBehaviour
         if (platformType == PlatformType.Random) // 현재 플랫폼타입에서 다른 타입으로 변형한다.
         {
             platformType = PlatformType.Line;
-            
-            foreach (GameObject platform in randomPlatforms)
-            {
-                platform.SetActive(false);
-            }
 
             foreach (GameObject platform in linePlatforms)
             {
                 platform.SetActive(true);
+            }
+
+            foreach (GameObject platform in randomPlatforms)
+            {
+                platform.SetActive(false);
             }
         }
         else

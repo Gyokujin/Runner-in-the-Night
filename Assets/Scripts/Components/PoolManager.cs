@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class PoolManager : MonoBehaviour
@@ -33,6 +34,8 @@ public class PoolManager : MonoBehaviour
     [Header("Boss")]
     [SerializeField]
     private GameObject[] bosses;
+    [SerializeField]
+    private GameObject[] bossDummies;
     public Vector2[] bossDis; // 보스 몬스터를 생성될 플레이어와의 간격
 
     void Awake()
@@ -125,9 +128,10 @@ public class PoolManager : MonoBehaviour
         return select;
     }
 
-    public void SpawnBoss(Boss boss, Vector2 distance)
+    public void SpawnBoss(Boss boss)
     {
-
+        bossDummies[(int)boss].SetActive(false);
+        Instantiate(bosses[(int)boss], bossDis[(int)boss], Quaternion.identity);
     }
 
     public void Return(GameObject poolObject)

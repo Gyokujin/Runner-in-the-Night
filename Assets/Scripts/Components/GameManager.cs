@@ -121,8 +121,8 @@ public class GameManager : MonoBehaviour
         yield return StartCoroutine(EventManager.instance.BossEvent());
         yield return StartCoroutine(UIManager.instance.FadeOut());
 
-        yield return new WaitForSeconds(1f);
-        PoolManager.instance.SpawnBoss(PoolManager.Boss.Excel, PoolManager.instance.bossDis[(int)PoolManager.Boss.Excel]);
+        yield return new WaitForSeconds(0.5f);
+        PoolManager.instance.SpawnBoss(PoolManager.Boss.Excel);
         yield return StartCoroutine(UIManager.instance.FadeIn());
 
         GameLive(true);

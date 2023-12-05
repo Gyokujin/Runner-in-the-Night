@@ -181,8 +181,10 @@ MonoBehaviour:
   - {fileID: 3538906271429629668, guid: 313ecc884a416014c8248ade19d1c666, type: 3}
   bosses:
   - {fileID: 3463684526100478980, guid: 45accb9a588e9b54cb0412da140226fc, type: 3}
+  bossDummies:
+  - {fileID: 681136311}
   bossDis:
-  - {x: 1, y: 1}
+  - {x: 10.5, y: -0.05}
 --- !u!1 &60088141
 GameObject:
   m_ObjectHideFlags: 0
@@ -2012,7 +2014,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3463684525987515817, guid: 76549e8705add72429e0d0a7c838342a, type: 3}
+    - {fileID: 3463684525987515819, guid: 76549e8705add72429e0d0a7c838342a, type: 3}
+    - {fileID: 3463684525987515816, guid: 76549e8705add72429e0d0a7c838342a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 76549e8705add72429e0d0a7c838342a, type: 3}
 --- !u!1 &550228930
 GameObject:
