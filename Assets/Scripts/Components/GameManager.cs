@@ -111,19 +111,20 @@ public class GameManager : MonoBehaviour
 
     IEnumerator ArriveBossProcess()
     {
-        UIManager.instance.ShowDangerPanel();
-        yield return StartCoroutine(EventManager.instance.DangerEvent());
-        yield return StartCoroutine(UIManager.instance.FadeOut());
+        // UIManager.instance.ShowDangerPanel();
+        // yield return StartCoroutine(EventManager.instance.DangerEvent());
+        // yield return StartCoroutine(UIManager.instance.FadeOut());
         platform.PlatformChange();
 
-        yield return new WaitForSeconds(1f);
-        yield return StartCoroutine(UIManager.instance.FadeIn());
-        yield return StartCoroutine(EventManager.instance.BossEvent());
-        yield return StartCoroutine(UIManager.instance.FadeOut());
+        // yield return new WaitForSeconds(1f);
+        // yield return StartCoroutine(UIManager.instance.FadeIn());
+        // yield return StartCoroutine(EventManager.instance.BossEvent());
+        // yield return StartCoroutine(UIManager.instance.FadeOut());
 
-        yield return new WaitForSeconds(0.5f);
+        // yield return new WaitForSeconds(0.5f);
         PoolManager.instance.SpawnBoss(PoolManager.Boss.Excel);
-        yield return StartCoroutine(UIManager.instance.FadeIn());
+        // yield return StartCoroutine(UIManager.instance.FadeIn());
+        yield return null; // ÀÌÈÄ¿¡ »©ÀÚ
 
         GameLive(true);
         player.Move(true);

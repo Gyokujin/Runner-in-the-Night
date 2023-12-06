@@ -13,11 +13,16 @@ public class B_Excel : MonoBehaviour
     }
 
     public Phase phase; // 1 ~ 3페이즈까지 있으며 공격 패턴의 경우의 수를 구분한다.
+    [SerializeField]
+    private int[] phaseHp; // hp가 해당 phaseHp가 될때마다 페이즈를 넘어간다.
 
     [Header("Status")]
     [SerializeField]
     private int maxHp;
     private int hp;
+    
+    [HideInInspector]
+    public bool onDie = false;
     [SerializeField]
     private float patternDelay; // 패턴 실행전 딜레이
 
@@ -479,5 +484,31 @@ public class B_Excel : MonoBehaviour
 
         yield return attackWait;
         StartCoroutine("PatternCycle");
+    }
+
+    public void Damage()
+    {
+        hp--;
+        Debug.Log(hp);
+
+        if (hp <= 0)
+        {
+            onDie = true;
+        }
+        else
+        {
+            if (hp <= phaseHp[0] && hp > phaseHp[1])
+            {
+                phase = Phase.Phase1;
+            }
+            else if (hp <= phaseHp[1] && hp > phaseHp[2])
+            {
+                phase = Phase.Phase2;
+            }
+            else
+            {
+                phase = Phase.Phase3;
+            }
+        }
     }
 }

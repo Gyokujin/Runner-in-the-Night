@@ -55,18 +55,31 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (type == BulletType.Player && collision.GetComponent<Enemy>())
+        if ((type == BulletType.Player && collision.GetComponent<Enemy>()) || (type == BulletType.Player && collision.GetComponent<B_Excel>()))
         {
-            Enemy enemy = collision.GetComponent<Enemy>();
-
-            if (!enemy.onDie)
+            if (collision.GetComponent<Enemy>())
             {
-                enemy.Damage();
-                onHit = true;
-                animator.SetBool("onHit", true);
-                collider.enabled = false;
-                AudioManager.instance.PlaySystemSFX(AudioManager.SystemSFX.Hit);
+                Enemy enemy = collision.GetComponent<Enemy>();
+
+                if (!enemy.onDie)
+                {
+                    enemy.Damage();
+                }
             }
+            else if (collision.GetComponent<B_Excel>())
+            {
+                B_Excel excel = collision.GetComponent<B_Excel>();
+
+                if (!excel.onDie)
+                {
+                    excel.Damage();
+                }
+            }
+
+            onHit = true;
+            animator.SetBool("onHit", true);
+            collider.enabled = false;
+            AudioManager.instance.PlaySystemSFX(AudioManager.SystemSFX.Hit);
         }
         else if (type == BulletType.Enemy && collision.GetComponent<PlayerController>())
         {

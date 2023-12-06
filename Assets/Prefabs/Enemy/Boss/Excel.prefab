@@ -407,7 +407,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   phase: 0
-  maxHp: 40
+  phaseHp: 640000004600000028000000
+  maxHp: 100
+  onDie: 0
   patternDelay: 1.25
   attackDisMin: 10.5
   attackDisMax: 14
