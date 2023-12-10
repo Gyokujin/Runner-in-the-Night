@@ -493,7 +493,7 @@ public class B_Excel : MonoBehaviour
 
         if (hp <= 0)
         {
-            onDie = true;
+            Die();
         }
         else
         {
@@ -510,5 +510,10 @@ public class B_Excel : MonoBehaviour
                 phase = Phase.Phase3;
             }
         }
+    }
+
+    void Die()
+    {
+        onDie = true;
     }
 }
