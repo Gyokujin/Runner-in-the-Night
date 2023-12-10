@@ -123,6 +123,7 @@ public class B_Excel : MonoBehaviour
         phase = Phase.Phase1;
         hp = maxHp;
         turbo.ControlEngine(true);
+        UIManager.instance.BossHPModify(true, maxHp, maxHp); // BossHP UI를 초기화한다
 
         attackWait = new WaitForSeconds(attackDelay);
         patternWait = new WaitForSeconds(patternDelay);
@@ -489,14 +490,16 @@ public class B_Excel : MonoBehaviour
     public void Damage()
     {
         hp--;
-        Debug.Log(hp);
 
         if (hp <= 0)
         {
+            UIManager.instance.BossHPModify(false);
             Die();
         }
         else
         {
+            UIManager.instance.BossHPModify(true, maxHp, hp);
+
             if (hp <= phaseHp[0] && hp > phaseHp[1])
             {
                 phase = Phase.Phase1;

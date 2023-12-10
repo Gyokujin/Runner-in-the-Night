@@ -41,6 +41,8 @@ public class UIManager : MonoBehaviour
     public Button restartButton;
     [SerializeField]
     private GameObject controllers;
+    [SerializeField]
+    private Slider bossHPBar;
 
     [Header("Fade")]
     [SerializeField]
@@ -149,6 +151,24 @@ public class UIManager : MonoBehaviour
     public void ShowController(bool onShow)
     {
         controllers.SetActive(onShow);
+    }
+
+    public void BossHPModify(bool able, int maxHp = 0, int hp = 0)
+    {
+        if (able) // UI 활성화
+        {
+            if (!bossHPBar.IsActive())
+            {
+                bossHPBar.gameObject.SetActive(true);
+            }
+
+            float percent = (float)hp / (float)maxHp;
+            bossHPBar.value = percent;
+        }
+        else // UI 비활성화
+        {
+            bossHPBar.gameObject.SetActive(false);
+        }
     }
 
     public IEnumerator FadeIn()
