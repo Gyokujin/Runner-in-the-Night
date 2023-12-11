@@ -85,7 +85,7 @@ public class Bullet : MonoBehaviour
         {
             PlayerController player = collision.GetComponent<PlayerController>();
 
-            if (!player.onDamage)
+            if (!player.onDamage && player.gameObject.layer == 6)
             {
                 player.Hit();
                 onHit = true;

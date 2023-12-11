@@ -131,13 +131,12 @@ public class PoolManager : MonoBehaviour
     public void SpawnBoss(Boss boss)
     {
         bossDummies[(int)boss].SetActive(false);
-        Instantiate(bosses[(int)boss], bossDis[(int)boss], Quaternion.identity);
+        GameObject bossObj = Instantiate(bosses[(int)boss], bossDis[(int)boss], Quaternion.identity);
     }
 
     public void SpawnDummy(Boss boss)
     {
         bossDummies[(int)boss].SetActive(true);
-        Instantiate(bosses[(int)boss], bossDis[(int)boss], Quaternion.identity);
     }
 
     public void Return(GameObject poolObject)

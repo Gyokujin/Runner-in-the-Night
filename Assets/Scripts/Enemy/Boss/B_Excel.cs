@@ -19,6 +19,7 @@ public class B_Excel : MonoBehaviour
     [Header("Status")]
     [SerializeField]
     private int maxHp;
+    [SerializeField]
     private int hp;
     
     [HideInInspector]
@@ -518,5 +519,7 @@ public class B_Excel : MonoBehaviour
     void Die()
     {
         onDie = true;
+        GameManager.instance.BossDefeat();
+        gameObject.SetActive(false);
     }
 }
