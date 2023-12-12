@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9a5b5488d93682541a1b7958d3d8d8ef
+guid: 5fc84462cefa2c64d9fdb001ffa574ae
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -67,7 +67,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 64
+    maxTextureSize: 256
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -129,13 +129,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ExplosionHPFX_0
+      name: Vehicle_Explosion_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 32
-        width: 32
-        height: 32
+        y: 128
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -143,20 +143,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6b9bdf7bb1edf3a42bb8b3fafe1785ec
-      internalID: 465150424
+      spriteID: 4a637b1013e07ba46af28bc4d6414562
+      internalID: 1593600950
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ExplosionHPFX_1
+      name: Vehicle_Explosion_1
       rect:
         serializedVersion: 2
-        x: 32
-        y: 32
-        width: 32
-        height: 32
+        x: 64
+        y: 128
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -164,20 +164,104 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e70c3488d8236d34e9a22cb1d2ad40dd
-      internalID: 28247696
+      spriteID: 124300c84ae790f42bd5cdba3db33f01
+      internalID: -1284480184
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ExplosionHPFX_2
+      name: Vehicle_Explosion_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a42037dafb95254a979032ec9030d0a
+      internalID: 392679673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Vehicle_Explosion_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f7c25b646f7a754ab95579fce6ee0d1
+      internalID: 1884120415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Vehicle_Explosion_4
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d138d097719bf33459b2d5f8f62bcde1
+      internalID: 355750216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Vehicle_Explosion_5
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9193c03f8319b31499560cd52e2625e0
+      internalID: -42516958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Vehicle_Explosion_6
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 32
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -185,20 +269,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b5723592616c0e944ad0ac4fecc38902
-      internalID: -1916170413
+      spriteID: 869dd6a19c67d0945b17e2d255c67ef8
+      internalID: -1931780595
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ExplosionHPFX_3
+      name: Vehicle_Explosion_7
       rect:
         serializedVersion: 2
-        x: 32
+        x: 64
         y: 0
-        width: 32
-        height: 32
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -206,8 +290,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3655c3a857d686c4cabaf10236ffc4d4
-      internalID: -1009879347
+      spriteID: 269418957e4271f4cb51971384ef1133
+      internalID: -1672501687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Vehicle_Explosion_8
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 008d4ea5878fbfb45b5b8641117285f2
+      internalID: 1513711704
       vertices: []
       indices: 
       edges: []
@@ -223,10 +328,15 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      ExplosionHPFX_3: -1009879347
-      ExplosionHPFX_2: -1916170413
-      ExplosionHPFX_0: 465150424
-      ExplosionHPFX_1: 28247696
+      Vehicle_Explosion_3: 1884120415
+      Vehicle_Explosion_1: -1284480184
+      Vehicle_Explosion_0: 1593600950
+      Vehicle_Explosion_6: -1931780595
+      Vehicle_Explosion_2: 392679673
+      Vehicle_Explosion_7: -1672501687
+      Vehicle_Explosion_8: 1513711704
+      Vehicle_Explosion_4: 355750216
+      Vehicle_Explosion_5: -42516958
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

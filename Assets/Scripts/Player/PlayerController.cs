@@ -398,16 +398,19 @@ public class PlayerController : MonoBehaviour
 
     void Invincible()
     {
-        if (leftInvincible > 0)
+        if (GameManager.instance.isLive)
         {
-            onInvincible = true;
-            gameObject.layer = invincibleLayer;
-            leftInvincible -= Time.deltaTime;
-        }
-        else
-        {
-            onInvincible = false;
-            gameObject.layer = defaultLayer;
+            if (leftInvincible > 0)
+            {
+                onInvincible = true;
+                gameObject.layer = invincibleLayer;
+                leftInvincible -= Time.deltaTime;
+            }
+            else
+            {
+                onInvincible = false;
+                gameObject.layer = defaultLayer;
+            }
         }
     }
 }

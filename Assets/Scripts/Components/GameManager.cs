@@ -134,9 +134,8 @@ public class GameManager : MonoBehaviour
 
     public void BossDefeat()
     {
-        isArrive = true;
         GameLive(false);
-        // player.gameObject.layer = 7; // 이 부분 수정과 Player의 무적 실행 함수를 수정
+        player.gameObject.layer = 7; // 이 부분 수정과 Player의 무적 실행 함수를 수정
         player.Move(false);
         UIManager.instance.ShowController(false);
         StartCoroutine("BossDefeatProcess");
@@ -145,7 +144,7 @@ public class GameManager : MonoBehaviour
     IEnumerator BossDefeatProcess()
     {
         yield return StartCoroutine(UIManager.instance.FadeOut());
-        PoolManager.instance.SpawnDummy(PoolManager.Boss.Excel); // 더미로 교체하여 타임라인을 재생한다.
+        // PoolManager.instance.SpawnDummy(PoolManager.Boss.Excel); // 더미로 교체하여 타임라인을 재생한다.
         yield return StartCoroutine(UIManager.instance.FadeIn());
 
         yield return StartCoroutine(EventManager.instance.BossDefeat());
