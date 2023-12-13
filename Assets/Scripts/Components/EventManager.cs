@@ -48,7 +48,7 @@ public class EventManager : MonoBehaviour
     public IEnumerator BossDefeat()
     {
         PlayTimeLine(Timeline.BossDefeat);
-        yield return new WaitForSeconds((float)timelines[(int)Timeline.BossDefeat].duration);
+        yield return null;
     }
 
     public void PlayTimeLine(Timeline index)

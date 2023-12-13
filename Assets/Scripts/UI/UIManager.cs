@@ -19,6 +19,8 @@ public class UIManager : MonoBehaviour
 
     [Header("Status")]
     [SerializeField]
+    private GameObject hpIcon;
+    [SerializeField]
     private Image[] hpIcons;
 
     [Header("System")]
@@ -151,6 +153,7 @@ public class UIManager : MonoBehaviour
     public void ShowController(bool onShow)
     {
         controllers.SetActive(onShow);
+        hpIcon.SetActive(onShow);
     }
 
     public void BossHPModify(bool able, int maxHp = 0, int hp = 0)

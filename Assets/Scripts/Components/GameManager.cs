@@ -144,10 +144,10 @@ public class GameManager : MonoBehaviour
     IEnumerator BossDefeatProcess()
     {
         yield return StartCoroutine(UIManager.instance.FadeOut());
-        // PoolManager.instance.SpawnDummy(PoolManager.Boss.Excel); // 더미로 교체하여 타임라인을 재생한다.
-        yield return StartCoroutine(UIManager.instance.FadeIn());
-
-        yield return StartCoroutine(EventManager.instance.BossDefeat());
+        yield return new WaitForSeconds(1f);
+        AudioManager.instance.SwitchBGM(1);
+        StartCoroutine(EventManager.instance.BossDefeat());
+        StartCoroutine(UIManager.instance.FadeIn());
     }
 
     public void CameraPause()
