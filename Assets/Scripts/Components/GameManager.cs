@@ -134,11 +134,11 @@ public class GameManager : MonoBehaviour
 
     public void BossDefeat()
     {
-        GameLive(false);
+        // GameLive(false);
         player.gameObject.layer = 7; // 이 부분 수정과 Player의 무적 실행 함수를 수정
-        player.Move(false);
-        UIManager.instance.ShowController(false);
-        StartCoroutine("BossDefeatProcess");
+        // player.Move(true);
+        // UIManager.instance.ShowController(false);
+        // StartCoroutine("BossDefeatProcess");
     }
 
     IEnumerator BossDefeatProcess()
@@ -146,7 +146,7 @@ public class GameManager : MonoBehaviour
         yield return StartCoroutine(UIManager.instance.FadeOut());
         yield return new WaitForSeconds(1f);
         AudioManager.instance.SwitchBGM(1);
-        StartCoroutine(EventManager.instance.BossDefeat());
+        // StartCoroutine(EventManager.instance.BossDefeat());
         StartCoroutine(UIManager.instance.FadeIn());
     }
 
