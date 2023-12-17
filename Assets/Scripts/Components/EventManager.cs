@@ -45,6 +45,12 @@ public class EventManager : MonoBehaviour
         yield return new WaitForSeconds((float)timelines[(int)Timeline.BossAppear].duration);
     }
 
+    public IEnumerator BossDefeat()
+    {
+        PlayTimeLine(Timeline.BossDefeat);
+        yield return new WaitForSeconds((float)timelines[(int)Timeline.BossDefeat].duration);
+    }
+
     public void PlayTimeLine(Timeline index)
     {
         director.playableAsset = timelines[(int)index];

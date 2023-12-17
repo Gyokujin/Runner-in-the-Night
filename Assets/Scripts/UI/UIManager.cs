@@ -45,6 +45,8 @@ public class UIManager : MonoBehaviour
     private GameObject controllers;
     [SerializeField]
     private Slider bossHPBar;
+    [SerializeField]
+    private Text gameFinishText;
 
     [Header("Fade")]
     [SerializeField]
@@ -200,6 +202,30 @@ public class UIManager : MonoBehaviour
         {
             time -= Time.deltaTime;
             fadeImage.color = new Color(0, 0, 0, (1 - time) / fadeTime);
+            yield return null;
+        }
+    }
+
+    public IEnumerator GameFinishMessage()
+    {
+        gameFinishText.gameObject.SetActive(true);
+        gameFinishText.color = new Color(1, 1, 1, 0);
+        float time = 3;
+
+        while (time > 0)
+        {
+            time -= Time.deltaTime;
+            gameFinishText.color = new Color(1, 1, 1, (1 - time / 3));
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(5f);
+        time = 3;
+
+        while (time > 0)
+        {
+            time -= Time.deltaTime;
+            gameFinishText.color = new Color(1, 1, 1, time / 3);
             yield return null;
         }
     }
