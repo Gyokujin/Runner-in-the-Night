@@ -56,7 +56,6 @@ public class AudioManager : MonoBehaviour
         if (null == instance)
         {
             instance = this;
-            DontDestroyOnLoad(this.gameObject);
         }
         else
         {
@@ -117,6 +116,11 @@ public class AudioManager : MonoBehaviour
     {
         bgmAudio.clip = bgmClips[(int)bgm];
         bgmAudio.Play();
+    }
+
+    public void MuteBgm()
+    {
+        bgmAudio.Stop();
     }
 
     public void BgmVolumeControl(float volume)

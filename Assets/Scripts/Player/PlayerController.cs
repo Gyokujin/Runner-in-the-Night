@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour
     private float bulletSpeed;
 
     // Hit
+    [SerializeField]
     private int life;
     [HideInInspector]
     public bool onDamage = false;

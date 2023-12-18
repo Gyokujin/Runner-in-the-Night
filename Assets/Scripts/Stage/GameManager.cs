@@ -33,7 +33,6 @@ public class GameManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(this.gameObject);
         }
         else
         {
@@ -88,9 +87,9 @@ public class GameManager : MonoBehaviour
             UIManager.instance.ProgressModify(score);
         }
 
-        if (score >= maxScore)
+        if (score >= maxScore && !isArrive)
         {
-            ArriveBoss();
+            ArriveGoal();
         }
     }
 
@@ -109,12 +108,25 @@ public class GameManager : MonoBehaviour
         UIManager.instance.ProgressCha(live);
     }
 
-    void ArriveBoss()
+    void ArriveGoal()
     {
         isArrive = true;
         GameLive(false);
         player.Move(false);
         UIManager.instance.ShowController(false);
+        AudioManager.instance.MuteBgm();
+        EventManager.instance.PlayTimeLine(EventManager.Timeline.Danger);
+    }
+
+    public void EnterBossStage()
+    {
+        StartCoroutine("EnterBossStageProcess");
+    }
+
+    IEnumerator EnterBossStageProcess()
+    {
+        yield return StartCoroutine(UIManager.instance.FadeOut());
+        SceneManager.LoadScene(2); // 보스 씬으로 이동
     }
 
     public void CameraPause()
@@ -167,6 +179,8 @@ public class GameManager : MonoBehaviour
     void GameRestartProcess()
     {
         SceneManager.LoadScene(1);
+        AudioManager.instance.MuteBgm();
+        EventManager.instance.PlayTimeLine(EventManager.Timeline.Countdown);
     }
 
     public void GameQuit()

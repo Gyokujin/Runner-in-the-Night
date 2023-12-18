@@ -26,18 +26,6 @@ public class PoolManager : MonoBehaviour
     public GameObject[] enemies;
     private List<GameObject>[] enemyPool;
 
-    public enum Boss
-    {
-        Excel
-    }
-
-    [Header("Boss")]
-    [SerializeField]
-    private GameObject[] bosses;
-    [SerializeField]
-    private GameObject[] bossDummies;
-    public Vector2[] bossDis; // 보스 몬스터를 생성될 플레이어와의 간격
-
     void Awake()
     {
         if (instance == null)
@@ -126,17 +114,6 @@ public class PoolManager : MonoBehaviour
         }
         
         return select;
-    }
-
-    public void SpawnBoss(Boss boss)
-    {
-        bossDummies[(int)boss].SetActive(false);
-        GameObject bossObj = Instantiate(bosses[(int)boss], bossDis[(int)boss], Quaternion.identity);
-    }
-
-    public void SpawnDummy(Boss boss)
-    {
-        bossDummies[(int)boss].SetActive(true);
     }
 
     public void Return(GameObject poolObject)
