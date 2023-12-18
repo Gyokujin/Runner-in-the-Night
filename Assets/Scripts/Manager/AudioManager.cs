@@ -12,7 +12,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField][Range(0, 1)]
     private float bgmVolume;
     private AudioSource bgmAudio;
-    public enum Bgm { Run, Boss, Mute }
+    public enum StageBGM { RunStage, BossStage }
 
     [Header("System")]
     [SerializeField]
@@ -53,13 +53,14 @@ public class AudioManager : MonoBehaviour
 
     void Awake()
     {
-        if (instance == null)
+        if (null == instance)
         {
             instance = this;
+            DontDestroyOnLoad(this.gameObject);
         }
         else
         {
-            Destroy(this);
+            Destroy(this.gameObject);
         }
 
         Init();
@@ -73,7 +74,6 @@ public class AudioManager : MonoBehaviour
         bgmAudio = bgmObject.AddComponent<AudioSource>();
         bgmAudio.loop = true;
         bgmAudio.volume = bgmVolume;
-        bgmAudio.clip = bgmClips[0];
         bgmAudio.Play();
 
         // System √ ±‚»≠
@@ -113,19 +113,16 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void SwitchBGM(int bgmIndex)
+    public void BgmPlay(StageBGM bgm)
     {
-        switch (bgmIndex)
-        {
-            case 0:
-            case 1:
-                bgmAudio.clip = bgmClips[bgmIndex];
-                bgmAudio.Play();
-                break;
-            case 2:
-                bgmAudio.Stop();
-                break;
-        }
+        bgmAudio.clip = bgmClips[(int)bgm];
+        bgmAudio.Play();
+    }
+
+    public void BgmVolumeControl(float volume)
+    {
+        bgmVolume = volume;
+        bgmAudio.volume = bgmVolume;
     }
 
     public void PlaySystemSFX(SystemSFX sfx)

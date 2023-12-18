@@ -765,11 +765,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLive: 0
   maxScore: 1500
-  score: 1495
+  score: 0
   scoreDelay: 0.2
   isGameOver: 0
-  spawnOffX: -2
-  spawnOffY: 2.5
   player: {fileID: 1854409583}
   platform: {fileID: 842387136}
   camera: {fileID: 519420033}

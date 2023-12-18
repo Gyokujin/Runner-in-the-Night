@@ -107,8 +107,6 @@ public class PlayerController : MonoBehaviour
         landVec[0] = transform.GetChild(0);
         landVec[1] = transform.GetChild(1);
         gameObject.layer = defaultLayer;
-
-        Move(true);
     }
 
     void WaitTimeSetting()

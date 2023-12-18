@@ -520,7 +520,7 @@ public class B_Excel : MonoBehaviour
     void Die()
     {
         onDie = true;
-        GameManager.instance.BossDefeat();
+        // GameManager.instance.BossDefeat();
         gameObject.SetActive(false);
     }
 }

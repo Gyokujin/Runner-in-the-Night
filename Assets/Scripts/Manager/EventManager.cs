@@ -10,6 +10,7 @@ public class EventManager : MonoBehaviour
 
     public enum Timeline
     {
+        Countdown,
         Danger,
         BossAppear,
         BossDefeat
@@ -24,6 +25,7 @@ public class EventManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(this.gameObject);
         }
         else
         {
@@ -31,24 +33,6 @@ public class EventManager : MonoBehaviour
         }
 
         director = GetComponent<PlayableDirector>();
-    }
-
-    public IEnumerator DangerEvent()
-    {
-        PlayTimeLine(Timeline.Danger);
-        yield return new WaitForSeconds((float)timelines[(int)Timeline.Danger].duration);
-    }
-
-    public IEnumerator BossEvent()
-    {
-        PlayTimeLine(Timeline.BossAppear);
-        yield return new WaitForSeconds((float)timelines[(int)Timeline.BossAppear].duration);
-    }
-
-    public IEnumerator BossDefeat()
-    {
-        PlayTimeLine(Timeline.BossDefeat);
-        yield return new WaitForSeconds((float)timelines[(int)Timeline.BossDefeat].duration);
     }
 
     public void PlayTimeLine(Timeline index)

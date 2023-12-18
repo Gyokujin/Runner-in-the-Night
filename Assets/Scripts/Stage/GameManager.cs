@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -13,19 +12,13 @@ public class GameManager : MonoBehaviour
 
     [Header("StageInfo")]
     public int maxScore;
-    private int score = 0;
+    public int score;
     [SerializeField]
     private float scoreDelay = 0.25f;
     private bool scoreGetting = false;
     [HideInInspector]
     public bool isGameOver = false;
     private bool isArrive = false;
-
-    [Header("Respawn")]
-    [SerializeField]
-    private float spawnOffX;
-    [SerializeField]
-    private float spawnOffY;
 
     [Header("Component")]
     [SerializeField]
@@ -40,6 +33,7 @@ public class GameManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(this.gameObject);
         }
         else
         {
@@ -51,7 +45,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        GameLive(true);
+        Init();
     }
     
     void Update()
@@ -60,6 +54,22 @@ public class GameManager : MonoBehaviour
         {
             ScoreProcess();
         }
+    }
+
+    void Init()
+    {
+        GameLive(false);
+        player.Move(false);
+        EventManager.instance.PlayTimeLine(EventManager.Timeline.Countdown);
+    }
+
+    public void GameStart()
+    {
+        Time.timeScale = 1;
+        GameLive(true);
+        isLive = true;
+        player.Move(true);
+        AudioManager.instance.BgmPlay(AudioManager.StageBGM.RunStage);
     }
 
     void ScoreProcess()
@@ -104,56 +114,7 @@ public class GameManager : MonoBehaviour
         isArrive = true;
         GameLive(false);
         player.Move(false);
-        AudioManager.instance.SwitchBGM(2);
         UIManager.instance.ShowController(false);
-        StartCoroutine("ArriveBossProcess");
-    }
-
-    IEnumerator ArriveBossProcess()
-    {
-        // UIManager.instance.ShowDangerPanel();
-        // yield return StartCoroutine(EventManager.instance.DangerEvent());
-        // yield return StartCoroutine(UIManager.instance.FadeOut());
-        platform.PlatformChange();
-
-        // yield return new WaitForSeconds(1f);
-        // yield return StartCoroutine(UIManager.instance.FadeIn());
-        // yield return StartCoroutine(EventManager.instance.BossEvent());
-        // yield return StartCoroutine(UIManager.instance.FadeOut());
-
-        // yield return new WaitForSeconds(0.5f);
-        PoolManager.instance.SpawnBoss(PoolManager.Boss.Excel);
-        // yield return StartCoroutine(UIManager.instance.FadeIn());
-        yield return null; // 이후에 빼자
-
-        GameLive(true);
-        player.Move(true);
-        AudioManager.instance.SwitchBGM(1);
-        UIManager.instance.ShowController(true);
-    }
-
-    public void BossDefeat()
-    {
-        GameLive(false);
-        player.gameObject.layer = 7; // 이 부분 수정과 Player의 무적 실행 함수를 수정
-        player.Move(false);
-        UIManager.instance.ShowController(false);
-        StartCoroutine("BossDefeatProcess");
-    }
-
-    IEnumerator BossDefeatProcess()
-    {
-        yield return StartCoroutine(UIManager.instance.FadeOut());
-        yield return new WaitForSeconds(1f);
-        AudioManager.instance.SwitchBGM(2);
-        yield return StartCoroutine(UIManager.instance.FadeIn());
-        yield return null;
-
-        // yield return StartCoroutine(EventManager.instance.BossDefeat());
-        yield return StartCoroutine(UIManager.instance.FadeOut());
-        yield return StartCoroutine(UIManager.instance.GameFinishMessage());
-
-        SceneManager.LoadScene(0);
     }
 
     public void CameraPause()
@@ -165,6 +126,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0;
         AudioManager.instance.PlaySystemSFX(AudioManager.SystemSFX.Click);
+        AudioManager.instance.BgmVolumeControl(0.1f);
         UIManager.instance.ShowPausePanel(true);
     }
 
@@ -172,6 +134,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
         AudioManager.instance.PlaySystemSFX(AudioManager.SystemSFX.Click);
+        AudioManager.instance.BgmVolumeControl(0.4f);
         UIManager.instance.ShowPausePanel(false);
     }
 
@@ -184,6 +147,7 @@ public class GameManager : MonoBehaviour
 
     void GameOverProcess()
     {
+        Time.timeScale = 0;
         UIManager.instance.ShowGameOverPanel(true);
         UIManager.instance.restartButton.interactable = true;
         AudioManager.instance.PlaySystemSFX(AudioManager.SystemSFX.GameOver);
@@ -193,6 +157,7 @@ public class GameManager : MonoBehaviour
     {
         if (isGameOver)
         {
+            Time.timeScale = 1;
             UIManager.instance.restartButton.interactable = false;
             AudioManager.instance.PlaySystemSFX(AudioManager.SystemSFX.Click);
             Invoke("GameRestartProcess", 1f);
@@ -201,11 +166,18 @@ public class GameManager : MonoBehaviour
 
     void GameRestartProcess()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(1);
     }
 
     public void GameQuit()
     {
-        Application.Quit();
+        Time.timeScale = 1;
+        AudioManager.instance.PlaySystemSFX(AudioManager.SystemSFX.Click);
+        Invoke("GameQuitProcess", 0.5f);
+    }
+
+    void GameQuitProcess()
+    {
+        SceneManager.LoadScene(0);
     }
 }
