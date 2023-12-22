@@ -4,19 +4,18 @@ using UnityEngine;
 
 public class PlatformControl : MonoBehaviour
 {
-    [HideInInspector]
+    public enum PlatformType
+    {
+        Random,
+        Line
+    }
+
     public PlatformType platformType;
 
     [SerializeField]
     private GameObject[] randomPlatforms;
     [SerializeField]
     private GameObject[] linePlatforms;
-
-    public enum PlatformType
-    {
-        Random,
-        Line
-    }
 
     [Header("PlatformData")]
     private int moveIndex = 0;
@@ -45,13 +44,10 @@ public class PlatformControl : MonoBehaviour
 
     void Awake()
     {
-        Init();
-        spawnData = GetComponent<SpawnData>();
-    }
-
-    void Init()
-    {
-        platformType = PlatformType.Random;
+        if (platformType == PlatformType.Random)
+        {
+            spawnData = GetComponent<SpawnData>();
+        }
     }
 
     void Update()

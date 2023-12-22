@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 
     [Header("StageInfo")]
     public int maxScore;
+    [HideInInspector]
     public int score;
     [SerializeField]
     private float scoreDelay = 0.25f;
@@ -21,8 +22,8 @@ public class GameManager : MonoBehaviour
     private bool isArrive = false;
 
     [Header("Component")]
-    [SerializeField]
-    private PlayerController player;
+    [HideInInspector]
+    public PlayerController player;
     [SerializeField]
     private PlatformControl platform;
     [SerializeField]
@@ -49,7 +50,7 @@ public class GameManager : MonoBehaviour
     
     void Update()
     {
-        if (isLive)
+        if (isLive && platform.platformType == PlatformControl.PlatformType.Random)
         {
             ScoreProcess();
         }
@@ -59,10 +60,24 @@ public class GameManager : MonoBehaviour
     {
         GameLive(false);
         player.Move(false);
-        EventManager.instance.PlayTimeLine(EventManager.Timeline.Countdown);
+
+        if (platform.platformType == PlatformControl.PlatformType.Random)
+        {
+            EventManager.instance.PlayTimeLine(EventManager.Timeline.Countdown);
+        }
+        else if (platform.platformType == PlatformControl.PlatformType.Line)
+        {
+            StartCoroutine("BossInitProcess");
+        }
     }
 
-    public void GameStart()
+    IEnumerator BossInitProcess()
+    {
+        yield return StartCoroutine(UIManager.instance.FadeIn());
+        EventManager.instance.PlayTimeLine(EventManager.Timeline.BossAppear);
+    }
+
+    public void RunStageStart()
     {
         Time.timeScale = 1;
         GameLive(true);
@@ -105,7 +120,11 @@ public class GameManager : MonoBehaviour
     public void GameLive(bool live)
     {
         isLive = live;
-        UIManager.instance.ProgressCha(live);
+
+        if (platform.platformType == PlatformControl.PlatformType.Random)
+        {
+            UIManager.instance.ProgressCha(live);
+        }
     }
 
     void ArriveGoal()

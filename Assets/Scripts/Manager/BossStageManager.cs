@@ -4,40 +4,21 @@ using UnityEngine;
 
 public class BossStageManager : MonoBehaviour
 {
-    public static BossStageManager instance = null;
+    [SerializeField]
+    private B_Excel excel;
 
-    [HideInInspector]
-    public bool isLive = false;
+    public void BossStageStart()
+    {
+        // GameManager
+        GameManager.instance.isLive = true;
 
-    //void ArriveBoss()
-    //{
-    //    isArrive = true;
-    //    GameLive(false);
-    //    player.Move(false);
-    //    UIManager.instance.ShowController(false);
-    //    StartCoroutine("ArriveBossProcess");
-    //}
+        // Player
+        GameManager.instance.player.Move(true);
 
-    //IEnumerator ArriveBossProcess()
-    //{
-    //    UIManager.instance.ShowDangerPanel();
-    //    yield return StartCoroutine(EventManager.instance.DangerEvent());
-    //    yield return StartCoroutine(UIManager.instance.FadeOut());
-    //    platform.PlatformChange();
-
-    //    yield return new WaitForSeconds(1f);
-    //    yield return StartCoroutine(UIManager.instance.FadeIn());
-    //    yield return StartCoroutine(EventManager.instance.BossEvent());
-    //    yield return StartCoroutine(UIManager.instance.FadeOut());
-
-    //    yield return new WaitForSeconds(0.5f);
-    //    PoolManager.instance.SpawnBoss(PoolManager.Boss.Excel);
-    //    yield return StartCoroutine(UIManager.instance.FadeIn());
-
-    //    GameLive(true);
-    //    player.Move(true);
-    //    UIManager.instance.ShowController(true);
-    //}
+        // Excel
+        excel.enabled = true;
+        excel.GetComponent<BoxCollider2D>().enabled = true;
+    }
 
     //public void BossDefeat()
     //{
