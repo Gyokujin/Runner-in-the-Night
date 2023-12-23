@@ -16,6 +16,7 @@ public class BossStageManager : MonoBehaviour
         GameManager.instance.isLive = true;
         UIManager.instance.ShowController(true);
         AudioManager.instance.BgmPlay(AudioManager.StageBGM.BossStage);
+        EventManager.instance.EndTimeLine();
 
         // Player
         GameManager.instance.player.Move(true);

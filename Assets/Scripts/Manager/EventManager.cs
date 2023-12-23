@@ -34,9 +34,38 @@ public class EventManager : MonoBehaviour
         director = GetComponent<PlayableDirector>();
     }
 
+    void Update()
+    {
+        if (director.playableAsset == null)
+            return;
+
+        if (director.playableAsset.name == "BossAppear" || director.playableAsset.name == "BossDefeat")
+        {
+            SkipButtonAct();
+        }
+    }
+
     public void PlayTimeLine(Timeline index)
     {
         director.playableAsset = timelines[(int)index];
         director.Play();
+    }
+
+    public void EndTimeLine()
+    {
+        director.playableAsset = null;
+    }
+
+    void SkipButtonAct()
+    {
+        if (Input.touchCount > 0 || Input.GetMouseButtonDown(0)) // PC 이용의 경우도 있기 때문에 다음과 같은 조건을 부여한다.
+        {
+            UIManager.instance.ShowSkipButton(true);
+        }
+    }
+
+    public void Skip()
+    {
+        Debug.Log("SKIP MESSAGE");
     }
 }

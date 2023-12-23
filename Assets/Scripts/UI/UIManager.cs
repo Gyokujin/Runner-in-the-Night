@@ -48,6 +48,8 @@ public class UIManager : MonoBehaviour
     private Slider bossHPBar;
     [SerializeField]
     private Text gameFinishText;
+    [SerializeField]
+    private GameObject skipButton;
 
     [Header("Fade")]
     [SerializeField]
@@ -158,6 +160,11 @@ public class UIManager : MonoBehaviour
         controllers.SetActive(onShow);
         hpIcon.SetActive(onShow);
     }
+    
+    public void ShowSkipButton(bool onShow)
+    {
+        skipButton.SetActive(onShow);
+    }
 
     public void BossHPModify(bool able, int maxHp = 0, int hp = 0)
     {
@@ -175,11 +182,6 @@ public class UIManager : MonoBehaviour
         {
             bossHPBar.gameObject.SetActive(false);
         }
-    }
-
-    public void PlayTimeline()
-    {
-
     }
 
     public IEnumerator FadeIn()
