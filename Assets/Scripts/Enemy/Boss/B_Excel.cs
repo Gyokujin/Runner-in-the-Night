@@ -122,8 +122,7 @@ public class B_Excel : MonoBehaviour
     void Init()
     {
         phase = Phase.Phase1;
-        hp = 1; // 이후에 지우자
-        // hp = maxHp;
+        hp = maxHp;
         turbo.ControlEngine(true);
         UIManager.instance.BossHPModify(true, maxHp, maxHp); // BossHP UI를 초기화한다
 

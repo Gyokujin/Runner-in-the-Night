@@ -655,6 +655,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   excel: {fileID: 726677458}
+  bossPos: {x: 0.5, y: 0.05}
 --- !u!1 &192890125
 GameObject:
   m_ObjectHideFlags: 0
@@ -4544,7 +4545,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 174133395}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: GamePause
         m_Mode: 1
@@ -5198,7 +5199,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 174133395}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: GameQuit
         m_Mode: 1
@@ -6836,7 +6837,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 174133395}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: GameResume
         m_Mode: 1
