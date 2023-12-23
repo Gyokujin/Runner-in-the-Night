@@ -66,6 +66,9 @@ public class EventManager : MonoBehaviour
 
     public void Skip()
     {
-        Debug.Log("SKIP MESSAGE");
+        if (!GameManager.instance.isPause) // Pause 중에 작동이 되는걸 막는다.
+        {
+            Debug.Log("SKIP MESSAGE");
+        }
     }
 }

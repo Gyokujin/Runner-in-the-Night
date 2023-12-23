@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector]
     public bool isLive = false;
+    [HideInInspector]
+    public bool isPause = false;
 
     [Header("StageInfo")]
     public int maxScore;
@@ -155,6 +157,7 @@ public class GameManager : MonoBehaviour
 
     public void GamePause()
     {
+        isPause = true;
         Time.timeScale = 0;
         AudioManager.instance.PlaySystemSFX(AudioManager.SystemSFX.Click);
         AudioManager.instance.BgmVolumeControl(0.1f);
@@ -163,6 +166,7 @@ public class GameManager : MonoBehaviour
 
     public void GameResume()
     {
+        isPause = false;
         Time.timeScale = 1;
         AudioManager.instance.PlaySystemSFX(AudioManager.SystemSFX.Click);
         AudioManager.instance.BgmVolumeControl(0.4f);
