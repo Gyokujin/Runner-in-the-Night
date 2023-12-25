@@ -680,6 +680,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLive: 0
+  isPause: 0
   maxScore: 1000
   score: 0
   scoreDelay: 0.25
@@ -1205,6 +1206,7 @@ MonoBehaviour:
   controllers: {fileID: 307365297}
   bossHPBar: {fileID: 570555580}
   gameFinishText: {fileID: 0}
+  skipButton: {fileID: 0}
   fadeImage: {fileID: 306631783}
   fadeTime: 1
   playerSpawnFX: {fileID: 1418493082767679888}
@@ -2385,7 +2387,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -107.5, y: 9.75}
+  m_Offset: {x: -107.5, y: 14.5}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -2396,7 +2398,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 7.326, y: 17.6}
+  m_Size: {x: 7.326, y: 27.5}
   m_EdgeRadius: 0
 --- !u!114 &651783828
 MonoBehaviour:
@@ -2423,7 +2425,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 167.5, y: 9.75}
+  m_Offset: {x: 167.5, y: 14.5}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -2434,7 +2436,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 7.326, y: 17.6}
+  m_Size: {x: 7.326, y: 27.5}
   m_EdgeRadius: 0
 --- !u!61 &651783830
 BoxCollider2D:
@@ -2449,7 +2451,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 30.4, y: 20.4}
+  m_Offset: {x: 30.4, y: 30}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}

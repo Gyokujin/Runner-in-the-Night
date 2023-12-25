@@ -53,6 +53,7 @@ public class EventManager : MonoBehaviour
 
     public void EndTimeLine()
     {
+        UIManager.instance.ShowSkipButton(false);
         director.playableAsset = null;
     }
 
@@ -66,9 +67,17 @@ public class EventManager : MonoBehaviour
 
     public void Skip()
     {
-        if (!GameManager.instance.isPause) // Pause 중에 작동이 되는걸 막는다.
+        if (GameManager.instance.isPause) // Pause 중에 작동이 되는걸 막는다.
+            return;
+
+        switch (director.playableAsset.name)
         {
-            Debug.Log("SKIP MESSAGE");
+            case "BossAppear":
+                BossStageManager.instance.BossStageStart();
+                break;
+            case "BossDefeat":
+
+                break;
         }
     }
 }

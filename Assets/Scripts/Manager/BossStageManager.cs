@@ -5,10 +5,26 @@ using UnityEngine;
 [RequireComponent(typeof(GameManager))]
 public class BossStageManager : MonoBehaviour
 {
+    public static BossStageManager instance = null;
+
     [SerializeField]
     private B_Excel excel;
     [SerializeField]
     private Vector2 bossPos;
+    [SerializeField]
+    private Vector3 bossScale;
+
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
 
     public void BossStageStart()
     {
@@ -22,9 +38,12 @@ public class BossStageManager : MonoBehaviour
         GameManager.instance.player.Move(true);
 
         // Excel
-        excel.transform.position = bossPos;
+        excel.gameObject.SetActive(true);
         excel.enabled = true;
         excel.GetComponent<BoxCollider2D>().enabled = true;
+        excel.transform.position = bossPos;
+        excel.transform.rotation = Quaternion.identity;
+        excel.transform.localScale = bossScale;
     }
 
     //public void BossDefeat()

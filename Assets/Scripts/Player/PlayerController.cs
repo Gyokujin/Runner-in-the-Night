@@ -289,55 +289,58 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator HitProcess()
     {
-        yield return StartCoroutine("LoseHP");
-        GameManager.instance.GameLive(false); // 캐릭터외의 진행을 멈춘다. 스크롤링 일시정지
-        onDamage = true;     
+        GameManager.instance.GameLive(false); // 스크롤링 일시정지
+        onDamage = true;
         Move(false);
         rigid.velocity = Vector2.zero;
         AttackCancel();
-
-        animator.SetTrigger("onHit");
-        rigid.AddForce(Vector2.left * knockback);
-        AudioManager.instance.PlayPlayerSFX(AudioManager.PlayerSFX.Hit);
-
-        yield return hitWait;
-        GameManager.instance.GameLive(true);
-        sprite.color = new Color(1, 1, 1, 0.7f);
-        onDamage = false;
-        Move(true);
-
-        leftInvincible += invincibleTime;
-        yield return new WaitForSeconds(leftInvincible);
-        sprite.color = new Color(1, 1, 1, 1);
-    }
-
-    public void FallDown()
-    {
-        StartCoroutine("FallDownProcess");
-    }
-
-    IEnumerator FallDownProcess()
-    {
-        if (!onInvincible && !onDamage)
-        {
-            yield return StartCoroutine("LoseHP");
-        }
-
-        onDamage = true;
-        StartCoroutine("Respawn");
-    }
-
-    IEnumerator LoseHP()
-    {
-        life--;
-        UIManager.instance.DamageUI(life);
+        LoseHP();
 
         if (life <= 0)
         {
             Die();
         }
+        else
+        {
+            animator.SetTrigger("onHit");
+            rigid.AddForce(Vector2.left * knockback);
+            AudioManager.instance.PlayPlayerSFX(AudioManager.PlayerSFX.Hit);
 
-        yield return null;
+            yield return hitWait;
+            GameManager.instance.GameLive(true);
+            sprite.color = new Color(1, 1, 1, 0.7f);
+            onDamage = false;
+            Move(true);
+
+            leftInvincible += invincibleTime;
+            yield return new WaitForSeconds(leftInvincible);
+            sprite.color = new Color(1, 1, 1, 1);
+        }
+    }
+
+    public void FallDown()
+    {
+        if (!onInvincible && !onDamage)
+        {
+            LoseHP();
+        }
+
+        onDamage = true;
+
+        if (life <= 0)
+        {
+            Die();
+        }
+        else
+        {
+            StartCoroutine("Respawn");
+        }
+    }
+
+    void LoseHP()
+    {
+        life--;
+        UIManager.instance.DamageUI(life);
     }
 
     IEnumerator Respawn()
@@ -375,6 +378,7 @@ public class PlayerController : MonoBehaviour
         if (isDead)
             return;
 
+        GameManager.instance.isLive = false;
         isDead = true;
         collider.enabled = false;
         animator.SetTrigger("doDie");
@@ -386,10 +390,10 @@ public class PlayerController : MonoBehaviour
     {
         rigid.velocity = Vector2.zero;
         rigid.AddForce(Vector2.up * bounce);
-        GameManager.instance.GameOver();
 
         yield return new WaitForSeconds(1f);
-        rigid.gravityScale *= 2;
+        rigid.gravityScale *= 3;
+        GameManager.instance.GameOver();
 
         yield return new WaitForSeconds(2f); // 캐릭터가 화면 밖으로 나간 시점에서 추락을 비활성화 한다.
         rigid.simulated = false;

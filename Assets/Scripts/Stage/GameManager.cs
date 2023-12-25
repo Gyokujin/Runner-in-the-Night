@@ -201,9 +201,9 @@ public class GameManager : MonoBehaviour
 
     void GameRestartProcess()
     {
-        SceneManager.LoadScene(1);
-        AudioManager.instance.MuteBgm();
-        EventManager.instance.PlayTimeLine(EventManager.Timeline.Countdown);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        // AudioManager.instance.MuteBgm();
+        // EventManager.instance.PlayTimeLine(EventManager.Timeline.Countdown);
     }
 
     public void GameQuit()
