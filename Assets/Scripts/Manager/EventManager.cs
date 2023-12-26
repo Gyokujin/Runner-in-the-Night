@@ -13,7 +13,8 @@ public class EventManager : MonoBehaviour
         Countdown,
         Danger,
         BossAppear,
-        BossDefeat
+        BossDefeat,
+        GameFinish
     }
 
     private PlayableDirector director;
@@ -47,6 +48,7 @@ public class EventManager : MonoBehaviour
 
     public void PlayTimeLine(Timeline index)
     {
+        director.Stop();
         director.playableAsset = timelines[(int)index];
         director.Play();
     }
@@ -70,13 +72,15 @@ public class EventManager : MonoBehaviour
         if (GameManager.instance.isPause) // Pause 중에 작동이 되는걸 막는다.
             return;
 
+        UIManager.instance.ShowSkipButton(false);
+
         switch (director.playableAsset.name)
         {
             case "BossAppear":
                 BossStageManager.instance.BossStageStart();
                 break;
             case "BossDefeat":
-
+                BossStageManager.instance.GameFinish();
                 break;
         }
     }

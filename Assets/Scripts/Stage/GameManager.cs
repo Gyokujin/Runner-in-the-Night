@@ -202,8 +202,6 @@ public class GameManager : MonoBehaviour
     void GameRestartProcess()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        // AudioManager.instance.MuteBgm();
-        // EventManager.instance.PlayTimeLine(EventManager.Timeline.Countdown);
     }
 
     public void GameQuit()
@@ -213,7 +211,7 @@ public class GameManager : MonoBehaviour
         Invoke("GameQuitProcess", 0.5f);
     }
 
-    void GameQuitProcess()
+    public void GameQuitProcess()
     {
         SceneManager.LoadScene(0);
     }

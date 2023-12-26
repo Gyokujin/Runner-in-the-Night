@@ -136,6 +136,9 @@ public class B_Excel : MonoBehaviour
 
     IEnumerator PatternCycle()
     {
+        if (onDie)
+            yield break;
+
         yield return patternWait;
 
         if (rigid.position.x - player.transform.position.x > attackDisMax) // 플레이어와 멀면 왼쪽 이동
@@ -519,7 +522,6 @@ public class B_Excel : MonoBehaviour
     void Die()
     {
         onDie = true;
-        // GameManager.instance.BossDefeat();
-        gameObject.SetActive(false);
+        BossStageManager.instance.BossDefeat();
     }
 }

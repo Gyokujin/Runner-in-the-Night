@@ -14,6 +14,11 @@ public class BossStageManager : MonoBehaviour
     [SerializeField]
     private Vector3 bossScale;
 
+    [SerializeField]
+    private GameObject excelTurbo;
+    [SerializeField]
+    private Vector2 turboPos;
+
     void Awake()
     {
         if (instance == null)
@@ -40,32 +45,55 @@ public class BossStageManager : MonoBehaviour
         // Excel
         excel.gameObject.SetActive(true);
         excel.enabled = true;
+        excel.GetComponent<SpriteRenderer>().flipX = false;
         excel.GetComponent<BoxCollider2D>().enabled = true;
         excel.transform.position = bossPos;
         excel.transform.rotation = Quaternion.identity;
         excel.transform.localScale = bossScale;
+
+        // Excel - Turbo
+        excelTurbo.gameObject.SetActive(true);
+        excelTurbo.GetComponent<SpriteRenderer>().flipX = false;
+        excelTurbo.transform.localPosition = turboPos;
+        excelTurbo.transform.rotation = Quaternion.identity;
+        excelTurbo.transform.localScale = Vector3.one;
     }
 
-    //public void BossDefeat()
-    //{
-    //    GameLive(false);
-    //    player.gameObject.layer = 7; // 이 부분 수정과 Player의 무적 실행 함수를 수정
-    //    player.Move(false);
-    //    UIManager.instance.ShowController(false);
-    //    StartCoroutine("BossDefeatProcess");
-    //}
+    public void BossDefeat()
+    {
+        GameManager.instance.GameLive(false);
+        GameManager.instance.player.gameObject.layer = 7;
+        GameManager.instance.player.Move(false);
+        UIManager.instance.ShowController(false);
+        excel.enabled = false;
+        excel.GetComponent<BoxCollider2D>().enabled = false;
+        StartCoroutine("BossDefeatProcess");
+    }
 
-    //IEnumerator BossDefeatProcess()
-    //{
-    //    yield return StartCoroutine(UIManager.instance.FadeOut());
-    //    yield return new WaitForSeconds(1f);
-    //    yield return StartCoroutine(UIManager.instance.FadeIn());
-    //    yield return null;
+    IEnumerator BossDefeatProcess()
+    {
+        if (PlayerPrefs.GetInt("GameProgress") != 2) // 클리어 데이터를 저장한다.
+        {
+            PlayerPrefs.SetInt("GameProgress", 2);
+        }
 
-    //    yield return StartCoroutine(EventManager.instance.BossDefeat());
-    //    yield return StartCoroutine(UIManager.instance.FadeOut());
-    //    yield return StartCoroutine(UIManager.instance.GameFinishMessage());
+        // Fade Out
+        yield return StartCoroutine(UIManager.instance.FadeOut());
+        AudioManager.instance.MuteBgm();
+        yield return new WaitForSeconds(2f);
 
-    //    SceneManager.LoadScene(0);
-    //}
+        // Event Start
+        EventManager.instance.PlayTimeLine(EventManager.Timeline.BossDefeat);
+        yield return null;
+
+        // Fade In
+        StartCoroutine(UIManager.instance.FadeIn());
+    }
+
+    public void GameFinish()
+    {
+        GameManager.instance.player.gameObject.SetActive(false);
+        excel.gameObject.SetActive(false);
+        EventManager.instance.PlayTimeLine(EventManager.Timeline.GameFinish);
+    }
 }
