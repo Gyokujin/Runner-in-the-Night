@@ -307,10 +307,14 @@ public class PlayerController : MonoBehaviour
             AudioManager.instance.PlayPlayerSFX(AudioManager.PlayerSFX.Hit);
 
             yield return hitWait;
-            GameManager.instance.GameLive(true);
+            if (!BossStageManager.instance.gameFinish) // 게임이 끝났지만 재생 되는걸 막기 위해 조건을 둔다.
+            {
+                Move(true);
+                GameManager.instance.GameLive(true);
+            }
+            
             sprite.color = new Color(1, 1, 1, 0.7f);
             onDamage = false;
-            Move(true);
 
             leftInvincible += invincibleTime;
             yield return new WaitForSeconds(leftInvincible);

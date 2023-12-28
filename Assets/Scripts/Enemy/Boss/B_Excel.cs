@@ -19,7 +19,7 @@ public class B_Excel : MonoBehaviour
     [Header("Status")]
     [SerializeField]
     private int maxHp;
-    [SerializeField]
+    [HideInInspector]
     private int hp;
     
     [HideInInspector]

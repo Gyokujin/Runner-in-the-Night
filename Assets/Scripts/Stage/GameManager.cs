@@ -133,6 +133,7 @@ public class GameManager : MonoBehaviour
     {
         isArrive = true;
         GameLive(false);
+        player.gameObject.layer = 7;
         player.Move(false);
         UIManager.instance.ShowController(false);
         AudioManager.instance.MuteBgm();

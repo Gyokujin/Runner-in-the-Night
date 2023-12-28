@@ -7,6 +7,9 @@ public class BossStageManager : MonoBehaviour
 {
     public static BossStageManager instance = null;
 
+    [HideInInspector]
+    public bool gameFinish = false;
+
     [SerializeField]
     private B_Excel excel;
     [SerializeField]
@@ -61,10 +64,12 @@ public class BossStageManager : MonoBehaviour
 
     public void BossDefeat()
     {
+        gameFinish = true;
         GameManager.instance.GameLive(false);
-        GameManager.instance.player.gameObject.layer = 7;
         GameManager.instance.player.Move(false);
+        GameManager.instance.player.gameObject.layer = 7;
         UIManager.instance.ShowController(false);
+        AudioManager.instance.MuteEnemySFX(AudioManager.EnemySfx.ExcelBoost); // FlameSpear 패턴의 경우 사운드가 오래 가기 때문에 끊는다.
         excel.enabled = false;
         excel.GetComponent<BoxCollider2D>().enabled = false;
         StartCoroutine("BossDefeatProcess");
