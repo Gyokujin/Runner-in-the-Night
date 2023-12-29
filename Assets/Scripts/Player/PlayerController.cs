@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.UIElements;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -307,7 +306,8 @@ public class PlayerController : MonoBehaviour
             AudioManager.instance.PlayPlayerSFX(AudioManager.PlayerSFX.Hit);
 
             yield return hitWait;
-            if (!BossStageManager.instance.gameFinish) // 게임이 끝났지만 재생 되는걸 막기 위해 조건을 둔다.
+
+            if (!GameManager.instance.gameFinish)
             {
                 Move(true);
                 GameManager.instance.GameLive(true);

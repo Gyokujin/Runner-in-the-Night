@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public bool isGameOver = false;
     private bool isArrive = false;
+    [HideInInspector]
+    public bool gameFinish = false;
 
     [Header("Component")]
     [HideInInspector]

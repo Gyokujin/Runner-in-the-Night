@@ -7,9 +7,6 @@ public class BossStageManager : MonoBehaviour
 {
     public static BossStageManager instance = null;
 
-    [HideInInspector]
-    public bool gameFinish = false;
-
     [SerializeField]
     private B_Excel excel;
     [SerializeField]
@@ -64,7 +61,7 @@ public class BossStageManager : MonoBehaviour
 
     public void BossDefeat()
     {
-        gameFinish = true;
+        GameManager.instance.gameFinish = true;
         GameManager.instance.GameLive(false);
         GameManager.instance.player.Move(false);
         GameManager.instance.player.gameObject.layer = 7;

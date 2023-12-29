@@ -646,6 +646,7 @@ MonoBehaviour:
   score: 0
   scoreDelay: 0.25
   isGameOver: 0
+  gameFinish: 0
   player: {fileID: 1854409583}
   platform: {fileID: 842387136}
   camera: {fileID: 519420033}
@@ -661,7 +662,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e7bd691495282b40b021d8ca867b01b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameFinish: 0
   excel: {fileID: 726677458}
   bossPos: {x: 10.5, y: 0.05}
   bossScale: {x: 1.6, y: 1.6, z: 1}
@@ -3649,7 +3649,7 @@ PlayableDirector:
   m_GameObject: {fileID: 1035273849}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: aa42724f226ee02499c17c883750d386, type: 2}
+  m_PlayableAsset: {fileID: 0}
   m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
@@ -3823,6 +3823,14 @@ PlayableDirector:
     value: {fileID: 1880911450}
   - key: {fileID: -3269466367098245367, guid: cdc524ea0e4992e4aa1a9b55689a03f5, type: 2}
     value: {fileID: 1813703877}
+  - key: {fileID: -2179156996550462416, guid: aa42724f226ee02499c17c883750d386, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 5125521111621026509, guid: aa42724f226ee02499c17c883750d386, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 4857878949453013049, guid: aa42724f226ee02499c17c883750d386, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 2859096879610148125, guid: aa42724f226ee02499c17c883750d386, type: 2}
+    value: {fileID: 0}
   m_ExposedReferences:
     m_References:
     - de6cf857d0441e347ba189f7945b843b: {fileID: 0}
