@@ -13,15 +13,15 @@ public class SpawnData : MonoBehaviour
         int num;
         int maxNum;
 
-        if (GameManager.instance.score < 100) // Guardian = 0123, Diver = 345, Chaser = 67, Wanderer = 8, Blazer = 9
+        if (GameManager.instance.score < 200) // Guardian = 0123, Diver = 345, Chaser = 67, Wanderer = 8, Blazer = 9
         {
             maxNum = 6;
         }
-        else if (GameManager.instance.score < 300)
+        else if (GameManager.instance.score < 500)
         {
             maxNum = 8;
         }
-        else if (GameManager.instance.score < 600)
+        else if (GameManager.instance.score < 900)
         {
             maxNum = 9;
         }

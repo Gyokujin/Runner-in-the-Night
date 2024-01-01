@@ -681,10 +681,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLive: 0
   isPause: 0
-  maxScore: 1000
+  maxScore: 1500
   score: 0
   scoreDelay: 0.25
   isGameOver: 0
+  gameFinish: 0
   player: {fileID: 1854409583}
   platform: {fileID: 842387136}
   camera: {fileID: 519420033}

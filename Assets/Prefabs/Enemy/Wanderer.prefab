@@ -171,12 +171,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   kind: 3
   type: 0
-  maxHp: 5
+  maxHp: 4
   getPoint: 45
   moveSpeed: 0
   moveVec: {x: 0, y: 0}
   onDie: 0
   detector: {fileID: 6062972552207224944}
+  dieDelay: 2
 --- !u!114 &5686926475658502057
 MonoBehaviour:
   m_ObjectHideFlags: 0

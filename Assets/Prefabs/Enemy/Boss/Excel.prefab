@@ -407,9 +407,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   phase: 0
-  phaseHp: 640000004600000028000000
-  maxHp: 100
-  hp: 0
+  phaseHp: 820000003c000000
+  maxHp: 150
   onDie: 0
   patternDelay: 1.25
   attackDisMin: 10.5
@@ -423,17 +422,17 @@ MonoBehaviour:
   shotDelay: 0.5
   generalShotSpeed: 5.8
   impactShotSpeed: 9.5
-  comboShotCount: 10
+  comboShotCount: 6
   comboShotDelay: 0.75
   flameSpearDis: 4.75
-  flameSpearSpeed: 2
+  flameSpearSpeed: 3.2
   machStrikeStartDisX: 22.4
-  machStrikeCount: 4
+  machStrikeCount: 5
   machStrikeEndDisX: 9.5
   machStrikeDirY: 0.1
   machStrikeRotate: 10
-  machStrikeSpeed: 19
-  machStrikeStartDelay: 0.8
+  machStrikeSpeed: 24
+  machStrikeStartDelay: 0.4
   machStrikeEndDelay: 0.3
   machStrikePaths:
   - {fileID: 3463684526963857419}

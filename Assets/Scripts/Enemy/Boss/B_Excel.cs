@@ -19,7 +19,6 @@ public class B_Excel : MonoBehaviour
     [Header("Status")]
     [SerializeField]
     private int maxHp;
-    [HideInInspector]
     private int hp;
     
     [HideInInspector]
@@ -504,11 +503,11 @@ public class B_Excel : MonoBehaviour
         {
             UIManager.instance.BossHPModify(true, maxHp, hp);
 
-            if (hp <= phaseHp[0] && hp > phaseHp[1])
+            if (hp >= phaseHp[0])
             {
                 phase = Phase.Phase1;
             }
-            else if (hp <= phaseHp[1] && hp > phaseHp[2])
+            else if (hp >= phaseHp[1])
             {
                 phase = Phase.Phase2;
             }
@@ -521,6 +520,7 @@ public class B_Excel : MonoBehaviour
 
     void Die()
     {
+        StopAllCoroutines();
         onDie = true;
         BossStageManager.instance.BossDefeat();
     }

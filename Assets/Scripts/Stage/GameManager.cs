@@ -137,6 +137,7 @@ public class GameManager : MonoBehaviour
         GameLive(false);
         player.gameObject.layer = 7;
         player.Move(false);
+        player.GetComponent<Rigidbody2D>().simulated = false; // 골인 지점에서의 낙사 방지
         UIManager.instance.ShowController(false);
         AudioManager.instance.MuteBgm();
         EventManager.instance.PlayTimeLine(EventManager.Timeline.Danger);
