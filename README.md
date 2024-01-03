@@ -1,7 +1,7 @@
 # Runner in the Night
 
 MIRACLE BOX의 게임 Runner in the Night입니다.
-<img src="https://github.com/Gyokujin/Runner-in-the-Night/assets/74170514/19725346-fdd7-4063-8c4b-34a6865f30fb">
+<img src="https://github.com/Gyokujin/Runner-in-the-Night/assets/74170514/19725346-fdd7-4063-8c4b-34a6865f30fb" width=50% height=50%>
 
 - 소개 영상 : https://www.youtube.com/watch?v=vdUYwJ-8DAM
 
