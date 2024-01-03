@@ -9,8 +9,7 @@ Director : 김격진(Gyokujin)
 <img src="https://github.com/Gyokujin/Runner-in-the-Night/assets/74170514/6b5dc606-dec8-40ad-ab7d-af1b75bbea93" width=40% height=40%>
 
 
-Game Trailer ([youtube Link](https://github.com/Gyokujin/Runner-in-the-Night/assets/74170514/19725346-fdd7-4063-8c4b-34a6865f30fb)](https://www.youtube.com/watch?v=vdUYwJ-8DAM))
-
+Game Trailer (https://www.youtube.com/watch?v=vdUYwJ-8DAM)
 
 [![Video Label](https://github.com/Gyokujin/Runner-in-the-Night/assets/74170514/19725346-fdd7-4063-8c4b-34a6865f30fb)](https://www.youtube.com/watch?v=vdUYwJ-8DAM)
 
