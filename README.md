@@ -11,6 +11,7 @@ Director : 김격진(Gyokujin)
 
 Game Trailer (youtube Link)
 
+
 [![Video Label](https://github.com/Gyokujin/Runner-in-the-Night/assets/74170514/19725346-fdd7-4063-8c4b-34a6865f30fb)](https://www.youtube.com/watch?v=vdUYwJ-8DAM)
 
 - 보스 Excel의 패턴인 FlameSpear의 아트는 유료 에셋이기 때문에 별도 구매를 하거나 다른 아트로 교체를 권장 드립니다.
