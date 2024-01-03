@@ -3,6 +3,7 @@
 MIRACLE BOX의 게임 Runner in the Night입니다.
 
 - 소개 영상 : https://www.youtube.com/watch?v=vdUYwJ-8DAM
+![1](https://github.com/Gyokujin/Runner-in-the-Night/assets/74170514/9bbb09f1-0a78-47fb-8cbe-f44f8ca70114)
 
 - 보스 Excel의 패턴인 FlameSpear의 아트는 유료 에셋이기 때문에 별도 구매를 하거나 다른 아트로 교체를 권장 드립니다.
 
