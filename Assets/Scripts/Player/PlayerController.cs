@@ -51,7 +51,8 @@ public class PlayerController : MonoBehaviour
     private int life;
     [HideInInspector]
     public bool onDamage = false;
-    private bool isDead = false;
+    [HideInInspector]
+    public bool isDead = false;
 
     // yield return time
     private WaitForSeconds slideWait;

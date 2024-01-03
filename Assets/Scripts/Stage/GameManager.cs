@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour
 
     void ScoreProcess()
     {
-        if (!scoreGetting && !isArrive)
+        if (!scoreGetting && !isArrive && !player.isDead)
         {
             StartCoroutine("ProgressScore");
         }
@@ -106,7 +106,7 @@ public class GameManager : MonoBehaviour
             UIManager.instance.ProgressModify(score);
         }
 
-        if (score >= maxScore && !isArrive)
+        if (score >= maxScore && !isArrive && !player.isDead)
         {
             ArriveGoal();
         }
