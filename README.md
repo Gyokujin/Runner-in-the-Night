@@ -2,10 +2,10 @@
 
 MIRACLE BOX의 게임 Runner in the Night입니다.
 
-<img src="https://github.com/Gyokujin/Runner-in-the-Night/assets/74170514/19725346-fdd7-4063-8c4b-34a6865f30fb" width=50% height=50%>
-<img src="https://github.com/Gyokujin/Runner-in-the-Night/assets/74170514/227f73ea-d288-457f-8262-a76954d7fac2" width=50% height=50%>
-<img src="https://github.com/Gyokujin/Runner-in-the-Night/assets/74170514/b7e2bf55-b07a-4aeb-99d3-a925072124b2" width=50% height=50%>
-<img src="https://github.com/Gyokujin/Runner-in-the-Night/assets/74170514/6b5dc606-dec8-40ad-ab7d-af1b75bbea93" width=50% height=50%>
+<img src="https://github.com/Gyokujin/Runner-in-the-Night/assets/74170514/19725346-fdd7-4063-8c4b-34a6865f30fb" width=40% height=40%>
+<img src="https://github.com/Gyokujin/Runner-in-the-Night/assets/74170514/227f73ea-d288-457f-8262-a76954d7fac2" width=40% height=40%>
+<img src="https://github.com/Gyokujin/Runner-in-the-Night/assets/74170514/b7e2bf55-b07a-4aeb-99d3-a925072124b2" width=40% height=40%>
+<img src="https://github.com/Gyokujin/Runner-in-the-Night/assets/74170514/6b5dc606-dec8-40ad-ab7d-af1b75bbea93" width=40% height=40%>
 
 - 소개 영상 : https://www.youtube.com/watch?v=vdUYwJ-8DAM
 
