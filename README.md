@@ -1,8 +1,8 @@
 # Runner in the Night
 
 - Runner in the Night - MIRACLE BOX
-- Play : https://gyokujin.itch.io/runner-in-the-night
 - Director : 김격진(Gyokujin)
+- Play : https://gyokujin.itch.io/runner-in-the-night
 
 <img src="https://github.com/Gyokujin/Runner-in-the-Night/assets/74170514/19725346-fdd7-4063-8c4b-34a6865f30fb" width=40% height=40%>
 <img src="https://github.com/Gyokujin/Runner-in-the-Night/assets/74170514/227f73ea-d288-457f-8262-a76954d7fac2" width=40% height=40%>
